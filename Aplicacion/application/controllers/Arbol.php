@@ -178,7 +178,7 @@ class Arbol extends CI_Controller
     public function misAdopciones()
     {
         $data['title']="MEPPP | Mis Adopciones";
-        $data['page']="misAdopciones";
+        $data['page']="Mis Adopciones";
         $data['seccion']="9";
         $data['imagen']='invernaderoSeccion';
 

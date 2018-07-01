@@ -52,3 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'Frontend';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+//Paginacion
+$route['Arbol/page'] = 'Arbol'; // Cuando sea la primera página
+$route['Arbol/page/(:num)'] = 'Arbol'; // Cuando no sea la primera página

@@ -120,7 +120,7 @@
               <?php }else{ ?>
                 <li class="dropdown" style="text-decoration: underline;"><a  href="<?=base_url();?>Frontend/login" id="<?php if($page=='login'){echo 'active';} ?>" >LOGIN/ÚNETE <span class="glyphicon glyphicon-user"></span></a></li>
               <?php } ?>
-              <li class="dropdown"><a  href="#" ><span class="glyphicon glyphicon-tree-deciduous"></span></a></li>
+              <li class="dropdown"><a  href="<?=base_url().'Arbol/misAdopciones';?>" id="<?php if($page=='Mis Adopciones'){echo 'active';} ?>"><span class="glyphicon glyphicon-tree-deciduous"></span></a></li>
             </ul>
           </div>
         </div>
