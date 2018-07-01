@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *     - addTree
 *     - deleteTree
 *     - vaciarCanasta
-*     - misAdopciones
+*     - misAdopcione
 *     - cargarVistaFront
 *
 * @author Jonathan Jair Alfaro Sánchez
@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *
 * @version 1.0.0
 * Creado el 14/06/2018 a las 10:40 pm
-* Ultima modificacion el 29/06/2018 a las 02:36 pm
+* Ultima modificacion el 30/06/2018 a las 08:27 pm
 *
 * @since Clase disponible desde la versión 1.0.0
 * @deprecated Clase obsoleta en la versión 2.0.0

@@ -4,7 +4,7 @@
 * En esta pagina se cargan todas las campañas que ya fueron realizadas por la asociasion
 *
 * @author Jonathan Jair Alfaro Sánchez
-* @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/views/fronted
+* @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/views/frontend
 * @package application/views/frontend
 *
 * @version 1.0.0

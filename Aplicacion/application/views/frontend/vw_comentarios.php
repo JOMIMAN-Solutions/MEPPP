@@ -6,7 +6,7 @@
 *     - Comentarios recientes
 *
 * @author Jonathan Jair Alfaro Sánchez
-* @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/views/fronted
+* @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/views/frontend
 * @package application/views/frontend
 *
 * @version 1.0.0
