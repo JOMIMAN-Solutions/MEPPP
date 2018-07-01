@@ -140,7 +140,27 @@ transform: scale(1.1);/*Damos un ligero zoom a la imagen*/
 
 
 
+/* Paginacion */
+#paginacion{
+    margin-top: 30px;
+    padding: 5px;
+    background-color: #5cb85c;
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+}
 
+#paginacion a, span{
+    font-weight: bold;
+    padding: 5px;
+}
 
+#paginacion a:hover{
+    color: #38761d;
+}
 
-
+#paginacion span.active{
+    color: #38761d;
+    border: 1px white dashed;
+    border-radius: 4px;
+}
