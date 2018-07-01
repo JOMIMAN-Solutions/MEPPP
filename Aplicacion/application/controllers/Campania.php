@@ -7,11 +7,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *     - index()
 *
 * @autor Jonathan Jair Alfaro Sánchez
-* @link [dirección_url_de_la_ubicacion]
+* @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/controllers
 * @package applications/controllers
 *
 * @version 1.0
 * Creado el 15/06/2018 a las 10:05 am
+* Ultima modificacion el 29/06/2018 a las 02:36 pm
 *
 * @since Clase disponible desde la versión 1.0
 * @deprecated Clase obsoleta en la versión 2.0
@@ -49,6 +50,23 @@ class Campania extends CI_Controller
         $data['imagenes'] = $this->Mdl_Campania->getImagenes();
 
         $this->cargarVistaFront('vw_campañas', $data);
+    }
+
+    /**
+    * Metodo que carga todos los eventos que la empresa hará para posteriormente mostrarlos en un calendario
+    *
+    * @access public
+    * @param Ninguno
+    * @return json
+    *
+    * @since Método disponible desde la versión 1.0
+    * @deprecated Método obsoleto en la versión 2.0
+    * @todo Nada
+    */
+    public function getEvents(){
+        $result=$this->Mdl_Campania->getEvents();
+        echo json_encode($result);
+
     }
 
 

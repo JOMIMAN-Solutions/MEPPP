@@ -43,8 +43,8 @@
               <div class="col-sm-3">
                 <div class="widget">
                   <h5 class="widget-title font-alt">Redes sociales</h5>
-                  <div class="col-sm-6" align="center"><img src="<?=base_url()?>template/frontend/images/fb.png" width="50%"></div>
-                  <div class="col-sm-6" align="center"><img src="<?=base_url()?>template/frontend/images/insta.png" width="50%"></div>
+                  <div class="col-sm-6 shake-slow" align="center" ><img src="<?=base_url()?>template/frontend/images/fb.png" width="50%"></div>
+                  <div class="col-sm-6 shake-slow" align="center"><img src="<?=base_url()?>template/frontend/images/insta.png" width="50%"></div>
                 </div>
               </div>
 

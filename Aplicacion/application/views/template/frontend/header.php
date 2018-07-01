@@ -9,43 +9,12 @@
     =============================================
     -->
     <title><?=$title?></title>
-    <!--  
-    Favicons
-    =============================================
-    -->
-    <link rel="apple-touch-icon" sizes="57x57" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="<?=base_url();?>template/frontend/assets/images/favicons/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?=base_url();?>template/frontend/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="<?=base_url();?>template/frontend/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?=base_url();?>template/frontend/assets/images/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="<?=base_url();?>template/frontend/assets/images/favicons/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
 
 
-
-
-
-
-
-    <!--  
-    Stylesheets
-    =============================================
-
--->
     <!--JS-->
     <script src="<?=base_url();?>template/frontend/assets/lib/jquery/dist/jquery.js"></script>
-    <script src="<?=base_url();?>template/frontend/assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="<?php echo base_url();?>template/frontend/js/bootstrap4.min.js"></script>
+    <script src="<?php echo base_url();?>template/frontend/fullcalendar/js/jquery.min.js"></script>
     <script src="<?=base_url();?>template/frontend/assets/lib/wow/dist/wow.js"></script>
     <script src="<?=base_url();?>template/frontend/assets/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
     <script src="<?=base_url();?>template/frontend/assets/lib/isotope/dist/isotope.pkgd.js"></script>
@@ -59,24 +28,6 @@
     <script src="<?=base_url();?>template/frontend/assets/js/main.js"></script>
     <script src="<?=base_url();?>template/frontend/js/jquery.smoove.min.js"></script>
     <script src="<?=base_url();?>template/frontend/js/custombox.min.js"></script>
-    <!--JS TERMINADO-->
-
-
-           <link href="<?php echo base_url();?>template/frontend/fullcalendar/assets/css/bootstrap.min.css" rel="stylesheet">
-        <link href='<?php echo base_url();?>template/frontend/fullcalendar/assets/css/fullcalendar.css' rel='stylesheet' />
-        <link href="<?php echo base_url();?>template/frontend/fullcalendar/assets/css/bootstrapValidator.min.css" rel="stylesheet" />        
-        <link href="<?php echo base_url();?>template/frontend/fullcalendar/assets/css/bootstrap-colorpicker.min.css" rel="stylesheet" />
-        <!-- Custom css  -->
-        <link href="<?php echo base_url();?>template/frontend/fullcalendar/assets/css/custom.css" rel="stylesheet" />
-
-        <script src='<?php echo base_url();?>template/frontend/fullcalendar/assets/js/moment.min.js'></script>
-        
-        <script src="<?php echo base_url();?>template/frontend/fullcalendar/assets/js/bootstrapValidator.min.js"></script>
-        <script src="<?php echo base_url();?>template/frontend/fullcalendar/assets/js/fullcalendar.min.js"></script>
-        <script src='<?php echo base_url();?>template/frontend/fullcalendar/assets/js/bootstrap-colorpicker.min.js'></script>
-        
-
-        <script src='<?php echo base_url();?>template/frontend/fullcalendar/assets/js/main.js'></script>
         
 
     <!-- Default stylesheets-->
@@ -95,12 +46,33 @@
     <link href="<?=base_url();?>template/frontend/assets/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
     <link href="<?=base_url();?>template/frontend/css/estilos.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<?=base_url();?>template/frontend/css/custombox.min.css">
+    <link rel="stylesheet" type="text/css" href="<?=base_url();?>template/frontend/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="<?=base_url();?>template/frontend/css/csshake.min.css">
+    <script src="<?=base_url();?>template/frontend/js/jquery.smoove.min.js"></script>
+
     <!-- Main stylesheet and color file-->
+
+
+
+    <!--FULLCALENDAR-->
+
+
+        <link href='<?php echo base_url();?>template/frontend/fullcalendar/css/fullcalendar.css' rel='stylesheet' />
+        <link href="<?php echo base_url();?>template/frontend/fullcalendar/css/bootstrapValidator.min.css" rel="stylesheet" />  
+        <link href="<?php echo base_url();?>template/frontend/fullcalendar/css/bootstrap-colorpicker.min.css" rel="stylesheet" />
+        <link href="<?php echo base_url();?>template/frontend/fullcalendar/css/custom.css" rel="stylesheet" />
+
+        <script src='<?php echo base_url();?>template/frontend/fullcalendar/js/moment.min.js'></script>
+        <script src="<?php echo base_url();?>template/frontend/fullcalendar/js/bootstrapValidator.min.js"></script>
+        <script src="<?php echo base_url();?>template/frontend/fullcalendar/js/fullcalendar.min.js"></script>
+        <script src='<?php echo base_url();?>template/frontend/fullcalendar/locale/locale-all.js'></script>
+        <script src='<?php echo base_url();?>template/frontend/fullcalendar/js/bootstrap-colorpicker.min.js'></script>
+        <script src='<?php echo base_url();?>template/frontend/fullcalendar/js/main.js'></script>
+        
+
 
     <link href="<?=base_url();?>template/frontend/assets/css/style.css" rel="stylesheet">
     <link id="color-scheme" href="<?=base_url();?>template/frontend/assets/css/colors/default.css" rel="stylesheet">
-
-
 
 
   </head>
@@ -109,7 +81,9 @@
       <div class="page-loader">
         <div class="loader">Loading...</div>
       </div>
-      <nav class="navbar navbar-custom navbar-fixed-top navbar-transparent" role="navigation">
+      
+
+<nav class="navbar navbar-custom navbar-fixed-top navbar-transparent" role="navigation">
         <div class="container-fluid">
           <div class="navbar-header">
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#custom-collapse"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
@@ -146,50 +120,48 @@
 
 
 
-                  
-
-              <li class="dropdown"><a  href="#" ><span class="glyphicon glyphicon-tree-deciduous"></span></a></li>
+              <li class="dropdown"><a  href="<?=base_url().'Arbol/misAdopciones';?>" id="<?php if($page=='Mis Adopciones'){echo 'active';} ?>"><span class="glyphicon glyphicon-tree-deciduous"></span></a></li>
             </ul>
             </div>
             </ul>
           </div>
         </div>
       </nav>
+
       <section class="home-section home-parallax home-fade home-full-height" id="home">
         <div class="hero-slider">
           <ul class="slides">
-            <li class="bg-dark-30 bg-dark" style="background-image:url(http://localhost/MEPPP/template/frontend/images/slider.png);">
+            <li class="bg-dark-30 bg-dark" style="background-image:url(<?=base_url()?>template/frontend/images/slider.png);">
               <div class="titan-caption">
                 <div class="caption-content">
-                	<div class="font-alt mb-30 titan-title-size-3" align="left" style="margin-left: 15px">Movimiento Ecologista</div>
-                	<div class="font-alt mb-30 titan-title-size-2" align="left" style="margin-left: 15px">Preocupados por el planeta</div>
+                  <div class="font-alt mb-30 titan-title-size-3 animated bounceInRight" align="left" style="margin-left: 15px">Movimiento Ecologista</div>
+                  <div class="font-alt mb-30 titan-title-size-2 animated bounceInLeft" align="left" style="margin-left: 15px">Preocupados por el planeta</div>
                  <!-- <div class="font-alt mb-40 titan-title-size-4">We are Titan</div>
                   <a class="section-scroll btn btn-border-w btn-round" href="#about">Learn More</a>-->
                 </div>
               </div>
             </li>
-            <li class="bg-dark-30 bg-dark" style="background-image:url(http://localhost/MEPPP/template/frontend/images/slider2.png);">
+            <li class="bg-dark-30 bg-dark" style="background-image:url(<?=base_url()?>template/frontend/images/slider2.png);">
               <div class="titan-caption">
                 <div class="caption-content">
                   <div class="font-alt mb-30 titan-title-size-4">Conoce nuestras campañas</div>
-                  <a class="btn btn-border-w btn-round" href="<?=base_url().'Campania';?>">Ver campañas</a>
+                  <a class="btn btn-border-w btn-round" href="<?=base_url();?>Frontend/campanias">Ver campañas</a>
 
                 </div>
               </div>
             </li>
-            <li class="bg-dark-30 bg-dark" style="background-image:url(http://localhost/MEPPP/template/frontend/images/slider3.png);">
+            <li class="bg-dark-30 bg-dark" style="background-image:url(<?=base_url()?>template/frontend/images/slider3.png);">
               <div class="titan-caption">
                 <div class="caption-content">
                   <div class="font-alt mb-30 titan-title-size-4">ADOPTA UN ARBOL</div>
-                  <a class="section-scroll btn btn-border-w btn-round" href="<?=base_url().'Arbol';?>">Ver invernadero</a>
+                  <a class="section-scroll btn btn-border-w btn-round" href="<?=base_url();?>Frontend/invernadero">Ver invernadero</a>
                 </div>
               </div>
      
             </li>
           </ul>   
-			
+      
         </div>
       </section>
-
 
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-06-2018 a las 22:18:00
+-- Tiempo de generación: 01-07-2018 a las 04:57:52
 -- Versión del servidor: 10.1.30-MariaDB
 -- Versión de PHP: 7.2.1
 
@@ -98,6 +98,7 @@ CREATE TABLE `campanias` (
   `lugar` varchar(150) NOT NULL,
   `publico` varchar(50) NOT NULL,
   `estatusCampania` tinyint(4) NOT NULL,
+  `color` varchar(7) NOT NULL,
   `Administradores_idAdministrador` int(11) NOT NULL,
   `TiposCampania_idTipoCampania` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -106,9 +107,9 @@ CREATE TABLE `campanias` (
 -- Volcado de datos para la tabla `campanias`
 --
 
-INSERT INTO `campanias` (`idCampania`, `imagenPortada`, `nombreCampania`, `fechaInicio`, `fechaFin`, `hora`, `lugar`, `publico`, `estatusCampania`, `Administradores_idAdministrador`, `TiposCampania_idTipoCampania`) VALUES
-(1, 'campaña1.jpg', 'El fruto de la vida', '2018-06-14', '2018-06-14', '05:00:00', 'Plazuela acámbaro', 'Adultos', 2, 1, 3),
-(3, 'campaña2.jpg', 'Hola mundo', '2018-06-29', '2018-06-30', '15:00:00', 'COMUDE', 'Niños', 1, 1, 1);
+INSERT INTO `campanias` (`idCampania`, `imagenPortada`, `nombreCampania`, `fechaInicio`, `fechaFin`, `hora`, `lugar`, `publico`, `estatusCampania`, `color`, `Administradores_idAdministrador`, `TiposCampania_idTipoCampania`) VALUES
+(1, 'campaña1.jpg', 'El fruto de la vida', '2018-06-14', '2018-06-14', '05:00:00', 'Plazuela acámbaro', 'Adultos', 2, '#006ab8', 1, 3),
+(3, 'campaña2.jpg', 'Hola mundo', '2018-06-29', '2018-06-30', '15:00:00', 'COMUDE', 'Niños', 1, '#006ab8', 1, 1);
 
 -- --------------------------------------------------------
 
