@@ -94,7 +94,8 @@ class Arbol extends CI_Controller
             'id' => $id,
             'qty' => $cantidad,
             'price' => 0,
-            'name' => $arbol->nombreComun
+            'name' => $arbol->nombreComun,
+            'image' => $arbol->imagenArbol
         );
 
         // Insertamos al carrito

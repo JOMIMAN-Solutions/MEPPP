@@ -6,7 +6,7 @@
 * @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/views/frontend
 * @package views/frontend
 *
-* @version 1.0.1
+* @version 1.0.0
 * Creado el 25/06/2018 a las 05:08 pm
 * Ultima modificacion el 30/06/2018 a las 08:47 pm
 */
@@ -32,6 +32,7 @@
         <div>
           <table class="table table-bordered table-hover">
             <tr class="white">
+              <th>Imagen</th>
               <th>Nombre</th>
               <th>Cantidad</th>
               <th>Eliminar</th>
@@ -45,20 +46,19 @@
             foreach ($canasta as $arbol): 
             ?>
               <tr class="white">
+                <td><img src="<?=base_url().'images/arboles/'.$arbol['image'];?>" class="center-block" style="width: 50px;"></td>
                 <td><?= $arbol['name']; ?></td>
                 <td><?= $arbol['qty']; ?></td>
                 <td>
-                  <a href="<?=base_url().'Arbol/deleteTree/'.$arbol['rowid'];?>">Eliminar</a>
+                  <a href="<?=base_url().'Arbol/deleteTree/'.$arbol['rowid'];?>"><span class="fa fa-trash"></span></a>
                 </td>
               </tr>
             <?php endforeach; ?>
-
-            <tr>
-              <td>
-                <a href="<?=base_url().'Arbol/vaciarCanasta';?>">Vaciar canasta</a>
-              </td>
-            </tr>
           </table>
+
+          <a href="<?=base_url().'Arbol/vaciarCanasta';?>"><span class="fa fa-trash"> Vaciar</span></a>
+
+          <a href="#" class="btn btn-success center-block greenButton">Enviar solicitud <span class="fa fa-seedling"></span></a>
         </div>
       <?php else: ?>
         <div class="row" class="white">
