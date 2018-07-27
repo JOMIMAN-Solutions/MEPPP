@@ -12,6 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *
 * @version 1.0
 * Creado el 15/06/2018 a las 05:09 pm
+* Ultima modificacion el 26/07/2018 a las 08:48 pm
 *
 * @since Clase disponible desde la versión 1.0
 * @deprecated Clase obsoleta en la versión 2.0
@@ -50,6 +51,14 @@ class Faq extends CI_Controller
     }
 
 
+/* -------------------------------------- BACKEND --------------------------------------- */
+
+    public function cPanel()
+    {
+        $this->load->view('template/backend/header');
+        $this->load->view('backend/vw_faqs');
+        $this->load->view('template/backend/footer');
+    }
 
 
 /* ------------------------------------------------------------------------------------- */

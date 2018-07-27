@@ -14,6 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *
 * @version 1.0.0
 * Creado el 15/06/2018 a las 10:35 am
+* Ultima modificacion el 26/07/2018 a las 08:47 pm
 *
 * @since Clase disponible desde la versión 1.0.0
 * @deprecated Clase obsoleta en la versión 2.0.0
@@ -51,6 +52,15 @@ class Comentario extends CI_Controller
         $this->cargarVistaFront('vw_comentarios',$data);
     }
 
+
+/* -------------------------------------- BACKEND --------------------------------------- */
+
+    public function cPanel()
+    {
+        $this->load->view('template/backend/header');
+        $this->load->view('backend/vw_comentarios');
+        $this->load->view('template/backend/footer');
+    }
 
 
 
