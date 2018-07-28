@@ -2,7 +2,7 @@ function calendario(){
 
     var base_url='http://localhost/MEPPP/Aplicacion/'; // Here i define the base_url
 
-    // Fullcalendar
+  
     $('#calendar').fullCalendar({
 
             monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
@@ -12,7 +12,20 @@ function calendario(){
             header: {
             left: 'prev, next, today',
             center: 'title',
-            right: 'month, basicDay'
+            right: 'month'
+        },
+
+        viewRender: function(currentView){
+        var minDate = moment();
+        // Past
+        if (minDate >= currentView.start) {
+            $(".fc-prev-button").prop('disabled', true); 
+            $(".fc-prev-button").addClass('fc-state-disabled'); 
+        }else {
+            $(".fc-prev-button").removeClass('fc-state-disabled'); 
+            $(".fc-prev-button").prop('disabled', false); 
+        }
+    
         },
         // Get all events stored in database
         eventLimit: true, // allow "more" link when too many events

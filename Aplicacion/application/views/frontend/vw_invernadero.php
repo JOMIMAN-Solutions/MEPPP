@@ -8,22 +8,46 @@
 *
 * @version 1.0.1
 * Creado el 13/06/2018 a las 01:10 am
-* Ultima modificacion el 29/06/2018 a las 08:43 pm
+* Ultima modificacion el 28/07/2018 a las 12:03 am
 */
 ?>
+
+<script>
+      $(document).ready(function(){
+$('.bloque').smoove({offset:'10%'}); 
+});
+
+</script>
+
 <div class="main" style="background-color: #b6d7a8">
   <div style="height:10px;background-color:#b9a11f;margin-bottom: 40px" class="shadowBrownLine"></div>
 
-  <div class="row" style="margin-bottom: 20px">
-    <div class="col-lg-12 col-xs-12 col-sm-10 divRedondo" >
-      <h1 class="white" style="font-size: 45px" align="center">ARBOLES DISPONIBLES</h1>
+  <div class="row bloque" data-move-x="150%">
+    <div class="col-lg-12 col-xs-12 col-sm-10 divRedondoR borderTopBrown" style="margin-top: 20px;">
+      <h1 class="white" style="font-size: 45px" align="center">Arboles disponibles<span class="glyphicon glyphicon-tree-deciduous"></span></h1>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-lg-1 col-xs-12"></div>
+  <div class="row bloque" data-move-x="-150%" style="margin-bottom: 20px">
+      <div class="col-lg-12 col-xs-12 col-sm-12 divContenidoR">
+        <section class="module pb-0 bg-dark-10 pt-0 pb-0 parallax-bg" data-background="<?=base_url();?>template/frontend/images/parallax5.png">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12">
+                <h1 class="font-serif" align="center" >Adopta un árbol y contribuye junto a nosotros a ayudar al medio ambiente.</h1>
+                 <h3 class="white" align="center">Tu adopción contribuye a frenar el calentamiento global.<span class="glyphicon glyphicon-globe" style="color:#004e87"></span></h3>
+                 <hr style="height: 3px; background-color: #ffffff; width: 500px">
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
 
-    <div class="col-lg-10 col-xs-12 divContenido borderTopBrown">
+
+  <div class="row bloque"  style="margin-top: 0px" data-move-x="150%">
+    <div class="col-lg-1 col-xs-12"></div>
+    <div class="col-lg-10 col-xs-12 divArboles">
       <?php
       /**
       * Condición que valida si existe la variable $arboles y esta no esta vacia.
@@ -35,16 +59,18 @@
         * El bucle asigna a la variable $ar el valor del elemento actual que está reccoriendo en ese momento, en la siguiente iteración devolverá el siguiente valor.
         */
         foreach($arboles as $ar): ?>
-          <div class="col-lg-3 col-xs-12" >
-            <a id="example<?=$i?>" class="contenedor-img ejemplo-1"><img src="<?=base_url();?>images/arboles/<?=$ar->imagenArbol?>"></a>
+          <div class="col-lg-3 col-xs-12" style="margin-top: 10px;">
+            <a id="example<?=$i?>" class="contenedor-img ejemplo-1">
+              <img src="<?=base_url();?>images/arboles/<?=$ar->imagenArbol?>" style="border-radius: 45% / 20%;margin-bottom: 10px"></a>
             
-            <div style="background-color: #38761d">
-              <h4 align="center" class="titlePlanta"><?=$ar->nombreComun?></h4>
+           
+            <div style="background-color: #ffffff;border: solid #38761d;" class="redondeado">
+              <h5 align="center" class="titlePlanta">Nombre común:</h5>
+              <h4 align="center" class="titlePlanta font-serif"><strong><?=$ar->nombreComun?></strong> </h4>
+              <h5 align="center" class="titlePlanta">Tipo de árbol:</h5>
+              <h4 align="center" class="titlePlanta font-serif"><strong><?=$ar->tipoArbol?></strong></h4>
             </div>
-            
-            <div style="background-color: #38761d;">
-              <h4 align="center" class="datosPlanta"><?=$ar->tipoArbol?></h4>
-            </div>
+       
             
             <?php
             echo form_open(base_url() . 'Arbol/addTree');
@@ -53,7 +79,7 @@
             $btn = array(
               'type' => 'submit',
               'content' => 'Adoptar <span class="fa fa-fw">&#xf004;</span>',
-              'class' => 'btn btn-success center-block greenButton'
+              'class' => 'btn  btn-circle center-block greenButton2'
             );
             echo form_button($btn);
             echo form_close();
@@ -80,10 +106,10 @@
 */
 if($this->pagination->create_links()): 
 ?>
-  <div class="container row">
-    <div class="col-xs-1 col-md-4"></div>
-    <div class="col-xs-10 col-md-4" id="paginacion"><?= $this->pagination->create_links(); ?></div>
-    <div class="col-xs-1 col-md-4"></div>
+  <div class="row bloque" data-rotate-x="90deg" data-move-z="-500px" data-move-y="200px" >
+    <div class="col-lg-1 col-xs-12"></div>
+    <div class="col-lg-10 col-xs-12" id="paginacion"><?= $this->pagination->create_links(); ?></div>
+    <div class="col-lg-1 col-xs-12"></div>
   </div>
 <?php endif; ?>
 
@@ -104,35 +130,35 @@ if (isset($arboles) && $arboles != 0):
         <div class="modal-content" style="border: 5px dashed #38761d;">
           <div class="modal-header" style="background-color: #38761d;">
             <button type="button" class="close" onClick="Custombox.modal.close();">&times;</button>
-            <h2 class="modal-title white" align="center"><?=$ar->nombreComun?></h2>
+            <h2 class="modal-title white font-serif" align="center"><?=$ar->nombreComun?></h2>
           </div>
           <div class="modal-body" style="background-color: #6aa84f;">
           <div class="row">
             <div class="col-lg-4 col-xs-12">
-              <img src="<?=base_url()?>images/arboles/<?=$ar->imagenArbol?>" alt="">
+              <img src="<?=base_url()?>images/arboles/<?=$ar->imagenArbol?>" alt="" style="border-radius: 45% / 20%;">
             </div>
             <div class="col-lg-8 col-xs-12">
               <div class="row">
                 <div class="col-lg-6">
-                  <h3 class="white"><strong>Nombre: </strong><?=$ar->nombreComun?></h3>
+                  <h3 class="white font-serif"><strong>Nombre: </strong><?=$ar->nombreComun?></h3>
                   
                 </div>
                 <div class="col-lg-6">
-                  <h3 class="white"><strong>Nombre cientifico: </strong><?=$ar->nombreCientifico?></h3>
+                  <h3 class="white font-serif"><strong>Nombre cientifico: </strong><?=$ar->nombreCientifico?></h3>
                 </div>  
               </div>
               <div class="row">
                 <div class="col-lg-6">
-                  <h3 class="white"><strong>Tipo de arbol: </strong><?=$ar->tipoArbol?></h3>
+                  <h3 class="white font-serif"><strong>Tipo de arbol: </strong><?=$ar->tipoArbol?></h3>
                   
                 </div>
                 <div class="col-lg-6">
-                  <h3 class="white"><strong>Temporada: </strong><?=$ar->temporadaArbol?></h3>
+                  <h3 class="white font-serif"><strong>Temporada: </strong><?=$ar->temporadaArbol?></h3>
                 </div>  
               </div>
               <div class="row">
                 <div class="col-lg-12">
-                  <h3 class="white"><?=$ar->descripcion?></h3>
+                  <h3 class="white font-serif"><?=$ar->descripcion?></h3>
                 </div>
               </div>
             </div>
@@ -146,7 +172,7 @@ if (isset($arboles) && $arboles != 0):
             $btn = array(
               'type' => 'submit',
               'content' => 'Adoptar <span class="fa fa-fw">&#xf004;</span>',
-              'class' => 'btn btn-success center-block greenButton'
+              'class' => 'btn btn-default btn-circle center-block blueButton'
             );
             echo form_button($btn);
             echo form_close();

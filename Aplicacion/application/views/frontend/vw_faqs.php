@@ -10,16 +10,36 @@
 * Creado el 13/06/2018 a las 01:11 am
 */
  ?>
+ <script>
+      $(document).ready(function(){
+$('.bloque').smoove({offset:'10%'}); 
+});
+
+</script>
 <div class="main" style="background-color: #b6d7a8">
 <div style="height:10px;background-color:#b9a11f;margin-bottom: 40px" class="shadowBrownLine"></div>
-<div class="row" style="margin-bottom: 20px">
-    <div class="col-lg-12 col-xs-12 col-sm-10 divRedondo" >
-      <h1 class="white" style="font-size: 45px" align="center">¿Resuelve tus dudas?</h1>
+<div class="row bloque" data-move-x="-150%">
+    <div class="col-lg-12 col-xs-12 col-sm-10 divRedondo borderTopBrown" >
+      <h1 class="white" style="font-size: 45px" align="center">¿Tienes dudas? <span class="glyphicon glyphicon-question-sign"></span></h1>
     </div>
  </div>
+ <div class="row bloque" data-move-x="150%" style="margin-bottom: 20px">
+      <div class="col-lg-12 col-xs-12 col-sm-12 divContenidoR">
+        <section class="module pb-0 bg-dark-10 pt-0 pb-0 parallax-bg" data-background="<?=base_url();?>template/frontend/images/parallax9.png">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-12">
+                <h1 class="font-serif" align="center" >Resuelve tus dudas aquí!.</h1>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
 
 
- <div class="row">
+
+ <div class="row bloque" data-move-x="-150%">
 	<div class="col-lg-1 col-xs-12"></div>
 	<div class="col-lg-10 col-xs-12 divContenido borderTopBrown">
 		<div role="tabpanel">

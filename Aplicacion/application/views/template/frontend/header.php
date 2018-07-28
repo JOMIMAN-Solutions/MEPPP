@@ -13,8 +13,8 @@
 
     <!--JS-->
     <script src="<?=base_url();?>template/frontend/assets/lib/jquery/dist/jquery.js"></script>
-    <script src="<?php echo base_url();?>template/frontend/js/bootstrap4.min.js"></script>
-    <script src="<?php echo base_url();?>template/frontend/fullcalendar/js/jquery.min.js"></script>
+    <script src="<?=base_url();?>template/frontend/js/bootstrap4.min.js"></script>
+    <script src="<?=base_url();?>template/frontend/fullcalendar/js/jquery.min.js"></script>
     <script src="<?=base_url();?>template/frontend/assets/lib/wow/dist/wow.js"></script>
     <script src="<?=base_url();?>template/frontend/assets/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
     <script src="<?=base_url();?>template/frontend/assets/lib/isotope/dist/isotope.pkgd.js"></script>
@@ -28,6 +28,8 @@
     <script src="<?=base_url();?>template/frontend/assets/js/main.js"></script>
     <script src="<?=base_url();?>template/frontend/js/jquery.smoove.min.js"></script>
     <script src="<?=base_url();?>template/frontend/js/custombox.min.js"></script>
+     <script src="<?=base_url();?>template/frontend/js/efectos.js"></script>
+
         
 
     <!-- Default stylesheets-->
@@ -59,17 +61,14 @@
 
         <link href='<?php echo base_url();?>template/frontend/fullcalendar/css/fullcalendar.css' rel='stylesheet' />
         <link href="<?php echo base_url();?>template/frontend/fullcalendar/css/bootstrapValidator.min.css" rel="stylesheet" />  
-        <link href="<?php echo base_url();?>template/frontend/fullcalendar/css/bootstrap-colorpicker.min.css" rel="stylesheet" />
         <link href="<?php echo base_url();?>template/frontend/fullcalendar/css/custom.css" rel="stylesheet" />
 
         <script src='<?php echo base_url();?>template/frontend/fullcalendar/js/moment.min.js'></script>
         <script src="<?php echo base_url();?>template/frontend/fullcalendar/js/bootstrapValidator.min.js"></script>
         <script src="<?php echo base_url();?>template/frontend/fullcalendar/js/fullcalendar.min.js"></script>
         <script src='<?php echo base_url();?>template/frontend/fullcalendar/locale/locale-all.js'></script>
-        <script src='<?php echo base_url();?>template/frontend/fullcalendar/js/bootstrap-colorpicker.min.js'></script>
         <script src='<?php echo base_url();?>template/frontend/fullcalendar/js/main.js'></script>
-        
-
+      
 
     <link href="<?=base_url();?>template/frontend/assets/css/style.css" rel="stylesheet">
     <link id="color-scheme" href="<?=base_url();?>template/frontend/assets/css/colors/default.css" rel="stylesheet">
@@ -150,7 +149,7 @@
                 </div>
               </div>
             </li>
-            <li class="bg-dark-30 bg-dark" style="background-image:url(<?=base_url()?>template/frontend/images/slider3.png);">
+            <li class="bg-dark-30 bg-dark" style="background-image:url(<?=base_url()?>template/frontend/images/slider4.png);">
               <div class="titan-caption">
                 <div class="caption-content">
                   <div class="font-alt mb-30 titan-title-size-4">ADOPTA UN ARBOL</div>
