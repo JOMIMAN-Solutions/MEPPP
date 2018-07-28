@@ -8,7 +8,7 @@
 *
 * @version 1.0.0
 * Creado el 26/07/2018 a las 08:33 pm
-* Ultima modificacion el 26/07/2018 a las 08:36 pm
+* Ultima modificacion el 27/07/2018 a las 011:04 pm
 */
 ?>
 
@@ -43,15 +43,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-block">
-                        <h4 class="card-title">Title</h4>
-                        <h6 class="card-subtitle">Subtitle</h6>
-
-                        <section class="m-t-40">
-                            <h4 class="card-title">Title</h4>
-                        </section>
-                        <section class="m-t-40">
-                            <h4 class="card-title">Title</h4>
-                        </section>
+                        <?=$output;?>
                     </div>
                 </div>
             </div>

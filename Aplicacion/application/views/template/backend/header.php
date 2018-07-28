@@ -9,7 +9,7 @@
 *
 * @version 1.0.0
 * Creado el 26/07/2018 a las 05:30 pm
-* Ultima modificacion el 26/07/2018 a las 08:59 pm
+* Ultima modificacion el 27/07/2018 a las 08:10 pm
 */
 ?>
 
@@ -21,7 +21,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="<?=base_url().'template/backend/assets/images/favicon.png';?>">
     <title>Monster Admin Template</title>
@@ -36,7 +36,19 @@
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
+    <![endif]-->
+
+    <!-- CSS files of Grocery CRUD -->
+    <?php 
+    foreach ($css_files as $file): 
+        if ($file == "http://localhost/MEPPP/Aplicacion/assets/grocery_crud/themes/bootstrap-v4/css/bootstrap/bootstrap.min.css"): 
+    ?>
+            <link rel="stylesheet" href="http://localhost/MEPPP/Aplicacion/assets/grocery_crud/themes/bootstrap-v4/css/bootstrap/bootstrap.css">
+        <?php else: ?>
+            <link rel="stylesheet" href="<?=$file;?>">
+        <?php endif; ?>
+    <?php endforeach; ?>
+    
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -120,27 +132,27 @@
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
-                    <ul id="sidebarnav">
-                        <li>
-                            <a href="<?=base_url().'Adopcion/cPanel';?>" class="waves-effect"><i class="fa fa-shopping-basket m-r-10" aria-hidden="true"></i>Adopciones</a>
+                    <ul id="sidebarnav" class="in">
+                        <li class="<?=$activeAdopcion;?>">
+                            <a href="<?=base_url().'Adopcion/cPanel';?>" class="waves-effect <?=$activeAdopcion;?>"><i class="fa fa-shopping-basket m-r-10" aria-hidden="true"></i>Adopciones</a>
                         </li>
-                        <li>
-                            <a href="<?=base_url().'Arbol/cPanel';?>" class="waves-effect"><i class="fa fa-tree m-r-10" aria-hidden="true"></i>Invernadero</a>
+                        <li class="<?=$activeArbol;?>">
+                            <a href="<?=base_url().'Arbol/cPanel';?>" class="waves-effect <?=$activeArbol;?>"><i class="fa fa-tree m-r-10" aria-hidden="true"></i>Invernadero</a>
                         </li>
-                        <li>
-                            <a href="<?=base_url().'Campania/cPanel';?>" class="waves-effect"><i class="fa fa-leaf m-r-10" aria-hidden="true"></i>Campañas</a>
+                        <li class="<?=$activeCampania;?>">
+                            <a href="<?=base_url().'Campania/cPanel';?>" class="waves-effect <?=$activeCampania;?>"><i class="fa fa-leaf m-r-10" aria-hidden="true"></i>Campañas</a>
                         </li>
-                        <li>
-                            <a href="<?=base_url().'Comentario/cPanel';?>" class="waves-effect"><i class="fa fa-comments m-r-10" aria-hidden="true"></i>Comentarios</a>
+                        <li class="<?=$activeComentario;?>">
+                            <a href="<?=base_url().'Comentario/cPanel';?>" class="waves-effect <?=$activeComentario;?>"><i class="fa fa-comments m-r-10" aria-hidden="true"></i>Comentarios</a>
                         </li>
-                        <li>
-                            <a href="<?=base_url().'Faq/cPanel';?>" class="waves-effect"><i class="fa fa-question-circle m-r-10" aria-hidden="true"></i>FAQs</a>
+                        <li class="<?=$activeFaq;?>">
+                            <a href="<?=base_url().'Faq/cPanel';?>" class="waves-effect <?=$activeFaq;?>"><i class="fa fa-question-circle m-r-10" aria-hidden="true"></i>FAQs</a>
                         </li>
-                        <li>
-                            <a href="<?=base_url().'Usuario/cPanel';?>" class="waves-effect"><i class="fa fa-users m-r-10" aria-hidden="true"></i>Usuarios</a>
+                        <li class="<?=$activeUsuario;?>">
+                            <a href="<?=base_url().'Usuario/cPanel';?>" class="waves-effect <?=$activeUsuario;?>"><i class="fa fa-users m-r-10" aria-hidden="true"></i>Usuarios</a>
                         </li>
-                        <li>
-                            <a href="<?=base_url().'QuienesSomos/cPanel';?>" class="waves-effect"><i class="fa fa-globe m-r-10" aria-hidden="true"></i>¿Quiénes somos?</a>
+                        <li class="<?=$activeQuienesSomos;?>">
+                            <a href="<?=base_url().'QuienesSomos/cPanel';?>" class="waves-effect <?=$activeQuienesSomos;?>"><i class="fa fa-globe m-r-10" aria-hidden="true"></i>¿Quiénes somos?</a>
                         </li>
                     </ul>
                 </nav>

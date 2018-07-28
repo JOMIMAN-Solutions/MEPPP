@@ -839,6 +839,10 @@ ol li{
 	.footer{
 		left:240px
 	}
+
+	.footer{
+		left:0px
+	}
 }
 
 @media (min-width:768px){
