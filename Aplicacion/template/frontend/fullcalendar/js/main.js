@@ -1,10 +1,10 @@
-
-$(function(){
+function calendario(){
 
     var base_url='http://localhost/MEPPP/Aplicacion/'; // Here i define the base_url
 
     // Fullcalendar
     $('#calendar').fullCalendar({
+
             monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
             dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
             dayNamesShort: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
@@ -18,11 +18,11 @@ $(function(){
         eventLimit: true, // allow "more" link when too many events
         ignoreTimezone: false,
         events: base_url+'Campania/getEvents',
-        selectable: true,
         allDay:true,
         selectHelper: true,
         editable: false, // Make the event resizable true        
-        
+        prev: 'glyphicon-remove',
+
            eventClick: function(calEvent, jsEvent, view) {
 
             currentEvent = calEvent;
@@ -40,4 +40,4 @@ $(function(){
 
     });
 
-});
+}

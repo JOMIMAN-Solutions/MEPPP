@@ -3,6 +3,9 @@
                 vertical-align: middle;
                 background:#F2F2F2;
             }
+              .fc-event{
+                cursor: pointer;
+                }
             .fc-day-grid-event>.fc-content {
                 padding: 4px;
             }
