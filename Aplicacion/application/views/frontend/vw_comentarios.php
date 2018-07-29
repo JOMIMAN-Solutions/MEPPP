@@ -73,6 +73,10 @@ $('.bloque').smoove({offset:'10%'});
 									<label for="" class="control-label" style="color:white">Asunto:</label>
 									<select name="asunto" id="" class="form-control">
 										<option value="">-Selecciona una opción-</option>
+										<option value="Comentario">Comentario</option>
+										<option value="Sugerencia">Sugerencia</option>
+										<option value="Duda">Duda</option>
+										<option value="Queja">Queja</option>
 									</select>
 								</div>
 								<div class="col-lg-6 col-xs-12">
@@ -221,8 +225,9 @@ $('.bloque').smoove({offset:'10%'});
 						endforeach;
 					endif;
 					?>
-					<h3 align="center" id="verMas"><a href="" class="white">Ver más...</a></h3>
-					<h3 align="center" id="verMas1"><a href="" class="white">Ver más...</a></h3>
+					<h3 align="center" id="verMas"><a class="white">Ver más...</a></h3>
+					<h3 align="center" id="verMas1"><a  class="white">Ver más...</a></h3>
+					<h3 align="center" id="ocultar"><a class="white">Ocultar...</a></h3>
                       </div>
                     </div>
                   </div>
@@ -239,6 +244,7 @@ $('.bloque').smoove({offset:'10%'});
  <script>
  	$(document).ready(function(){
  		$('#verMas1').hide();
+ 		$('#ocultar').hide();
 
         $('#verMas').on('click',function(e){
             $('#more').toggle('slow');
@@ -251,6 +257,14 @@ $('.bloque').smoove({offset:'10%'});
             $('#more1').toggle('slow');
             e.preventDefault();
             $('#verMas1').hide();
+            $('#ocultar').show();
         });
+        $('#ocultar').on('click',function(){
+        	$('#more').hide();
+        	$('#more1').hide();
+        	$('#ocultar').hide();
+        	$('#verMas').show();
+        });
+
     }); 	
  </script>

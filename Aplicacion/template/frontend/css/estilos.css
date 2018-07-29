@@ -121,14 +121,13 @@ box-shadow: 13px 12px 13px 0px rgba(152,191,136,0.75);
 	width: 80%;
 	margin-top: 10px;
 	margin-bottom: 10px;
-	border: dashed #38761d;
+	background-color: white;
 	color: green;
 }
 
 .greenButton:hover{
 	background-color:#38761d;
 	color:white;
-	border: dashed #ffffff;
 }
 
 .greenButton2{
@@ -148,14 +147,12 @@ box-shadow: 13px 12px 13px 0px rgba(152,191,136,0.75);
 	width: 80%;
 	margin-top: 10px;
 	margin-bottom: 10px;
-	border: dashed; #38761d;
 	color: green;
 }
 
 .blueButton:hover{
 	background-color:#004e87;
 	color:white;
-	border: dashed #ffffff;
 }
 
 

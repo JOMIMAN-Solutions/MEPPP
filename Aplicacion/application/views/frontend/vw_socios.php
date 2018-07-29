@@ -27,21 +27,6 @@ $('.bloque').smoove({offset:'10%'});
       <h1 class="white" style="font-size: 45px" align="center">Conoce a nuestros socios <span class="glyphicon glyphicon-user"></span></h1>
     </div>
  </div>
- <div class="row bloque" data-move-x="-150%" style="margin-bottom: 20px">
-      <div class="col-lg-12 col-xs-12 col-sm-12 divContenidoR">
-        <section class="module pb-0 bg-dark-10 pt-0 pb-0 parallax-bg" data-background="<?=base_url();?>template/frontend/images/parallax8.png">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-12">
-                <h1 class="font-serif" align="center" >Para nosotros, tu opinion es muy importante.</h1>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
-
-
 <div class="row bloque" data-move-x="-150%" style="margin-bottom: 20px">
       <div class="col-lg-12 col-xs-12 col-sm-12 divContenidoR">
         <section class="module pb-0 bg-dark-10 pt-0 pb-0 parallax-bg" data-background="<?=base_url();?>template/frontend/images/parallax7.png">

@@ -15,7 +15,25 @@
 <script>
       $(document).ready(function(){
 $('.bloque').smoove({offset:'10%'}); 
+
+
 });
+
+
+
+</script>
+
+<script>
+  window.onload=function(){
+    var pos=window.name || 0;
+    window.scrollTo(0,pos);
+    pos=0;
+    window.name=0;
+  }
+
+  function guardarScroll(){
+      window.name=self.pageYOffset || (document.documentElement.scrollTop+document.body.scrollTop);
+  }
 
 </script>
 
@@ -45,9 +63,16 @@ $('.bloque').smoove({offset:'10%'});
     </div>
 
 
-  <div class="row bloque"  style="margin-top: 0px" data-move-x="150%">
+  <div class="row bloque"  style="margin-top: 0px" data-move-x="150%" id="arboles">
     <div class="col-lg-1 col-xs-12"></div>
     <div class="col-lg-10 col-xs-12 divArboles">
+      <div class="row">
+        <div class="col-lg-5"></div>
+        <div class="col-lg-2">
+          <a class=" btn btn-circle greenButton2 center-block" id="exampleCesta">Mi cesta: <?=count($canasta = $this->cart->contents())?><span class="glyphicon glyphicon-leaf"></span></a>
+        </div>
+        <div class="col-lg-5"></div>
+      </div>
       <?php
       /**
       * Condición que valida si existe la variable $arboles y esta no esta vacia.
@@ -79,7 +104,8 @@ $('.bloque').smoove({offset:'10%'});
             $btn = array(
               'type' => 'submit',
               'content' => 'Adoptar <span class="fa fa-fw">&#xf004;</span>',
-              'class' => 'btn  btn-circle center-block greenButton2'
+              'class' => 'btn  btn-circle center-block greenButton2',
+              'onclick' => 'guardarScroll()'
             );
             echo form_button($btn);
             echo form_close();
@@ -90,7 +116,7 @@ $('.bloque').smoove({offset:'10%'});
         endforeach;
       else:
       ?>
-        <p>No tenemos árboles por ahora, pero estamo trabajando en ello.</p>
+        <p style="color: white">No tenemos árboles por ahora, pero estamo trabajando en ello.</p>
       <?php endif; ?>
     </div>
 
@@ -108,7 +134,7 @@ if($this->pagination->create_links()):
 ?>
   <div class="row bloque" data-rotate-x="90deg" data-move-z="-500px" data-move-y="200px" >
     <div class="col-lg-1 col-xs-12"></div>
-    <div class="col-lg-10 col-xs-12" id="paginacion"><?= $this->pagination->create_links(); ?></div>
+    <div class="col-lg-10 col-xs-12" id="paginacion" onclick="guardarScroll()"><?= $this->pagination->create_links(); ?></div>
     <div class="col-lg-1 col-xs-12"></div>
   </div>
 <?php endif; ?>
@@ -127,7 +153,7 @@ if (isset($arboles) && $arboles != 0):
   foreach($arboles as $ar): ?>
 
     <div id="<?php echo 'modal'.$i; ?>" style="display: none" class="modal-example-content">
-        <div class="modal-content" style="border: 5px dashed #38761d;">
+        <div class="modal-content">
           <div class="modal-header" style="background-color: #38761d;">
             <button type="button" class="close" onClick="Custombox.modal.close();">&times;</button>
             <h2 class="modal-title white font-serif" align="center"><?=$ar->nombreComun?></h2>
@@ -172,7 +198,8 @@ if (isset($arboles) && $arboles != 0):
             $btn = array(
               'type' => 'submit',
               'content' => 'Adoptar <span class="fa fa-fw">&#xf004;</span>',
-              'class' => 'btn btn-default btn-circle center-block blueButton'
+              'class' => 'btn btn-default btn-circle center-block blueButton',
+              'onclick' => 'guardarScroll()'
             );
             echo form_button($btn);
             echo form_close();
@@ -217,4 +244,100 @@ if (isset($arboles) && $arboles != 0):
   endforeach;
 endif;
 ?>
+
+
+     var modalCesta = new Custombox.modal({
+      content: {
+        effect: 'fadein',
+        target: '#modalCesta',
+        width: '70%',
+      }
+    });
+
+    $(function() {
+        $('#exampleCesta').on('click', function () {
+          modalCesta.open();
+        });
+    });  
+
+
+
+
+
 </script>
+
+
+
+
+
+    <div id="modalCesta" style="display: none" class="modal-example-content">
+        <div class="modal-content" style="border: 5px dashed #38761d;">
+          <div class="modal-header" style="background-color: #38761d;">
+            <button type="button" class="close" onClick="Custombox.modal.close();">&times;</button>
+            <h2 class="modal-title white font-serif" align="center">Mi cesta <span class="glyphicon glyphicon-leaf"></span></h2>
+          </div>
+          <div class="modal-body" style="background-color: #6aa84f;">
+          <div class="row">
+            <div class="col-lg-12 col-xs-12">
+                <div class="row">
+                  <div class="col-lg-12 col-xs-12">
+                    <a href="<?=base_url().'Arbol/vaciarCanasta';?>" class="btn btn-circle center-block greenButton2">Vaciar cesta <span class="glyphicon glyphicon-trash"></span></a>
+                    <?php
+                    /**
+                    * Si el carrito contiene árboles los mostramos
+                    */
+                    if ($canasta = $this->cart->contents()): ?>
+                      <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tr style="background-color: white">
+                              <th><h5 align="center" style="margin-top: 0px;margin-bottom: 0px"><strong>Imagen</strong></h5></th>
+                              <th><h5 align="center" style="margin-top: 0px;margin-bottom: 0px"><strong>Nombre</strong></h5></th>
+                              <th><h5 align="center" style="margin-top: 0px;margin-bottom: 0px"><strong>Cantidad</strong></h5></th>
+                              <th style="background-color: red"><h5 align="center" style="color:white;margin-top: 0px;margin-bottom: 0px"><strong>Eliminar</strong></h5></th>
+                            </tr>
+
+                          <?php 
+                          /**
+                          * Bucle que recorre el arreglo $canasta (carrito)
+                          * El bucle asigna a la variable $arbol el valor del elemento actual que está reccoriendo en ese momento, en la siguiente iteración devolverá el siguiente valor.
+                          */
+                          foreach ($canasta as $arbol): 
+                          ?>
+                            <tr class="white">
+                              <td>
+                                <img src="<?=base_url().'images/arboles/'.$arbol['image'];?>" class="center-block" style="border-radius: 45% / 20%;width: 70px">
+                              </td>
+                              <td><h4 align="center"><?= $arbol['name']; ?></h4></td>
+                              <td><h4 align="center"><?= $arbol['qty']; ?></h4></td>
+                              <td>
+                                <a href="<?=base_url().'Arbol/deleteTree/'.$arbol['rowid'];?>" onclick="guardarScroll()"><h4 align="center"><span class="fa fa-trash"></span></h4>
+                                </a>
+                              </td>
+                            </tr>
+                          <?php endforeach; ?>
+                        </table>
+
+                        <a href="#" class="btn btn-circle center-block greenButton2">Adoptar <span class="glyphicon glyphicon-heart"></span></a>
+                      </div>
+
+                    <?php else: ?>
+                      <div class="row" class="white">
+                        <p class="whiteD">No has agregado árboles a tu canasta.</p>
+                      </div>
+                      <div class="row" align="center">
+                        <div class="col-xs-4"></div>
+                        <div class="col-xs-4">
+                          <p class="whiteD">Agrega algunos</p>
+                          <a href="<?=base_url().'Arbol';?>" class="btn btn-circle center-block greenButton2">Ir al Invernadero</a>
+                        </div>
+                        <div class="col-xs-4"></div>
+                      </div>
+                    <?php endif; ?>
+                  </div>
+                <!--</div>-->
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
+    </div>

@@ -137,7 +137,7 @@ class Arbol extends CI_Controller
         
         //$this->session->set_flashdata('productoEliminado', 'El producto fue eliminado correctamente');
         if ($this->cart->contents()) {
-            redirect(base_url().'Arbol/misAdopciones', 'refresh');
+            redirect(base_url().'Arbol/', 'refresh');
         } else {
             redirect(base_url().'Arbol', 'refresh');
         }
@@ -163,30 +163,6 @@ class Arbol extends CI_Controller
         //$this->session->set_flashdata('destruido', 'El carrito fue eliminado correctamente');
         redirect(base_url().'Arbol', 'refresh');
     }
-
-    /**
-    * Método que carga los arboles que has agregado a tu "carrito"
-    * Descripción larga del fichero (opcional, líneas que necesarias)
-    *
-    * @access public
-    * @param Ninguno
-    * @return void
-    *
-    * @since Método disponible desde la versión 1.0
-    * @deprecated Método obsoleto en la versión 2.0
-    * @todo [información]
-    */
-    public function misAdopciones()
-    {
-        $data['title']="MEPPP | Mis Adopciones";
-        $data['page']="Mis Adopciones";
-        $data['seccion']="9";
-        $data['imagen']='invernaderoSeccion';
-
-        $this->cargarVistaFront('vw_misAdopciones',$data);
-    } 
-
-
 
 /* ------------------------------------------------------------------------------------- */
 

@@ -85,7 +85,7 @@ $('.bloque').smoove({offset:'10%'});
       <div class="row divContenidoR shadowL" style="padding-top: 10px">
         <div class="col-lg-12 col-xs-12" align="center">
           <a class="btn btn-primary btn-circle" onclick="mostrar()" id="btnCalendario">Ver proximos eventos<span class="glyphicon glyphicon-calendar"></span></a><br>
-          <a href="<?=base_url().'Campania';?>" class="btn btn-default btn-circle greenButton" style="font-size: 20px;">Ver campañas <span class="fa fa-fw">&#xf06c;</span></a>
+          <a href="<?=base_url().'Campania';?>" class="btn btn-circle greenButton" style="font-size: 20px;">Ver campañas <span class="fa fa-fw">&#xf06c;</span></a>
         </div>
       </div>
   </div>
@@ -110,7 +110,7 @@ $('.bloque').smoove({offset:'10%'});
         </section>
       </div>
     </div>
-    <div class="row" >
+    <div class="row" id="hola">
       <div class="col-lg-12 col-xs-12 col-sm-12 divContenidoL shadowR">
         <div class="row" style="margin-left: 10px;margin-right: 10px;">
         
@@ -169,7 +169,7 @@ $('.bloque').smoove({offset:'10%'});
                     <div class="item <?php if($i==0){echo 'active';} ?>">
                   <?php endif; ?>
                   <div class="col-lg-4 col-md-4 col-xs-12 col-sm-4">
-                    <img src="<?=base_url().'images/arboles/'.$arbolT->imagenArbol;?>" class="img-responsive" style="border-radius: 45% / 20%">
+                    <a class="contenedor-img ejemplo-1"><img src="<?=base_url().'images/arboles/'.$arbolT->imagenArbol;?>" class="img-responsive" style="border-radius: 45% / 20%"></a>
                     <div style="background-color: #38761d;" class="redondeadoTitle">
                       <h4 align="center" class="font-serif" style="color:white;border-top: 5px solid #b9a11f;"><?=$arbolT->nombreComun;?><span class="glyphicon glyphicon-tree-deciduous"></span></h4>
                     </div>
@@ -220,7 +220,7 @@ $('.bloque').smoove({offset:'10%'});
     </div>
     
       <div class="row">
-          <a href="<?=base_url().'Arbol';?>" class="btn btn-default btn-circle greenButton center-block" style="font-size: 20px">Ver invernadero <span class="fa fa-fw">&#xf1bb;</span></a>
+          <a href="<?=base_url().'Arbol';?>" class="btn btn-circle greenButton center-block" style="font-size: 20px">Ver invernadero <span class="fa fa-fw">&#xf1bb;</span></a>
       </div>
     </div>
   
@@ -341,7 +341,7 @@ $('.bloque').smoove({offset:'10%'});
 
       <div class="row" style="background-color:#6aa84f">
         <div class="col-lg-12 col-lg-12">
-          <a href="<?=base_url().'Frontend/login#services';?>" class="btn btn-default btn-circle center-block greenButton" style="font-size: 20px">Únete Ahora <span class="fa fa-fw">&#xf061;</span></a>
+          <a href="<?=base_url().'Frontend/login#services';?>" class="btn btn-circle center-block greenButton" style="font-size: 20px">Únete Ahora <span class="fa fa-fw">&#xf061;</span></a>
         </div>
       </div>
     </div>
@@ -350,9 +350,9 @@ $('.bloque').smoove({offset:'10%'});
 
 
 
-<div id="modal" style="display: none" class="modal-example-content">
-    <div class="modal-content" style="border: 5px dashed #137499;">
-      <div class="modal-header" style="background-color: #137499;">
+<div id="modal" style="display: none;" class="modal-example-content">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #38761d;">
         <button type="button" class="close" onClick="Custombox.modal.close();">&times;</button>
         <h2 class="modal-title white" align="center" id="titleModal"></h2>
       </div>
@@ -389,7 +389,7 @@ $('.bloque').smoove({offset:'10%'});
         </div>
       </div>
       </div>
-      <div class="modal-footer" style="background-color: #137499">
+      <div class="modal-footer" style="background-color:#38761d">
       
       </div>
     </div>
