@@ -8,7 +8,7 @@
 *
 * @version 1.0.0
 * Creado el 26/07/2018 a las 08:33 pm
-* Ultima modificacion el 26/07/2018 a las 08:34 pm
+* Ultima modificacion el 29/07/2018 a las 01:38 pm
 */
 ?>
 
@@ -29,6 +29,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><span class="text-themecolor">cPanel</span></li>
                     <li class="breadcrumb-item active">Campañas</li>
+                    <li class="breadcrumb-item active"><?=$seccion;?></li>
                 </ol>
             </div>
         </div>
@@ -43,15 +44,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-block">
-                        <h4 class="card-title">Title</h4>
-                        <h6 class="card-subtitle">Subtitle</h6>
-
-                        <section class="m-t-40">
-                            <h4 class="card-title">Title</h4>
-                        </section>
-                        <section class="m-t-40">
-                            <h4 class="card-title">Title</h4>
-                        </section>
+                        <?=$output;?>
                     </div>
                 </div>
             </div>

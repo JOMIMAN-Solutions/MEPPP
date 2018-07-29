@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *
 * @version 1.0
 * Creado el 15/06/2018 a las 05:09 pm
-* Ultima modificacion el 28/07/2018 a las 09:17 pm
+* Ultima modificacion el 29/07/2018 a las 05:40 pm
 *
 * @since Clase disponible desde la versión 1.0
 * @deprecated Clase obsoleta en la versión 2.0
@@ -82,7 +82,7 @@ class Faq extends CI_Controller
 
         /* Establecer relaciones entra tablas */
         // set_relation(campo_tabla_actual, tabla_a_relacionar, campo_tabla_relacionada)
-        if ($this->uri->segment(3) == '' || $this->uri->segment(3) == 'read') {
+        if ($this->uri->segment(3) == '' || $this->uri->segment(3) == 'read' || $this->uri->segment(3) == 'success') {
             $crud->set_relation('Administradores_idAdministrador','usuarios','{nombreusuario} {apePat} {apeMat}');
             $crud->set_relation('SeccionesFaq_idSeccionFaq','secciones_faq','nombreSeccion');
         } else if ($this->uri->segment(3) == 'add') {
@@ -125,14 +125,13 @@ class Faq extends CI_Controller
         }
         
         /* Habilitar un input como campos para subir archivos */
-        // set_field_upload(campo, ruta_archivos);
-        //$crud->set_field_upload('idFaq','assets/uploads/files');
+        // $crud->set_field_upload(campo, ruta_archivos);
 
         /* Establecer los campos que son requeridos en los formularios */
         $crud->required_fields('pregunta', 'respuesta', 'Administradores_idAdministrador', 'SeccionesFaq_idSeccionFaq');
 
         /* Establecer las reglas de los formularios */
-        //$crud->set_rules('idFaq', 'Id Faq', 'required');
+        // $crud->set_rules(campo, label, rule);
 
         /* Deshabilitar funciones */
         //$crud->unset_add();
@@ -143,10 +142,15 @@ class Faq extends CI_Controller
         //$crud->unset_export();
         //$crud->unset_operations();
         //$crud->unset_back_to_list();
+        //$crud->unset_texteditor(campo, 'full_text');
         $crud->unset_texteditor('respuesta', 'full_text');
 
         /* Condiciones para los datos a listar */
         // $crud->where(campo, valor_condicion);
+
+        /* Ordenamiento de los datos a listar */
+        // $crud->order_by(campo, direccion);
+        $crud->order_by('SeccionesFaq_idSeccionFaq', 'DESC');
 
         /* Renderizar la tabla */
         $output = $crud->render();
@@ -163,7 +167,7 @@ class Faq extends CI_Controller
         $output->activeUsuario = "";
         $output->activeQuienesSomos = "";
         // Seccion titulos
-        if ($this->uri->segment(3) == '') {
+        if ($this->uri->segment(3) == '' || $this->uri->segment(3) == 'success') {
             $output->seccion = "Lista";
         } else if ($this->uri->segment(3) == 'read') {
             $output->seccion = "Viendo";

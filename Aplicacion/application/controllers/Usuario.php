@@ -17,11 +17,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *
 * @version 1.0.0
 * Creado el 14/06/2018 a las 10:28 pm
-* Ultima modificacion el 26/07/2018 a las 08:49 pm
+* Ultima modificacion el 29/07/2018 a las 05:46 pm
 *
 * @since Clase disponible desde la versión 1.0.0
 * @deprecated Clase obsoleta en la versión 2.0.0
 * @todo Realizar método para guardar,modificar y eliminar un usuario
+*     - En la vista read deja ver el id (quitarlo) 
 */
 class Usuario extends CI_Controller 
 {
@@ -168,9 +169,131 @@ class Usuario extends CI_Controller
 
     public function cPanel()
     {
-        $this->load->view('template/backend/header');
-        $this->load->view('backend/vw_usuarios');
-        $this->load->view('template/backend/footer');
+        /* Cargar la libreria */
+        $this->load->library('grocery_CRUD');
+
+        /* Instanciar un objeto de grocery crud */
+        $crud = new grocery_CRUD();
+
+        /* Establecer el tema */
+        $crud->set_theme('bootstrap-v4');
+
+        /* Indicar el "objeto" que estaremos manejando */
+        $crud->set_subject('Usuario');
+
+        /* Indicar con que tabla se trabajará */
+        $crud->set_table('usuarios');
+
+        /* Perzonalizar como se muestras los nombres de los campos */
+        $campos = array(
+            'idUsuario' => 'ID',
+            'nombreUsuario' => 'Nombre',
+            'apePat' => 'Apellido paterno',
+            'apeMat' => 'Apellido materno',
+            'correo' => 'Correo'
+        );
+        $crud->display_as($campos);
+
+        /* Establecer relaciones entra tablas */
+        // set_relation(campo_tabla_actual, tabla_a_relacionar, campo_tabla_relacionada)
+        if ($this->uri->segment(3) == '' || $this->uri->segment(3) == 'read' || $this->uri->segment(3) == 'success') {
+            //$crud->set_relation('Administradores_idAdministrador','usuarios','{nombreusuario} {apePat} {apeMat}');
+            //$crud->set_relation('SeccionesFaq_idSeccionFaq','secciones_faq','nombreSeccion');
+        } else if ($this->uri->segment(3) == 'add') {
+            //$crud->set_relation('SeccionesFaq_idSeccionFaq','secciones_faq','nombreSeccion');
+        } else if ($this->uri->segment(3) == 'edit') {
+            //$crud->set_relation('SeccionesFaq_idSeccionFaq','secciones_faq','nombreSeccion');
+        }
+
+        /* Establecer los campos que queremos ver en la lista */
+        // Todas
+        //$crud->columns('idUsuario','nombreUsuario', 'apePat', 'apeMat', 'correo');
+        // Perzonalizado
+        $crud->columns('nombreUsuario', 'apePat', 'apeMat', 'correo');
+        // Deshabilitando las que no se quieren
+        //$crud->unset_columns('idUsuario');
+
+        /* Establecer los campos que queremos ver en los formularios */
+        // Todos
+        //$crud->fields('idUsuario','nombreUsuario', 'apePat', 'apeMat', 'correo');
+        // Perzonalizado
+        //$crud->fields('nombreUsuario', 'apePat', 'apeMat', 'correo');
+        // Para el formulario add
+        //$crud->add_fields('nombreUsuario', 'apePat', 'apeMat', 'correo');
+        $crud->unset_add_fields('idUsuario');
+        // Para el formulario edit
+        //$crud->edit_fields('nombreUsuario', 'apePat', 'apeMat', 'correo');
+        $crud->unset_edit_fields('idUsuario');
+
+        /* Cambiar el atributo type a un campo */
+        // The field type is a string and can take the following options:
+            // hidden      // set          // text       // enum         
+            // invisible   // integer      // date       // string      
+            // password    // true_false   // datetime   //readonly                           
+        // $crud->field_type(campo, type, value);
+        // Seccion titulos
+        if ($this->uri->segment(3) == 'add') {
+            //$crud->field_type('Administradores_idAdministrador', 'hidden', 1);
+        } else if ($this->uri->segment(3) == 'edit') {
+            
+        }
+        
+        /* Habilitar un input como campos para subir archivos */
+        // $crud->set_field_upload(campo, ruta_archivos);
+
+        /* Establecer los campos que son requeridos en los formularios */
+        $crud->required_fields('nombreUsuario', 'apePat', 'apeMat', 'correo');
+
+        /* Establecer las reglas de los formularios */
+        // $crud->set_rules(campo, label, rule);
+
+        /* Deshabilitar funciones */
+        //$crud->unset_add();
+        //$crud->unset_edit();
+        //$crud->unset_read();
+        //$crud->unset_delete();
+        //$crud->unset_print();
+        //$crud->unset_export();
+        //$crud->unset_operations();
+        //$crud->unset_back_to_list();
+        //$crud->unset_texteditor(campo, 'full_text');
+
+        /* Condiciones para los datos a listar */
+        // $crud->where(campo, valor_condicion);
+
+        /* Ordenamiento de los datos a listar */
+        // $crud->order_by(campo, direccion);
+        $crud->order_by('nombreUsuario', 'ASC');
+
+        /* Renderizar la tabla */
+        $output = $crud->render();
+
+        /* Variables para perzonalizar las paginas */
+        // Titulo
+        $output->title = "cPanel | Usuarios";
+        // Clases para el menu lateral
+        $output->activeAdopcion = "";
+        $output->activeArbol = "";
+        $output->activeCampania = "";
+        $output->activeComentario = "";
+        $output->activeFaq = "";
+        $output->activeUsuario = "active";
+        $output->activeQuienesSomos = "";
+        // Seccion titulos
+        if ($this->uri->segment(3) == '' || $this->uri->segment(3) == 'success') {
+            $output->seccion = "Lista";
+        } else if ($this->uri->segment(3) == 'read') {
+            $output->seccion = "Viendo";
+        } else if ($this->uri->segment(3) == 'add') {
+            $output->seccion = "Agregando";
+        } else if ($this->uri->segment(3) == 'edit') {
+            $output->seccion = "Modificando";
+        }
+
+        /* Cargar las vistas */
+        $this->load->view('template/backend/header',(array)$output);
+        $this->load->view('backend/vw_usuarios.php',(array)$output);
+        $this->load->view('template/backend/footer',(array)$output);
     }
 
 
