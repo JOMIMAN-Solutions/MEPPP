@@ -103,7 +103,7 @@
                 <div class="only-mobiles">
                     <?php if ($buttons_counter > 0) { ?>
                     <div class="btn-group dropdown">
-                        <button type="button" class="btn btn-secondary gc-bootstrap-dropdown dropdown-toggle">
+                        <button type="button" class="btn btn-default btn-outline-dark gc-bootstrap-dropdown dropdown-toggle">
                             <?php echo $this->l('list_actions'); ?>
                             <span class="caret"></span>
                         </button>

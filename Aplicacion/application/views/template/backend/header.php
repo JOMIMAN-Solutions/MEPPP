@@ -9,7 +9,7 @@
 *
 * @version 1.0.0
 * Creado el 26/07/2018 a las 05:30 pm
-* Ultima modificacion el 27/07/2018 a las 08:10 pm
+* Ultima modificacion el 28/07/2018 a las 07:55 pm
 */
 ?>
 
@@ -24,7 +24,7 @@
 
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="<?=base_url().'template/backend/assets/images/favicon.png';?>">
-    <title>Monster Admin Template</title>
+    <title><?=$title;?></title>
     <!-- Bootstrap Core CSS -->
     <link href="<?=base_url().'template/backend/assets/plugins/bootstrap/css/bootstrap.min.css';?>" rel="stylesheet">
     <!-- Custom CSS -->
@@ -48,7 +48,6 @@
             <link rel="stylesheet" href="<?=$file;?>">
         <?php endif; ?>
     <?php endforeach; ?>
-    
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">

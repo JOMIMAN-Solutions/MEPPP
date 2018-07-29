@@ -31,7 +31,7 @@ include(__DIR__ . '/common_javascript_vars.php');
                     <div class="clear"></div>
                 </div>
                 <div class="form-container table-container">
-                    <?php echo form_open( $insert_url, 'method="post" id="crudForm"  enctype="multipart/form-data""'); ?>
+                    <?php echo form_open( $insert_url, 'method="post" id="crudForm"  enctype="multipart/form-data"'); ?>
 
                     <?php foreach($fields as $field) { ?>
                         <div class="form-group <?php echo $field->field_name; ?>_form_group row">

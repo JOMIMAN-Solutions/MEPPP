@@ -8,7 +8,7 @@
 *
 * @version 1.0.0
 * Creado el 26/07/2018 a las 05:30 pm
-* Ultima modificacion el 27/07/2018 a las 02:25 pm
+* Ultima modificacion el 28/07/2018 a las 07:56 pm
 */
 ?>
 
@@ -25,7 +25,14 @@
     <script src="<?=$file;?>"></script>
     <?php endforeach; ?>
 
-    <script src="<?=base_url().'template/backend/assets/plugins/jquery/jquery.min.js';?>"></script>
+    <!-- Script para ocultar el preloader -->
+    <script type="text/javascript">
+        $(window).load(function() {
+            $(".preloader").fadeOut("slow");
+        });
+    </script>
+
+    <!--<script src="<?php //=base_url().'template/backend/assets/plugins/jquery/jquery.min.js';?>"></script>-->
     <!-- Bootstrap tether Core JavaScript -->
     <script src="<?=base_url().'template/backend/assets/plugins/bootstrap/js/tether.min.js';?>"></script>
     <script src="<?=base_url().'template/backend/assets/plugins/bootstrap/js/bootstrap.min.js';?>"></script>

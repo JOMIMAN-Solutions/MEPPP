@@ -72,6 +72,11 @@
   width: 180px;
   background: white;
 }
+
+.gc-container .search-button-big i {
+  color: black;
+}
+
 .gc-container .search-button-big:hover, .gc-container .search-button-big:focus, .gc-container .search-button-big:active {
   background: white !important;
 }
