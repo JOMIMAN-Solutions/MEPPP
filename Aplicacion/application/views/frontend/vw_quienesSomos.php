@@ -30,7 +30,7 @@ $('.bloque').smoove({offset:'10%'});
   <div class="row bloque" data-move-x="150%">
     <div class="col-lg-1 col-xs-12 col-sm-1"></div>
     <div class="col-lg-11 col-xs-12 col-sm-10 divRedondoR borderTopBrown shadowL">
-      <h1 class="white" align="center" style="font-size: 45px;">Misión</h1>
+      <h1 class="white font-serif" align="center" style="font-size: 45px;">Misión</h1>
     </div>
   </div>
   <div class="row bloque" data-move-x="150%">
@@ -38,7 +38,7 @@ $('.bloque').smoove({offset:'10%'});
     <div class="col-lg-11 col-xs-12 col-sm-10 divContenidoR shadowL">
 		<div class="row">
 			<div class="col-lg-3">
-				<img src="<?=base_url()?>template/frontend/images/cuida.jpg" width="70%" style="margin-top: 10px;margin-bottom: 10px" class="center-block">
+				<img src="<?=base_url()?>template/frontend/images/mision.png" width="70%" style="margin-top: 10px;margin-bottom: 10px;border-radius: 45% / 20%" class="center-block">
 			</div>
 			<div class="col-lg-9">
 				<h1 class="white" align="center" style="margin-left: 10px;margin-right: 10px">Movimiento Ecologista Preocupados por el Planeta tiene como misión concientizar a la ciudadanía sobre el medio ambiente y su deterioro, así como motivarlos a la plantación de árboles, buscando innovación, respeto  y amor por el planeta.</h1>
@@ -51,7 +51,7 @@ $('.bloque').smoove({offset:'10%'});
   <div class="row bloque" data-move-x="-150%">
     
     <div class="col-lg-11 col-xs-12 col-sm-10 divRedondoL borderTopBrown shadowL">
-      <h1 class="white" align="center" style="font-size: 45px;">Visión</h1>
+      <h1 class="white font-serif" align="center" style="font-size: 45px;">Visión</h1>
     </div>
     <div class="col-lg-1 col-xs-12 col-sm-1"></div>
   </div>
@@ -62,7 +62,7 @@ $('.bloque').smoove({offset:'10%'});
 				<h1 class="white" align="center" style="margin-left: 10px;margin-right: 10px">Lograr ser reconocidos como una asociación que mejora el medio ambiente a través de la donación de árboles a los miembros de la sociedad logrando así una reserva ecológica sustentable. </h1>
 			</div>
 			<div class="col-lg-3">
-				<img src="<?=base_url()?>template/frontend/images/cuida.jpg" width="70%" style="margin-top: 10px;margin-bottom: 10px" class="center-block">
+				<img src="<?=base_url()?>template/frontend/images/vision.png" width="70%" style="margin-top: 10px;margin-bottom: 10px;border-radius: 45% / 20%" class="center-block">
 			</div>
 		</div>
     </div>
@@ -73,7 +73,7 @@ $('.bloque').smoove({offset:'10%'});
   <div class="row bloque" data-move-x="150%">
     <div class="col-lg-1 col-xs-12 col-sm-1"></div>
     <div class="col-lg-11 col-xs-12 col-sm-10 divRedondoR borderTopBrown shadowL">
-      <h1 class="white" align="center" style="font-size: 45px;">Valores</h1>
+      <h1 class="white font-serif" align="center" style="font-size: 45px;">Valores</h1>
     </div>
   </div>
   <div class="row bloque" data-move-x="150%">
@@ -81,7 +81,7 @@ $('.bloque').smoove({offset:'10%'});
     <div class="col-lg-11 col-xs-12 col-sm-10 divContenidoR shadowL">
 		<div class="row">
 			<div class="col-lg-3">
-				<img src="<?=base_url()?>template/frontend/images/cuida.jpg" width="70%" style="margin-top: 10px;margin-bottom: 10px" class="center-block">
+				<img src="<?=base_url()?>template/frontend/images/valores.png" width="70%" style="margin-top: 10px;margin-bottom: 10px;border-radius: 45% / 20%" class="center-block">
 			</div>
 			<div class="col-lg-9">
 				<div role="tabpanel" style="margin-top: 10px">
@@ -94,9 +94,9 @@ $('.bloque').smoove({offset:'10%'});
                   <div class="tab-content">
 
                     <div class="tab-pane active" id="amor">
-						<div style="margin-top: 10px">
+						          <div style="margin-top: 10px">
                   			<h3 class="white" style="margin-right: 10px" align="center">Consideramos que el amor puede mover cualquier cosa es por eso  que cada uno de nuestros miembros ama a la naturaleza y su entorno.</h3>
-           				</div>
+           				     </div>
                     </div>
 
                     <div class="tab-pane" id="confianza">

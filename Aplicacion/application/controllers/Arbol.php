@@ -64,7 +64,12 @@ class Arbol extends CI_Controller
 
         //$data['arboles'] = $this->Mdl_Arbol->getAllInvernadero();
         $data["arboles"] = $this->Mdl_Arbol->getTreesPaged($config['per_page'], $this->uri->segment(3));
-
+        if ($this->session->flashdata('item')) {
+           
+        }else{
+           $this->session->set_flashdata('item', 3);
+        }
+    
         $this->cargarVistaFront('vw_invernadero',$data);
     }
 
@@ -106,7 +111,7 @@ class Arbol extends CI_Controller
         
         /* Redirigimos mostrando un mensaje con las sesiones flashdata
            confirmando que hemos agregado el árbol */
-        //$this->session->set_flashdata('agregado', 'El árbol fue agregado correctamente');
+        $this->session->set_flashdata('item',4);
         redirect(base_url().'Arbol/page/'.$uri, 'refresh');
     }
     
@@ -136,6 +141,7 @@ class Arbol extends CI_Controller
         $this->cart->update($arbol);
         
         //$this->session->set_flashdata('productoEliminado', 'El producto fue eliminado correctamente');
+        $this->session->set_flashdata('item',1);
         if ($this->cart->contents()) {
             redirect(base_url().'Arbol/', 'refresh');
         } else {
@@ -161,6 +167,7 @@ class Arbol extends CI_Controller
     public function vaciarCanasta() {
         $this->cart->destroy();
         //$this->session->set_flashdata('destruido', 'El carrito fue eliminado correctamente');
+        $this->session->set_flashdata('item',5);
         redirect(base_url().'Arbol', 'refresh');
     }
 

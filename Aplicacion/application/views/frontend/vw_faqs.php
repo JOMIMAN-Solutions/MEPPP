@@ -80,7 +80,7 @@ $('.bloque').smoove({offset:'10%'});
                       */
                        if($faq->SeccionesFaq_idSeccionFaq == $sec->idSeccionFaq): ?>           
                           <div class="panel-heading" style="border: dashed #38761d;background-color:  #38761d">
-                              <h4 class="panel-title font-alt white"><a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#<?=$j?>"><?=$faq->pregunta?></a></h4>
+                              <h4 class="white font-serif"><a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#<?=$j?>"><?=$faq->pregunta?></a></h4>
                           </div>
                             <div class="panel-collapse collapse " id="<?=$j?>">
                               <div class="panel-body" >

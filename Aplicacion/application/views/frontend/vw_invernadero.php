@@ -8,35 +8,35 @@
 *
 * @version 1.0.1
 * Creado el 13/06/2018 a las 01:10 am
-* Ultima modificacion el 28/07/2018 a las 12:03 am
+* Ultima modificacion el 29/07/2018 a las 11:35 pm
 */
 ?>
 
 <script>
-      $(document).ready(function(){
-$('.bloque').smoove({offset:'10%'}); 
+  $(document).ready(function(){
+    $('.bloque').smoove({offset:'10%'}); 
+
 
 
 });
 
-
-
 </script>
 
 <script>
-  window.onload=function(){
+ window.onload=function(){
     var pos=window.name || 0;
     window.scrollTo(0,pos);
+    
     pos=0;
     window.name=0;
+
+    if (<?=$this->session->flashdata('item')?> ==4 || <?=$this->session->flashdata('item')?> ==1 || <?=$this->session->flashdata('item')?> == 5) {
+      modalAgregada.open();
+    }
   }
 
-  function guardarScroll(){
-      window.name=self.pageYOffset || (document.documentElement.scrollTop+document.body.scrollTop);
-  }
 
 </script>
-
 <div class="main" style="background-color: #b6d7a8">
   <div style="height:10px;background-color:#b9a11f;margin-bottom: 40px" class="shadowBrownLine"></div>
 
@@ -45,7 +45,6 @@ $('.bloque').smoove({offset:'10%'});
       <h1 class="white" style="font-size: 45px" align="center">Arboles disponibles<span class="glyphicon glyphicon-tree-deciduous"></span></h1>
     </div>
   </div>
-
   <div class="row bloque" data-move-x="-150%" style="margin-bottom: 20px">
       <div class="col-lg-12 col-xs-12 col-sm-12 divContenidoR">
         <section class="module pb-0 bg-dark-10 pt-0 pb-0 parallax-bg" data-background="<?=base_url();?>template/frontend/images/parallax5.png">
@@ -61,7 +60,6 @@ $('.bloque').smoove({offset:'10%'});
         </section>
       </div>
     </div>
-
 
   <div class="row bloque"  style="margin-top: 0px" data-move-x="150%" id="arboles">
     <div class="col-lg-1 col-xs-12"></div>
@@ -116,7 +114,7 @@ $('.bloque').smoove({offset:'10%'});
         endforeach;
       else:
       ?>
-        <p style="color: white">No tenemos árboles por ahora, pero estamo trabajando en ello.</p>
+        <h2 style="color: white" align="center">No tenemos árboles por ahora, pero estamos trabajando en ello.</h2>
       <?php endif; ?>
     </div>
 
@@ -245,25 +243,27 @@ if (isset($arboles) && $arboles != 0):
 endif;
 ?>
 
-
-     var modalCesta = new Custombox.modal({
-      content: {
-        effect: 'fadein',
-        target: '#modalCesta',
-        width: '70%',
+  var modalCesta = new Custombox.modal({
+    content: {
+      effect: 'fadein',
+      target: '#modalCesta',
+      width: '70%',
       }
     });
 
     $(function() {
-        $('#exampleCesta').on('click', function () {
-          modalCesta.open();
-        });
+      $('#exampleCesta').on('click', function () {
+        modalCesta.open();
+      });
     });  
 
-
-
-
-
+    var modalAgregada = new Custombox.modal({
+      content:{
+        effect: 'fadein',
+        target: '#modalAgregada',
+        width: '20%',
+      }
+    });
 </script>
 
 
@@ -281,12 +281,12 @@ endif;
             <div class="col-lg-12 col-xs-12">
                 <div class="row">
                   <div class="col-lg-12 col-xs-12">
-                    <a href="<?=base_url().'Arbol/vaciarCanasta';?>" class="btn btn-circle center-block greenButton2">Vaciar cesta <span class="glyphicon glyphicon-trash"></span></a>
                     <?php
                     /**
                     * Si el carrito contiene árboles los mostramos
                     */
                     if ($canasta = $this->cart->contents()): ?>
+                      <a href="<?=base_url().'Arbol/vaciarCanasta';?>" class="btn btn-circle center-block greenButton2" onclick="guardarScroll()">Vaciar cesta <span class="glyphicon glyphicon-trash"></span></a>
                       <div class="table-responsive">
                         <table class="table table-bordered">
                             <tr style="background-color: white">
@@ -322,15 +322,7 @@ endif;
 
                     <?php else: ?>
                       <div class="row" class="white">
-                        <p class="whiteD">No has agregado árboles a tu canasta.</p>
-                      </div>
-                      <div class="row" align="center">
-                        <div class="col-xs-4"></div>
-                        <div class="col-xs-4">
-                          <p class="whiteD">Agrega algunos</p>
-                          <a href="<?=base_url().'Arbol';?>" class="btn btn-circle center-block greenButton2">Ir al Invernadero</a>
-                        </div>
-                        <div class="col-xs-4"></div>
+                        <h1 class="white font-serif" align="center">No has agregado árboles a tu canasta.</h1>
                       </div>
                     <?php endif; ?>
                   </div>
@@ -341,3 +333,44 @@ endif;
           </div>
         </div>
     </div>
+
+
+
+    <div id="modalAgregada" style="display: none" class="modal-example-content">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: #38761d;">
+            <button type="button" class="close" onClick="Custombox.modal.close();">&times;</button>
+            <?php 
+                switch ($this->session->flashdata('item')) {
+                  case 1:
+                      echo '<h3 class="white font-serif" align="center">Arbol eliminado de la cesta correctamente</h3>';
+                    break;
+                  case 4:
+                      echo '<h3 class="white font-serif" align="center">Arbol agregado a la cesta correctamente</h3>';
+                    break;
+                  case 5:
+                      echo '<h3 class="white font-serif" align="center">Se ha vaciado la canasta correctamente</h3>';
+                    break;
+                  
+                  default:
+                    # code...
+                    break;
+                }
+
+
+             ?>
+          </div>
+          <div class="modal-body">
+            <img src="<?=base_url()?>template/frontend/images/correcto.png" alt="" width="50%" class="center-block">
+          </div>
+          <div class="modal-footer" style="background-color: #38761d"></div>
+        </div>
+    </div>
+
+
+    <script>
+         function guardarScroll(){
+          <?php if(!$this->session->flashdata('item')){$this->session->set_flashdata('item',3);} ?>
+            window.name=self.pageYOffset || (document.documentElement.scrollTop+document.body.scrollTop);
+          }
+    </script>
