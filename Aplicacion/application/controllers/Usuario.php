@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *
 * @version 1.0.0
 * Creado el 14/06/2018 a las 10:28 pm
-* Ultima modificacion el 29/07/2018 a las 05:46 pm
+* Ultima modificacion el 01/08/2018 a las 01:46 pm
 *
 * @since Clase disponible desde la versión 1.0.0
 * @deprecated Clase obsoleta en la versión 2.0.0
@@ -187,43 +187,47 @@ class Usuario extends CI_Controller
         /* Perzonalizar como se muestras los nombres de los campos */
         $campos = array(
             'idUsuario' => 'ID',
+            'avatar' => 'Avatar',
             'nombreUsuario' => 'Nombre',
             'apePat' => 'Apellido paterno',
             'apeMat' => 'Apellido materno',
-            'correo' => 'Correo'
+            'correo' => 'Correo',
+            'organizacion' => 'Organización',
+            'usuario' => 'Usuario',
+            'contrasenia' => 'Contraseña',
+            'privilegios' => 'Privilegios',
+            'estatusUsuario' => 'Estatus',
+            'Telefonos_idtelefono' => 'Teléfono',
+            'Direcciones_idDireccion' => 'Dirección',
+            'TiposUsuario_idTipoUsuario' => 'Tipo de usuario'
         );
         $crud->display_as($campos);
 
         /* Establecer relaciones entra tablas */
         // set_relation(campo_tabla_actual, tabla_a_relacionar, campo_tabla_relacionada)
-        if ($this->uri->segment(3) == '' || $this->uri->segment(3) == 'read' || $this->uri->segment(3) == 'success') {
-            //$crud->set_relation('Administradores_idAdministrador','usuarios','{nombreusuario} {apePat} {apeMat}');
-            //$crud->set_relation('SeccionesFaq_idSeccionFaq','secciones_faq','nombreSeccion');
-        } else if ($this->uri->segment(3) == 'add') {
-            //$crud->set_relation('SeccionesFaq_idSeccionFaq','secciones_faq','nombreSeccion');
-        } else if ($this->uri->segment(3) == 'edit') {
-            //$crud->set_relation('SeccionesFaq_idSeccionFaq','secciones_faq','nombreSeccion');
-        }
+        $crud->set_relation('Telefonos_idtelefono','telefonos','{lada}-{telefono}');
+        $crud->set_relation('Direcciones_idDireccion','direcciones','{calle} #{numero}');
+        $crud->set_relation('TiposUsuario_idTipoUsuario','tipos_usuario','tipoUsuario');
 
         /* Establecer los campos que queremos ver en la lista */
         // Todas
-        //$crud->columns('idUsuario','nombreUsuario', 'apePat', 'apeMat', 'correo');
+        //$crud->columns('idUsuario', 'avatar', 'nombreUsuario', 'apePat', 'apeMat', 'correo', 'organizacion', 'usuario', 'contrasenia', 'privilegios', 'estatusUsuario', 'Telefonos_idtelefono', 'Direcciones_idDireccion', 'TiposUsuario_idTipoUsuario');
         // Perzonalizado
-        $crud->columns('nombreUsuario', 'apePat', 'apeMat', 'correo');
+        $crud->columns('avatar', 'nombreUsuario', 'apePat', 'apeMat', 'correo', 'estatusUsuario');
         // Deshabilitando las que no se quieren
         //$crud->unset_columns('idUsuario');
 
         /* Establecer los campos que queremos ver en los formularios */
         // Todos
-        //$crud->fields('idUsuario','nombreUsuario', 'apePat', 'apeMat', 'correo');
+        //$crud->fields('idUsuario', 'avatar', 'nombreUsuario', 'apePat', 'apeMat', 'correo', 'organizacion', 'usuario', 'contrasenia', 'privilegios', 'estatusUsuario', 'Telefonos_idtelefono', 'Direcciones_idDireccion', 'TiposUsuario_idTipoUsuario');
         // Perzonalizado
-        //$crud->fields('nombreUsuario', 'apePat', 'apeMat', 'correo');
+        $crud->fields('avatar', 'nombreUsuario', 'apePat', 'apeMat', 'correo', 'organizacion', 'privilegios', 'estatusUsuario', 'TiposUsuario_idTipoUsuario');
         // Para el formulario add
-        //$crud->add_fields('nombreUsuario', 'apePat', 'apeMat', 'correo');
-        $crud->unset_add_fields('idUsuario');
+        //$crud->add_fields('avatar', 'nombreUsuario', 'apePat', 'apeMat', 'correo', 'organizacion', 'privilegios', 'estatusUsuario', 'Telefonos_idtelefono', 'Direcciones_idDireccion', 'TiposUsuario_idTipoUsuario');
+        //$crud->unset_add_fields('idUsuario');
         // Para el formulario edit
-        //$crud->edit_fields('nombreUsuario', 'apePat', 'apeMat', 'correo');
-        $crud->unset_edit_fields('idUsuario');
+        //$crud->edit_fields('avatar', 'nombreUsuario', 'apePat', 'apeMat', 'correo', 'organizacion', 'privilegios', 'estatusUsuario', 'Telefonos_idtelefono', 'Direcciones_idDireccion', 'TiposUsuario_idTipoUsuario');
+        //$crud->unset_edit_fields('idUsuario');
 
         /* Cambiar el atributo type a un campo */
         // The field type is a string and can take the following options:
@@ -231,18 +235,20 @@ class Usuario extends CI_Controller
             // invisible   // integer      // date       // string      
             // password    // true_false   // datetime   //readonly                           
         // $crud->field_type(campo, type, value);
-        // Seccion titulos
-        if ($this->uri->segment(3) == 'add') {
-            //$crud->field_type('Administradores_idAdministrador', 'hidden', 1);
-        } else if ($this->uri->segment(3) == 'edit') {
-            
-        }
+        $crud->field_type('avatar', 'readonly');
+        $crud->field_type('nombreUsuario', 'readonly');
+        $crud->field_type('apePat', 'readonly');
+        $crud->field_type('apeMat', 'readonly');
+        $crud->field_type('correo', 'readonly');
+        $crud->field_type('organizacion', 'readonly');
+        $crud->field_type('privilegios','dropdown', array('Administrador' => 'Administrador', 'Usuario general' => 'Usuario general'));
+        $crud->field_type('estatusUsuario','dropdown', array('Activo' => 'Activo', 'Inactivo' => 'Inactivo'));
         
         /* Habilitar un input como campos para subir archivos */
         // $crud->set_field_upload(campo, ruta_archivos);
 
         /* Establecer los campos que son requeridos en los formularios */
-        $crud->required_fields('nombreUsuario', 'apePat', 'apeMat', 'correo');
+        $crud->required_fields('privilegios', 'estatusUsuario', 'TiposUsuario_idTipoUsuario');
 
         /* Establecer las reglas de los formularios */
         // $crud->set_rules(campo, label, rule);
@@ -263,7 +269,7 @@ class Usuario extends CI_Controller
 
         /* Ordenamiento de los datos a listar */
         // $crud->order_by(campo, direccion);
-        $crud->order_by('nombreUsuario', 'ASC');
+        //$crud->order_by('nombreUsuario', 'ASC');
 
         /* Renderizar la tabla */
         $output = $crud->render();

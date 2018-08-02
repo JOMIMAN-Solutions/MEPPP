@@ -17,12 +17,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *
 * @version 1.0.0
 * Creado el 14/06/2018 a las 10:40 pm
-* Ultima modificacion el 29/07/2018 a las 05:42 pm
+* Ultima modificacion el 01/08/2018 a las 12:48 pm
 *
 * @since Clase disponible desde la versión 1.0.0
 * @deprecated Clase obsoleta en la versión 2.0.0
 * @todo Realizar método para guardar,modificar y eliminar un arbol.
-*     - Cambiar el tipo de input "existencia" a number, mostrar los estatus como letras y no como numeros, poder mostrar las temporadas del arbol. em la vista read la imagen carga como un vinculo a la imagen.
+*     - poder mostrar las temporadas del arbol. em la vista read la imagen carga como un vinculo a la imagen.
 */
 class Arbol extends CI_Controller 
 {
@@ -222,27 +222,23 @@ class Arbol extends CI_Controller
 
         /* Establecer relaciones entra tablas */
         // set_relation(campo_tabla_actual, tabla_a_relacionar, campo_tabla_relacionada)
-        if ($this->uri->segment(3) == '' || $this->uri->segment(3) == 'read' || $this->uri->segment(3) == 'success') {
-            $crud->set_relation('TiposArbol_idTipoArbol','tipos_arbol','tipoArbol');
-        } else if ($this->uri->segment(3) == 'add') {
-            $crud->set_relation('TiposArbol_idTipoArbol','tipos_arbol','tipoArbol');
-        } else if ($this->uri->segment(3) == 'edit') {
-            $crud->set_relation('TiposArbol_idTipoArbol','tipos_arbol','tipoArbol');
-        }
+        $crud->set_relation('TiposArbol_idTipoArbol','tipos_arbol','tipoArbol');
+        // set_relation_n_n(nombre_relacion, tabla_det, tabla3, pk_tabla_actual, pk_tabla3, campo_mostrar)
+        $crud->set_relation_n_n('Temporadas', 'det_temporadas', 'temporadas_arbol', 'idArbol', 'idTemporadaArbol', 'temporadaArbol');
 
         /* Establecer los campos que queremos ver en la lista */
         // Todas
         //$crud->columns('idArbol','imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol');
         // Perzonalizado
-        $crud->columns('imagenArbol', 'nombreComun', 'existencia', 'estatusArbol');
+        $crud->columns('imagenArbol', 'nombreComun', 'existencia', 'TiposArbol_idTipoArbol', 'Temporadas', 'estatusArbol');
         // Deshabilitando las que no se quieren
         //$crud->unset_columns('idArbol', 'nombreCientifico', 'descripcion', 'TiposArbol_idTipoArbol');
 
         /* Establecer los campos que queremos ver en los formularios */
         // Todos
-        //$crud->fields('idArbol','imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol');
+        //$crud->fields('idArbol','imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol', 'Temporadas');
         // Perzonalizado
-        $crud->fields('imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol');
+        $crud->fields('imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol', 'Temporadas');
         // Para el formulario add
         //$crud->add_fields('imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol');
         //$crud->unset_add_fields('idFaq');
@@ -256,12 +252,7 @@ class Arbol extends CI_Controller
             // invisible   // integer      // date       // string      
             // password    // true_false   // datetime   //readonly                           
         // $crud->field_type(campo, type, value);
-        // Seccion titulos
-        if ($this->uri->segment(3) == 'add') {
-            $crud->field_type('estatusArbol', 'true_false');
-        } else if ($this->uri->segment(3) == 'edit') {
-            $crud->field_type('estatusArbol', 'true_false');
-        }
+        $crud->field_type('estatusArbol','dropdown', array('Activo' => 'Activo', 'Inactivo' => 'Inactivo'));
         
         /* Habilitar un input como campos para subir archivos */
         $crud->set_field_upload('imagenArbol', 'images/arboles');
@@ -271,6 +262,9 @@ class Arbol extends CI_Controller
 
         /* Establecer las reglas de los formularios */
         // $crud->set_rules(campo, label, rule);
+        $crud->set_rules('nombreComun', 'Nombre Común', 'trim|required');
+        $crud->set_rules('nombreCientifico', 'Nombre Científico', 'trim|required');
+        $crud->set_rules('descripcion', 'Descripción', 'trim|required');
 
         /* Deshabilitar funciones */
         //$crud->unset_add();
@@ -314,6 +308,8 @@ class Arbol extends CI_Controller
             $output->seccion = "Agregando";
         } else if ($this->uri->segment(3) == 'edit') {
             $output->seccion = "Modificando";
+        } else {
+            $output->seccion = "";
         }
 
         /* Cargar las vistas */

@@ -151,7 +151,7 @@
                             <a href="<?=base_url().'Usuario/cPanel';?>" class="waves-effect <?=$activeUsuario;?>"><i class="fa fa-users m-r-10" aria-hidden="true"></i>Usuarios</a>
                         </li>
                         <li class="<?=$activeQuienesSomos;?>">
-                            <a href="<?=base_url().'QuienesSomos/cPanel';?>" class="waves-effect <?=$activeQuienesSomos;?>"><i class="fa fa-globe m-r-10" aria-hidden="true"></i>¿Quiénes somos?</a>
+                            <a href="<?=base_url().'QuienesSomos/cPanel_Datos';?>" class="waves-effect <?=$activeQuienesSomos;?>"><i class="fa fa-globe m-r-10" aria-hidden="true"></i>¿Quiénes somos?</a>
                         </li>
                     </ul>
                 </nav>

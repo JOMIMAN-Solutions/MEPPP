@@ -28,8 +28,8 @@
                 <h3 class="text-themecolor">¿Quiénes somos?</h3>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><span class="text-themecolor">cPanel</span></li>
-                    <li class="breadcrumb-item active">¿Quiénes somos?</li>
                     <li class="breadcrumb-item active"><?=$seccion;?></li>
+                    <li class="breadcrumb-item active"><?=$accion;?></li>
                 </ol>
             </div>
         </div>

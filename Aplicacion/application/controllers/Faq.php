@@ -12,7 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *
 * @version 1.0
 * Creado el 15/06/2018 a las 05:09 pm
-* Ultima modificacion el 29/07/2018 a las 05:40 pm
+* Ultima modificacion el 01/08/2018 a las 07:47 pm
 *
 * @since Clase disponible desde la versión 1.0
 * @deprecated Clase obsoleta en la versión 2.0
@@ -75,41 +75,41 @@ class Faq extends CI_Controller
             'idFaq' => 'ID',
             'pregunta' => 'Pregunta',
             'respuesta' => 'Respuesta',
-            'Administradores_idAdministrador' => 'Creador',
+            'Usuarios_idUsuario' => 'Administrador',
             'SeccionesFaq_idSeccionFaq' => 'Sección'
         );
         $crud->display_as($campos);
 
         /* Establecer relaciones entra tablas */
         // set_relation(campo_tabla_actual, tabla_a_relacionar, campo_tabla_relacionada)
-        if ($this->uri->segment(3) == '' || $this->uri->segment(3) == 'read' || $this->uri->segment(3) == 'success') {
-            $crud->set_relation('Administradores_idAdministrador','usuarios','{nombreusuario} {apePat} {apeMat}');
-            $crud->set_relation('SeccionesFaq_idSeccionFaq','secciones_faq','nombreSeccion');
-        } else if ($this->uri->segment(3) == 'add') {
+        if ($this->uri->segment(3) == 'add') {
             $crud->set_relation('SeccionesFaq_idSeccionFaq','secciones_faq','nombreSeccion');
         } else if ($this->uri->segment(3) == 'edit') {
+            $crud->set_relation('SeccionesFaq_idSeccionFaq','secciones_faq','nombreSeccion');
+        } else {
+            $crud->set_relation('Usuarios_idUsuario','usuarios','{nombreusuario} {apePat} {apeMat}');
             $crud->set_relation('SeccionesFaq_idSeccionFaq','secciones_faq','nombreSeccion');
         }
 
         /* Establecer los campos que queremos ver en la lista */
         // Todas
-        //$crud->columns('idFaq','pregunta', 'respuesta', 'Administradores_idAdministrador', 'SeccionesFaq_idSeccionFaq');
+        //$crud->columns('idFaq','pregunta', 'respuesta', 'Usuarios_idUsuario', 'SeccionesFaq_idSeccionFaq');
         // Perzonalizado
-        $crud->columns('pregunta', 'respuesta', 'Administradores_idAdministrador', 'SeccionesFaq_idSeccionFaq');
+        $crud->columns('pregunta', 'respuesta', 'SeccionesFaq_idSeccionFaq', 'Usuarios_idUsuario');
         // Deshabilitando las que no se quieren
         //$crud->unset_columns('idFaq');
 
         /* Establecer los campos que queremos ver en los formularios */
         // Todos
-        //$crud->fields('idFaq','pregunta', 'respuesta', 'Administradores_idAdministrador', 'SeccionesFaq_idSeccionFaq');
+        //$crud->fields('idFaq','pregunta', 'respuesta', 'Usuarios_idUsuario', 'SeccionesFaq_idSeccionFaq');
         // Perzonalizado
-        //$crud->fields('pregunta', 'respuesta', 'Administradores_idAdministrador', 'SeccionesFaq_idSeccionFaq');
+        $crud->fields('pregunta', 'respuesta', 'Usuarios_idUsuario', 'SeccionesFaq_idSeccionFaq');
         // Para el formulario add
-        //$crud->add_fields('idFaq','pregunta', 'respuesta', 'Administradores_idAdministrador', 'SeccionesFaq_idSeccionFaq');
-        $crud->unset_add_fields('idFaq');
+        //$crud->add_fields('pregunta', 'respuesta', 'Usuarios_idUsuario', 'SeccionesFaq_idSeccionFaq');
+        //$crud->unset_add_fields('idFaq');
         // Para el formulario edit
-        //$crud->edit_fields('idFaq','pregunta', 'respuesta', 'SeccionesFaq_idSeccionFaq');
-        $crud->unset_edit_fields('idFaq', 'Administradores_idAdministrador');
+        //$crud->edit_fields('pregunta', 'respuesta', 'SeccionesFaq_idSeccionFaq');
+        //$crud->unset_edit_fields('idFaq', 'Usuarios_idUsuario');
 
         /* Cambiar el atributo type a un campo */
         // The field type is a string and can take the following options:
@@ -117,9 +117,8 @@ class Faq extends CI_Controller
             // invisible   // integer      // date       // string      
             // password    // true_false   // datetime   //readonly                           
         // $crud->field_type(campo, type, value);
-        // Seccion titulos
         if ($this->uri->segment(3) == 'add') {
-            $crud->field_type('Administradores_idAdministrador', 'hidden', 1);
+            $crud->field_type('Usuarios_idUsuario', 'hidden', 1);
         } else if ($this->uri->segment(3) == 'edit') {
             
         }
@@ -128,10 +127,12 @@ class Faq extends CI_Controller
         // $crud->set_field_upload(campo, ruta_archivos);
 
         /* Establecer los campos que son requeridos en los formularios */
-        $crud->required_fields('pregunta', 'respuesta', 'Administradores_idAdministrador', 'SeccionesFaq_idSeccionFaq');
+        $crud->required_fields('pregunta', 'respuesta', 'Usuarios_idUsuario', 'SeccionesFaq_idSeccionFaq');
 
         /* Establecer las reglas de los formularios */
         // $crud->set_rules(campo, label, rule);
+        $crud->set_rules('pregunta', 'Pregunta', 'trim|required');
+        $crud->set_rules('respuesta', 'Respuesta', 'trim|required');
 
         /* Deshabilitar funciones */
         //$crud->unset_add();

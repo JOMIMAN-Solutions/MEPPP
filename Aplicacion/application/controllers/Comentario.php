@@ -14,7 +14,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *
 * @version 1.0.0
 * Creado el 15/06/2018 a las 10:35 am
-* Ultima modificacion el 29/07/2018 a las 05:45 pm
+* Ultima modificacion el 01/08/2018 a las 01:15 pm
 *
 * @since Clase disponible desde la versión 1.0.0
 * @deprecated Clase obsoleta en la versión 2.0.0
@@ -85,16 +85,8 @@ class Comentario extends CI_Controller
 
         /* Establecer relaciones entra tablas */
         // set_relation(campo_tabla_actual, tabla_a_relacionar, campo_tabla_relacionada)
-        if ($this->uri->segment(3) == '' || $this->uri->segment(3) == 'read' || $this->uri->segment(3) == 'success') {
-            $crud->set_relation('Usuarios_idUsuario','usuarios','{nombreusuario} {apePat} {apeMat}');
-            $crud->set_relation('TiposComentario_idTipoComentario','tipos_comentario','tipoComentario');
-        } else if ($this->uri->segment(3) == 'add') {
-            $crud->set_relation('Usuarios_idUsuario','usuarios','{nombreusuario} {apePat} {apeMat}');
-            $crud->set_relation('TiposComentario_idTipoComentario','tipos_comentario','tipoComentario');
-        } else if ($this->uri->segment(3) == 'edit') {
-            $crud->set_relation('Usuarios_idUsuario','usuarios','{nombreusuario} {apePat} {apeMat}');
-            $crud->set_relation('TiposComentario_idTipoComentario','tipos_comentario','tipoComentario');
-        }
+        $crud->set_relation('Usuarios_idUsuario','usuarios','{nombreusuario} {apePat} {apeMat}');
+        $crud->set_relation('TiposComentario_idTipoComentario','tipos_comentario','tipoComentario');
 
         /* Establecer los campos que queremos ver en la lista */
         // Todas
@@ -111,10 +103,10 @@ class Comentario extends CI_Controller
         //$crud->fields('fechaComentario', 'mensaje', 'estatusComentario', 'Usuarios_idUsuario', 'TiposComentario_idTipoComentario');
         // Para el formulario add
         //$crud->add_fields('fechaComentario', 'mensaje', 'estatusComentario', 'Usuarios_idUsuario', 'TiposComentario_idTipoComentario');
-        $crud->unset_add_fields('idComentario');
+        //$crud->unset_add_fields('idComentario');
         // Para el formulario edit
-        //$crud->edit_fields('fechaComentario', 'mensaje', 'estatusComentario', 'TiposComentario_idTipoComentario');
-        $crud->unset_edit_fields('idComentario', 'Usuarios_idUsuario');
+        $crud->edit_fields('fechaComentario', 'mensaje', 'estatusComentario', 'TiposComentario_idTipoComentario');
+        //$crud->unset_edit_fields('idComentario', 'Usuarios_idUsuario');
 
         /* Cambiar el atributo type a un campo */
         // The field type is a string and can take the following options:
@@ -122,18 +114,17 @@ class Comentario extends CI_Controller
             // invisible   // integer      // date       // string      
             // password    // true_false   // datetime   //readonly                           
         // $crud->field_type(campo, type, value);
-        // Seccion titulos
-        if ($this->uri->segment(3) == 'add') {
-            $crud->field_type('estatusComentario', 'true_false');
-        } else if ($this->uri->segment(3) == 'edit') {
-            $crud->field_type('estatusComentario', 'true_false');
-        }
+        $crud->field_type('fechaComentario','readonly');
+        $crud->field_type('mensaje','readonly');
+        $crud->field_type('estatusComentario','dropdown', array('Activo' => 'Activo', 'Inactivo' => 'Inactivo'));
+        $crud->field_type('Usuarios_idUsuario','readonly');
+        $crud->field_type('TiposComentario_idTipoComentario','readonly');
         
         /* Habilitar un input como campos para subir archivos */
         // $crud->set_field_upload(campo, ruta_archivos);
 
         /* Establecer los campos que son requeridos en los formularios */
-        $crud->required_fields('fechaComentario', 'mensaje', 'estatusComentario', 'Usuarios_idUsuario', 'TiposComentario_idTipoComentario');
+        $crud->required_fields('estatusComentario');
 
         /* Establecer las reglas de los formularios */
         // $crud->set_rules(campo, label, rule);
