@@ -1,10 +1,10 @@
-
-$(function(){
+function calendario(){
 
     var base_url='http://localhost/MEPPP/Aplicacion/'; // Here i define the base_url
 
-    // Fullcalendar
+  
     $('#calendar').fullCalendar({
+
             monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
             dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
             dayNamesShort: ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],
@@ -12,17 +12,31 @@ $(function(){
             header: {
             left: 'prev, next, today',
             center: 'title',
-            right: 'month, basicDay'
+            right: 'month'
+        },
+
+        viewRender: function(currentView){
+        var minDate = moment();
+    
+        // Past
+        if (minDate >= currentView.start) {
+            $(".fc-prev-button").prop('disabled', true); 
+            $(".fc-prev-button").addClass('fc-state-disabled'); 
+        }else {
+            $(".fc-prev-button").removeClass('fc-state-disabled'); 
+            $(".fc-prev-button").prop('disabled', false); 
+        }
+    
         },
         // Get all events stored in database
         eventLimit: true, // allow "more" link when too many events
         ignoreTimezone: false,
         events: base_url+'Campania/getEvents',
-        selectable: true,
         allDay:true,
         selectHelper: true,
         editable: false, // Make the event resizable true        
-        
+        prev: 'glyphicon-remove',
+
            eventClick: function(calEvent, jsEvent, view) {
 
             currentEvent = calEvent;
@@ -31,6 +45,8 @@ $(function(){
             $("#publico").text("Público: "+calEvent.publico);
             $("#lugar").text("Lugar: "+calEvent.lugar);
             $("#hora").text("Hora: "+calEvent.hora);
+            document.getElementById("imagen").setAttribute("src",base_url+"images/campañas/"+calEvent.imagenPortada);
+            //$("#imagen").setAttribute('src','hola.php');
         
             //var evento = load(base_url+'Campania/getEvent');
             //alert("hola "+evento);
@@ -40,4 +56,4 @@ $(function(){
 
     });
 
-});
+}

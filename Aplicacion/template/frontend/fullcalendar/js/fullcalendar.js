@@ -13000,7 +13000,7 @@ var Toolbar = /** @class */ (function () {
                                 buttonAriaAttr = '';
                             }
                             else if (buttonIcon) {
-                                buttonInnerHtml = "<span class='" + buttonIcon + "'></span>";
+                                buttonInnerHtml = "<span class='hola'></span>";
                                 buttonAriaAttr = ' aria-label="' + buttonName + '"';
                             }
                             buttonEl = dom_manip_1.htmlToElement(// type="button" so that it doesn't submit a form

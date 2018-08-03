@@ -63,7 +63,6 @@ class Frontend extends CI_Controller
         $data['page'] = "¿Quienes Somos?";
         $data['seccion'] = "5";
         $data['imagen'] = 'quienesSomosSeccion';
-
         $this->cargarVista('vw_quienesSomos', $data);
     }
 
@@ -84,7 +83,6 @@ class Frontend extends CI_Controller
         $data['page'] = "login";
         $data['seccion'] = "7";
         $data['imagen'] = "loginSeccion";
-
         $this->cargarVista('vw_login', $data);
     }
 

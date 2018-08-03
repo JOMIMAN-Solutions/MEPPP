@@ -9,29 +9,8 @@
     =============================================
     -->
     <title><?=$title?></title>
+  
     <!--  
-    Favicons
-    =============================================
-    -->
-    <link rel="apple-touch-icon" sizes="57x57" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?=base_url();?>template/frontend/assets/images/favicons/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="<?=base_url();?>template/frontend/assets/images/favicons/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?=base_url();?>template/frontend/assets/images/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="<?=base_url();?>template/frontend/assets/images/favicons/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?=base_url();?>template/frontend/assets/images/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/manifest.json">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="<?=base_url();?>template/frontend/assets/images/favicons/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-    <!--  
-    Stylesheets
     =============================================
     
     -->
@@ -50,12 +29,14 @@
     <link href="<?=base_url();?>template/frontend/assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
     <link href="<?=base_url();?>template/frontend/assets/lib/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
     <link href="<?=base_url();?>template/frontend/assets/lib/simple-text-rotator/simpletextrotator.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="<?=base_url();?>template/frontend/css/custombox.min.css">
+    
+    
 
 
     <!--JS-->
     <script src="<?=base_url();?>template/frontend/assets/lib/jquery/dist/jquery.js"></script>
-    <script src="<?=base_url();?>template/frontend/assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="<?=base_url();?>template/frontend/js/bootstrap4.min.js"></script>
+    <script src="<?=base_url();?>template/frontend/fullcalendar/js/jquery.min.js"></script>
     <script src="<?=base_url();?>template/frontend/assets/lib/wow/dist/wow.js"></script>
     <script src="<?=base_url();?>template/frontend/assets/lib/jquery.mb.ytplayer/dist/jquery.mb.YTPlayer.js"></script>
     <script src="<?=base_url();?>template/frontend/assets/lib/isotope/dist/isotope.pkgd.js"></script>
@@ -71,8 +52,12 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <link href="<?=base_url();?>template/frontend/css/estilos.css" rel="stylesheet">
     <script src="<?=base_url();?>template/frontend/js/custombox.min.js"></script>
+    <script src="<?=base_url();?>template/frontend/js/jquery.smoove.min.js"></script>
     <!--JS TERMINADO-->
 
+    <link rel="stylesheet" type="text/css" href="<?=base_url();?>template/frontend/css/custombox.min.css">
+    <link rel="stylesheet" type="text/css" href="<?=base_url();?>template/frontend/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="<?=base_url();?>template/frontend/css/csshake.min.css">
 
 
 
@@ -120,7 +105,6 @@
               <?php }else{ ?>
                 <li class="dropdown" style="text-decoration: underline;"><a  href="<?=base_url();?>Frontend/login" id="<?php if($page=='login'){echo 'active';} ?>" >LOGIN/ÚNETE <span class="glyphicon glyphicon-user"></span></a></li>
               <?php } ?>
-              <li class="dropdown"><a  href="<?=base_url().'Arbol/misAdopciones';?>" id="<?php if($page=='Mis Adopciones'){echo 'active';} ?>"><span class="glyphicon glyphicon-tree-deciduous"></span></a></li>
             </ul>
           </div>
         </div>
@@ -137,7 +121,7 @@
               */
               switch ($seccion) {
                 case '1': ?>
-                    <div class="font-alt mb-40 titan-title-size-2">Adopta un árbol y contribuye junto a nosotros a ayudar al medio ambiente.<br> Tu adopción contribuye a frenar el calentamiento global.</div>
+                    <div class="font-alt mb-40 titan-title-size-2"></div>
                   <?php
                   break;
                 case '2': ?>
@@ -187,12 +171,18 @@
                                 <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>ERROR!</strong> <?=validation_errors()?>
                             </div>
                             <?php }?>
-                          
+              
                           <form action="<?=base_url()?>Usuario/login" method="POST">
                             <label for="" class="control-label">Usuario</label>
-                              <input type="text" class="form-control center-block" name="user" id="user" required=""><br>
-                            <label for="" class="control-label" placeholder="Nombre de usuario">Password</label>
-                              <input type="password" class="form-control center-block" name="password" id="password" required=""><br>
+                            <div class="input-group">
+                               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input type="text" class="form-control center-block" name="user" id="user" required="" placeholder="Nombre de usuario">
+                            </div><br>
+                            <label for="" class="control-label">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input type="password" class="form-control center-block" name="password" id="password" required="" placeholder="Contraseña">
+                            </div><br>
                               <button type="submit" class="btn btn-success">Entrar</button>
                           </form>
                         <div class="large-text align-center"><a class="section-scroll" href="#services">Registrate <i class="fa fa-angle-down"></i></a></div>

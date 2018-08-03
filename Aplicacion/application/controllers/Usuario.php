@@ -62,7 +62,7 @@ class Usuario extends CI_Controller
             $data['seccion']="7";
             $data['imagen']="loginSeccion";
             //$this->load->view('template/frontend/header', $data);
-            $this->cargarVista('vw_login', $data);
+            $this->cargarVistaFront('vw_login', $data);
         } else {
         	$this->Mdl_Usuario->setUsuario($this->input->POST('user'));
        		$this->Mdl_Usuario->setContrasenia($this->input->POST('password'));
@@ -95,7 +95,7 @@ class Usuario extends CI_Controller
                 $data['seccion']="7";
                 $data['imagen']="loginSeccion";
                 //$this->load->view('template/frontend/header', $data);
-                $this->cargarVista('vw_login', $data);
+                $this->cargarVistaFront('vw_login', $data);
             }
         } 
 	}
