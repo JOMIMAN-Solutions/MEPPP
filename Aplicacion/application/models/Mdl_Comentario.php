@@ -8,13 +8,15 @@
 * En esta clase se encuentran métodos como:
 *     - __construct
 *     - getRecent
+*     - insert
 *
 * @author Jonathan Jair Alfaro Sánchez
 * @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/models
 * @package application/models
 *
-* @version 1.0.0
+* @version 1.0.1
 * Creado el 15/06/2018 a las 10:40 am
+* Ultima modificacion el 02/08/2018 a las 12:53 pm
 *
 * @since Clase disponible desde la versión 1.0.0
 * @deprecated Clase obsoleta en la versión 2.0.0
@@ -79,6 +81,29 @@ class Mdl_Comentario extends CI_Model
             return $comentarios->result();
         } else {
             return 0;
+        }
+    }
+
+    /**
+    * Método que guarda un comentario hecho desde el Frontend
+    *
+    * @access public
+    * @param Ninguno
+    * @return Nada
+    *
+    * @since Método disponible desde la versión 1.0.1
+    * @deprecated Método obsoleto en la versión 2.0.0
+    * @todo Comprobar que guarde
+    */
+    public function insert($comentario){
+        $this->db->trans_begin();
+
+        $this->db->insert('comentarios', $comentario);
+
+        if ($this->db->trans_status() === TRUE){
+            $this->db->trans_commit();
+        }else{
+            $this->db->trans_rollback();
         }
     }
 }

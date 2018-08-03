@@ -8,7 +8,7 @@
 *
 * @version 1.0.0
 * Creado el 26/07/2018 a las 08:33 pm
-* Ultima modificacion el 29/07/2018 a las 01:38 pm
+* Ultima modificacion el 02/08/2018 a las 12:13 pm
 */
 ?>
 
@@ -28,8 +28,8 @@
                 <h3 class="text-themecolor">Campañas</h3>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><span class="text-themecolor">cPanel</span></li>
-                    <li class="breadcrumb-item active">Campañas</li>
                     <li class="breadcrumb-item active"><?=$seccion;?></li>
+                    <li class="breadcrumb-item active"><?=$accion;?></li>
                 </ol>
             </div>
         </div>
@@ -44,6 +44,15 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-block">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-2 m-b-10">
+                                <a href="<?=base_url().'Campania/cPanel';?>" class="btn btn-default btn-outline-dark <?php if($seccion == 'Campañas'){echo 'active';}?>"><i class="fa fa-leaf m-r-5"></i>Campañas</a>
+                            </div>
+                            <div class="col-xs-12 col-md-2 m-b-10">
+                                <a href="<?=base_url().'Campania/evidencia';?>" class="btn btn-default btn-outline-dark <?php if($seccion == 'Evidencia'){echo 'active';}?>"><i class="fa fa-image m-r-5"></i>Evidencia</a>
+                            </div>
+                        </div>
+
                         <?=$output;?>
                     </div>
                 </div>

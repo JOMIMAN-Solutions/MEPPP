@@ -6,21 +6,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 * En esta clase se encuentran métodos como:
 *     - __construct
 *     - index
+*     - save
+*     - cPanel
 *     - cargarVistaFront
 *
 * @author Jonathan Jair Alfaro Sánchez
 * @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/controllers
 * @package application/controllers
 *
-* @version 1.0.0
+* @version 1.0.1
 * Creado el 15/06/2018 a las 10:35 am
-* Ultima modificacion el 01/08/2018 a las 01:15 pm
+* Ultima modificacion el 03/08/2018 a las 01:49 am
 *
 * @since Clase disponible desde la versión 1.0.0
 * @deprecated Clase obsoleta en la versión 2.0.0
 * @todo Métodos para...
 *     - Guardar comentarios
-*     - Cambiar estatus del comentario para definir si se muestra o no en la pagina de comentarios
+*     - Verificar el cambio de estatus del comentario para definir si se muestra o no en la pagina de comentarios
 */
 class Comentario extends CI_Controller 
 {
@@ -28,7 +30,6 @@ class Comentario extends CI_Controller
         parent::__construct();
         $this->load->model('Mdl_Comentario');
     }
-
 
     /**
     * Metodo que carga los 15 comentarios más recientes en la pagina de Comentario
@@ -52,9 +53,64 @@ class Comentario extends CI_Controller
         $this->cargarVistaFront('vw_comentarios',$data);
     }
 
+    /**
+    * Método que guarda un comentario hecho desde el Frontend
+    *
+    * @access public
+    * @param Ninguno
+    * @return Nada
+    *
+    * @since Método disponible desde la versión 1.0.1
+    * @deprecated Método obsoleto en la versión 2.0.0
+    * @todo Comprobar que guarde, revisar los campos post conforme el formulario, revisar las rules y los messages
+    */
+    public function save()
+    {
+        $this->form_validation->set_rules('nombreUsuario', 'Nombre del usuario', 'trim|required|max_length[100]');
+        $this->form_validation->set_rules('apellidoPat', 'Apellido paterno', 'trim|required|max_length[80]');
+        $this->form_validation->set_rules('apellidoMat', 'Apellido materno', 'trim|required|max_length[80]');
+        $this->form_validation->set_rules('nickname', 'Nickname', 'trim|required|max_length[50]');
+
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
+        $this->form_validation->set_message('min_length', 'El campo %s debe tener mínimo %d caracteres.');
+        $this->form_validation->set_message('max_length', 'El campo %s debe tener máximo %d caracteres.');
+        $this->form_validation->set_message('matches', 'Las contraseñas no coiciden.');
+
+        if ($this->form_validation->run() === false){
+            $data['title'] = "MEPPP | Comentarios";
+            $data['page'] = "Comentarios";
+            $data['seccion'] = "4";
+            $data['imagen'] = 'comentariosSeccion';
+
+            $this->cargarVistaFront('vw_comentarios',$data);
+        } else{
+            $comentario = array(
+                'fechaComentario' => $this->input->POST('nombreUsuario'),
+                'mensaje' => $this->input->POST('apellidoPat'),
+                'estatusComentario' => 'Inactivo',
+                'Usuario_idUsuario' => $this->input->POST('puesto'),
+                'TiposComentario_idTipoComentario' => $this->input->POST('permisos')
+            );
+
+            $this->Mdl_Comentario->insert($comentario);
+            redirect('Comentario/index');
+        }
+    }
+
 
 /* -------------------------------------- BACKEND --------------------------------------- */
 
+    /**
+    * Método con las propiedades de configuración de Grocery CRUD en el modulo Comentarios
+    *
+    * @access public
+    * @param Ninguno
+    * @return Nada
+    *
+    * @since Método disponible desde la versión 1.0.1
+    * @deprecated Método obsoleto en la versión 2.0.0
+    * @todo Nada
+    */
     public function cPanel()
     {
         /* Cargar la libreria */
@@ -100,12 +156,12 @@ class Comentario extends CI_Controller
         // Todos
         //$crud->fields('idComentario', 'fechaComentario', 'mensaje', 'estatusComentario', 'Usuarios_idUsuario', 'TiposComentario_idTipoComentario');
         // Perzonalizado
-        //$crud->fields('fechaComentario', 'mensaje', 'estatusComentario', 'Usuarios_idUsuario', 'TiposComentario_idTipoComentario');
+        $crud->fields('Usuarios_idUsuario', 'TiposComentario_idTipoComentario', 'fechaComentario', 'mensaje', 'estatusComentario');
         // Para el formulario add
         //$crud->add_fields('fechaComentario', 'mensaje', 'estatusComentario', 'Usuarios_idUsuario', 'TiposComentario_idTipoComentario');
         //$crud->unset_add_fields('idComentario');
         // Para el formulario edit
-        $crud->edit_fields('fechaComentario', 'mensaje', 'estatusComentario', 'TiposComentario_idTipoComentario');
+        //$crud->edit_fields('fechaComentario', 'mensaje', 'estatusComentario', 'TiposComentario_idTipoComentario');
         //$crud->unset_edit_fields('idComentario', 'Usuarios_idUsuario');
 
         /* Cambiar el atributo type a un campo */
@@ -130,7 +186,7 @@ class Comentario extends CI_Controller
         // $crud->set_rules(campo, label, rule);
 
         /* Deshabilitar funciones */
-        //$crud->unset_add();
+        $crud->unset_add();
         //$crud->unset_edit();
         //$crud->unset_read();
         //$crud->unset_delete();
@@ -139,7 +195,10 @@ class Comentario extends CI_Controller
         //$crud->unset_operations();
         //$crud->unset_back_to_list();
         //$crud->unset_texteditor(campo, 'full_text');
-        $crud->unset_texteditor('mensaje', 'full_text');
+
+        /* Funcion de exportar a PDF */
+        $crud->unset_pdf();
+        //$crud->setPdfUrl('');
 
         /* Condiciones para los datos a listar */
         // $crud->where(campo, valor_condicion);
@@ -163,14 +222,18 @@ class Comentario extends CI_Controller
         $output->activeUsuario = "";
         $output->activeQuienesSomos = "";
         // Seccion titulos
+
+        /**
+        * Condicion que determina la pagina en la que se encuentra, para establecer un valor diferente a la variable $accion. 
+        */
         if ($this->uri->segment(3) == '' || $this->uri->segment(3) == 'success') {
-            $output->seccion = "Lista";
+            $output->accion = "Lista";
         } else if ($this->uri->segment(3) == 'read') {
-            $output->seccion = "Viendo";
+            $output->accion = "Viendo";
         } else if ($this->uri->segment(3) == 'add') {
-            $output->seccion = "Agregando";
+            $output->accion = "Agregando";
         } else if ($this->uri->segment(3) == 'edit') {
-            $output->seccion = "Modificando";
+            $output->accion = "Modificando";
         }
 
         /* Cargar las vistas */

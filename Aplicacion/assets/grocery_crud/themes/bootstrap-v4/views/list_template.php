@@ -121,6 +121,10 @@
                                 </div>
                             <?php } ?>
                             <div class="floatR">
+                                <?php if(!$unset_pdf): ?>
+                                    <a href="<?=base_url().$pdf_url;?>" class="btn btn-default btn-outline-dark t5"><i class="el el-share m-r-5"></i>Generar PDF</a>
+                                <?php endif; ?>
+
                                 <?php if(!$unset_export) { ?>
                                     <a class="btn btn-default btn-outline-dark t5 gc-export" data-url="<?php echo $export_url; ?>" href="javascript:;">
                                         <i class="el el-share floatL t3"></i>

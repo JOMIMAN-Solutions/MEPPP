@@ -8,7 +8,7 @@
 *
 * @version 1.0.0
 * Creado el 26/07/2018 a las 08:33 pm
-* Ultima modificacion el 29/07/2018 a las 01:39 pm
+* Ultima modificacion el 03/08/2018 a las 12:36 am
 */
 ?>
 
@@ -29,7 +29,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><span class="text-themecolor">cPanel</span></li>
                     <li class="breadcrumb-item active">Comentarios</li>
-                    <li class="breadcrumb-item active"><?=$seccion;?></li>
+                    <li class="breadcrumb-item active"><?=$accion;?></li>
                 </ol>
             </div>
         </div>

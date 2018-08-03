@@ -1,22 +1,24 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 /**
-* Clase con las funciones que permiten gestionar el módulo de faq
+* Clase con las funciones que permiten gestionar el módulo de FAQs
 * En esta clase se encuentran métodos como:
+*     - __contruct
 *     - index()
+*     - cPanel
 *     - cargarVistaFront()
 *
-* @autor Jonathan Jair Alfaro Sánchez
-* @link [dirección_url_de_la_ubicacion]
+* @author Jonathan Jair Alfaro Sánchez
+* @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/controllers
 * @package applications/controllers
 *
-* @version 1.0
+* @version 1.0.1
 * Creado el 15/06/2018 a las 05:09 pm
-* Ultima modificacion el 01/08/2018 a las 07:47 pm
+* Ultima modificacion el 03/08/2018 a las 01:49 pm
 *
-* @since Clase disponible desde la versión 1.0
-* @deprecated Clase obsoleta en la versión 2.0
-* @todo Realizar método para guardar,modificar y eliminar un arbol.
+* @since Clase disponible desde la versión 1.0.0
+* @deprecated Clase obsoleta en la versión 2.0.0
+* @todo Nada
 */
 class Faq extends CI_Controller 
 {
@@ -27,8 +29,7 @@ class Faq extends CI_Controller
 
 
      /**
-    * Método para obtener todas las faqs de la abse de datos
-    * 
+    * Método para obtener todas las faqs de la base de datos 
     *
     * @access public
     * @param Ninguno
@@ -53,6 +54,17 @@ class Faq extends CI_Controller
 
 /* -------------------------------------- BACKEND --------------------------------------- */
 
+    /**
+    * Método con las propiedades de configuración de Grocery CRUD en el modulo FAQs
+    *
+    * @access public
+    * @param Ninguno
+    * @return Nada
+    *
+    * @since Método disponible desde la versión 1.0.1
+    * @deprecated Método obsoleto en la versión 2.0.0
+    * @todo poner el idUsuario de la sesion en el campo oculto
+    */
     public function cPanel()
     {
         /* Cargar la libreria */
@@ -82,9 +94,11 @@ class Faq extends CI_Controller
 
         /* Establecer relaciones entra tablas */
         // set_relation(campo_tabla_actual, tabla_a_relacionar, campo_tabla_relacionada)
-        if ($this->uri->segment(3) == 'add') {
-            $crud->set_relation('SeccionesFaq_idSeccionFaq','secciones_faq','nombreSeccion');
-        } else if ($this->uri->segment(3) == 'edit') {
+
+        /**
+        * Condicion que determina si esta en alguno de los formularios, para que no establezca una relación en estas secciones.
+        */
+        if ($this->uri->segment(3) == 'add' || $this->uri->segment(3) == 'edit') {
             $crud->set_relation('SeccionesFaq_idSeccionFaq','secciones_faq','nombreSeccion');
         } else {
             $crud->set_relation('Usuarios_idUsuario','usuarios','{nombreusuario} {apePat} {apeMat}');
@@ -95,7 +109,7 @@ class Faq extends CI_Controller
         // Todas
         //$crud->columns('idFaq','pregunta', 'respuesta', 'Usuarios_idUsuario', 'SeccionesFaq_idSeccionFaq');
         // Perzonalizado
-        $crud->columns('pregunta', 'respuesta', 'SeccionesFaq_idSeccionFaq', 'Usuarios_idUsuario');
+        $crud->columns('SeccionesFaq_idSeccionFaq', 'pregunta', 'respuesta', 'Usuarios_idUsuario');
         // Deshabilitando las que no se quieren
         //$crud->unset_columns('idFaq');
 
@@ -117,10 +131,12 @@ class Faq extends CI_Controller
             // invisible   // integer      // date       // string      
             // password    // true_false   // datetime   //readonly                           
         // $crud->field_type(campo, type, value);
-        if ($this->uri->segment(3) == 'add') {
+
+        /**
+        * Condicion que determina si esta en alguno de los formularios, para establecer un tipo de campo especifico en estas secciones.
+        */
+        if ($this->uri->segment(3) == 'add' || $this->uri->segment(3) == 'edit') {
             $crud->field_type('Usuarios_idUsuario', 'hidden', 1);
-        } else if ($this->uri->segment(3) == 'edit') {
-            
         }
         
         /* Habilitar un input como campos para subir archivos */
@@ -146,6 +162,10 @@ class Faq extends CI_Controller
         //$crud->unset_texteditor(campo, 'full_text');
         $crud->unset_texteditor('respuesta', 'full_text');
 
+        /* Funcion de exportar a PDF */
+        $crud->unset_pdf();
+        //$crud->setPdfUrl('');
+
         /* Condiciones para los datos a listar */
         // $crud->where(campo, valor_condicion);
 
@@ -168,14 +188,18 @@ class Faq extends CI_Controller
         $output->activeUsuario = "";
         $output->activeQuienesSomos = "";
         // Seccion titulos
+
+        /**
+        * Condicion que determina la pagina en la que se encuentra, para establecer un valor diferente a la variable $accion.
+        */
         if ($this->uri->segment(3) == '' || $this->uri->segment(3) == 'success') {
-            $output->seccion = "Lista";
+            $output->accion = "Lista";
         } else if ($this->uri->segment(3) == 'read') {
-            $output->seccion = "Viendo";
+            $output->accion = "Viendo";
         } else if ($this->uri->segment(3) == 'add') {
-            $output->seccion = "Agregando";
+            $output->accion = "Agregando";
         } else if ($this->uri->segment(3) == 'edit') {
-            $output->seccion = "Modificando";
+            $output->accion = "Modificando";
         }
 
         /* Cargar las vistas */

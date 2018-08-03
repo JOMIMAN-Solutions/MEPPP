@@ -1643,6 +1643,8 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unset_read			= $this->unset_read;
 		$data->unset_delete			= $this->unset_delete;
 		$data->unset_export			= $this->unset_export;
+		$data->unset_pdf			= $this->unset_pdf;
+		$data->pdf_url				= $this->getPdfUrl();
 		$data->unset_print			= $this->unset_print;
 
 		$default_per_page = $this->config->default_per_page;
@@ -3623,6 +3625,8 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $unset_bootstrap 		= false;
 	protected $unset_list			= false;
 	protected $unset_export			= false;
+	protected $unset_pdf			= false;
+	protected $pdf_url				= '';
 	protected $unset_print			= false;
 	protected $unset_back_to_list	= false;
     protected $unset_clone			= false;
@@ -3901,6 +3905,27 @@ class Grocery_CRUD extends grocery_CRUD_States
 		return $this;
 	}
 
+	/**
+	 * Unsets the export PDF button and functionality from the list
+	 *
+	 * @return	void
+	 */
+	public function unset_pdf()
+	{
+		$this->unset_pdf = true;
+
+		return $this;
+	}
+
+	public function getPdfUrl()
+	{
+		return $this->pdf_url;
+	}
+
+	public function setPdfUrl($url)
+	{
+		return $this->pdf_url = $url;
+	}
 
 	/**
 	 * Unsets the print button and functionality from the list
@@ -3927,6 +3952,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 		$this->unset_delete = true;
 		$this->unset_read	= true;
 		$this->unset_export = true;
+		$this->unset_pdf = true;
 		$this->unset_print  = true;
 
 		return $this;
