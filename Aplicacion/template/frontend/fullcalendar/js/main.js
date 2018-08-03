@@ -17,6 +17,7 @@ function calendario(){
 
         viewRender: function(currentView){
         var minDate = moment();
+    
         // Past
         if (minDate >= currentView.start) {
             $(".fc-prev-button").prop('disabled', true); 
@@ -44,6 +45,8 @@ function calendario(){
             $("#publico").text("Público: "+calEvent.publico);
             $("#lugar").text("Lugar: "+calEvent.lugar);
             $("#hora").text("Hora: "+calEvent.hora);
+            document.getElementById("imagen").setAttribute("src",base_url+"images/campañas/"+calEvent.imagenPortada);
+            //$("#imagen").setAttribute('src','hola.php');
         
             //var evento = load(base_url+'Campania/getEvent');
             //alert("hola "+evento);

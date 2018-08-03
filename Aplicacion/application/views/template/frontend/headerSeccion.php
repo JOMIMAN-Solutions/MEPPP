@@ -171,12 +171,18 @@
                                 <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>ERROR!</strong> <?=validation_errors()?>
                             </div>
                             <?php }?>
-                          
+              
                           <form action="<?=base_url()?>Usuario/login" method="POST">
                             <label for="" class="control-label">Usuario</label>
-                              <input type="text" class="form-control center-block" name="user" id="user" required=""><br>
-                            <label for="" class="control-label" placeholder="Nombre de usuario">Password</label>
-                              <input type="password" class="form-control center-block" name="password" id="password" required=""><br>
+                            <div class="input-group">
+                               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input type="text" class="form-control center-block" name="user" id="user" required="" placeholder="Nombre de usuario">
+                            </div><br>
+                            <label for="" class="control-label">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input type="password" class="form-control center-block" name="password" id="password" required="" placeholder="Contraseña">
+                            </div><br>
                               <button type="submit" class="btn btn-success">Entrar</button>
                           </form>
                         <div class="large-text align-center"><a class="section-scroll" href="#services">Registrate <i class="fa fa-angle-down"></i></a></div>

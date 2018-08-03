@@ -8,7 +8,7 @@
 *
 * @version 1.0.1
 * Creado el 13/06/2018 a las 01:10 am
-* Ultima modificacion el 29/07/2018 a las 11:35 pm
+* Ultima modificacion el 03/08/2018 a las 02:25 am
 */
 ?>
 
@@ -33,8 +33,16 @@
     if (<?=$this->session->flashdata('item')?> ==4 || <?=$this->session->flashdata('item')?> ==1 || <?=$this->session->flashdata('item')?> == 5) {
       modalAgregada.open();
     }
-  }
 
+
+    var x = document.getElementById("bTipo").value;
+           
+            document.getElementById("hiddenValue").value=" ";
+ var y = document.getElementById("bTemporada").value;
+            document.getElementById("hiddenValue2").value=" ";
+
+
+  }
 
 </script>
 <div class="main" style="background-color: #b6d7a8">
@@ -60,10 +68,63 @@
         </section>
       </div>
     </div>
-
-  <div class="row bloque"  style="margin-top: 0px" data-move-x="150%" id="arboles">
+  <div class="row bloque"  style="margin-top: 0px; margin-bottom: 0px;" data-move-x="150%" id="arboles">
     <div class="col-lg-1 col-xs-12"></div>
     <div class="col-lg-10 col-xs-12 divArboles">
+      <form action="<?=base_url()?>Arbol/index" method="POST">
+        <input type="hidden" name="valorEscondido" value="" id="hiddenValue">
+        <input type="hidden" name="valorEscondido2" value="" id="hiddenValue2">
+      <div class="row" align="center" >
+        <div class="col-lg-3 col-xs-12"></div>
+        <div class="col-lg-3 col-xs-12">
+          <h4 class="white font-serif">Tipo de árbol</h4>
+          <select name="bTipo" id="bTipo" class="form-control" onchange="cambio()">
+            <option value="0" selected="" >Todos</option>
+            <?php 
+
+            /**
+            * Bucle que recorre el arreglo $temporadas
+            * El bucle asigna a la variable $tip el valor del elemento actual que está reccoriendo en ese momento, en la siguiente iteración devolverá el siguiente valor.
+            * Para cargar los tipos de árboles
+            */
+            foreach($tipos as $tip): ?>
+              <option value="<?=$tip->idTipoArbol?>" <?php
+
+              /**
+              * Condicion que determina si la sesion busqueda existe y si la variable busquedaTipo es igual al id que se esta obtiendo
+              * en el momento para marcarla con selected en el select
+              */
+               if($this->session->has_userdata('busqueda') && $busquedaTipo==$tip->idTipoArbol){echo "selected";} ?>><?=$tip->tipoArbol?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div class="col-lg-3 col-xs-12">
+          <h4 class="white font-serif">Temporada de árbol</h4>
+          <select name="bTemporada" id="bTemporada" class="form-control" onchange="cambio()" >
+            <option value="0" selected="">Todos</option>
+            <?php 
+
+            /**
+            * Bucle que recorre el arreglo $temporadas
+            * El bucle asigna a la variable $tem el valor del elemento actual que está reccoriendo en ese momento, en la siguiente iteración devolverá el siguiente valor.
+            * Para cargar las temporadas de árboles.
+            */
+            foreach($temporadas as $tem): ?>
+              <option value="<?=$tem->idTemporadaArbol?>" <?php
+              /**
+              * Condicion que determina si la sesion busqueda existe y si la variable busquedaTemporada es igual al id que se esta obtiendo
+              * en el momento para marcarla con selected en el select
+              */
+               if($this->session->has_userdata('busqueda') && $busquedaTemporada==$tem->idTemporadaArbol){echo "selected";} ?>><?=$tem->temporadaArbol?></option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div class="col-lg-3 col-xs-12">
+          <button class="btn btn-circle greenButton2" type="submit" style="margin-top: 50px" onclick="guardarScroll()">Buscar <span class="glyphicon glyphicon-search"></span></button>
+        </div>
+      </div>
+      </form>
+      <hr>
       <div class="row">
         <div class="col-lg-5"></div>
         <div class="col-lg-2">
@@ -84,14 +145,13 @@
         foreach($arboles as $ar): ?>
           <div class="col-lg-3 col-xs-12" style="margin-top: 10px;">
             <a id="example<?=$i?>" class="contenedor-img ejemplo-1">
-              <img src="<?=base_url();?>images/arboles/<?=$ar->imagenArbol?>" style="border-radius: 45% / 20%;margin-bottom: 10px"></a>
+              <img src="<?=base_url();?>images/arboles/<?=$ar->imagenArbol?>" class="pointerHover" style="border-radius: 45% / 20%;margin-bottom: 10px"></a>
             
            
             <div style="background-color: #ffffff;border: solid #38761d;" class="redondeado">
-              <h5 align="center" class="titlePlanta">Nombre común:</h5>
               <h4 align="center" class="titlePlanta font-serif"><strong><?=$ar->nombreComun?></strong> </h4>
-              <h5 align="center" class="titlePlanta">Tipo de árbol:</h5>
               <h4 align="center" class="titlePlanta font-serif"><strong><?=$ar->tipoArbol?></strong></h4>
+              <h5 align="center" class="titlePlanta font-serif"><strong>Disponibles: <?=$ar->existencia?></strong></h5>
             </div>
        
             
@@ -116,26 +176,26 @@
       ?>
         <h2 style="color: white" align="center">No tenemos árboles por ahora, pero estamos trabajando en ello.</h2>
       <?php endif; ?>
+
+      <!-- Creamos los enlaces de la paginación -->
+      <?php
+      /**
+      * Condición que verifica que la paginacion pueda crearse
+      * Verifica que, en base a las configuraciones de la paginación, existan mas de una pagina para asi poder mostrar los enlaces. 
+      */
+      if($this->pagination->create_links()): 
+      ?>
+        <div class="row bloque center-block" data-rotate-x="90deg" data-move-z="-500px" data-move-y="200px" style="padding-top:0px">
+          <div class="col-lg-12 col-xs-12" id="paginacion" onclick="guardarScroll()" style="background-color: #38761d;"><?= $this->pagination->create_links(); ?></div>
+        </div>
+      <?php endif; ?>
+
     </div>
 
     <div class="col-lg-1 col-xs-12"></div>
   <!--</div>-->
 </div>
 
-<!-- Creamos los enlaces de la paginación -->
-<?php
-/**
-* Condición que verifica que la paginacion pueda crearse
-* Verifica que, en base a las configuraciones de la paginación, existan mas de una pagina para asi poder mostrar los enlaces. 
-*/
-if($this->pagination->create_links()): 
-?>
-  <div class="row bloque" data-rotate-x="90deg" data-move-z="-500px" data-move-y="200px" >
-    <div class="col-lg-1 col-xs-12"></div>
-    <div class="col-lg-10 col-xs-12" id="paginacion" onclick="guardarScroll()"><?= $this->pagination->create_links(); ?></div>
-    <div class="col-lg-1 col-xs-12"></div>
-  </div>
-<?php endif; ?>
 
 
 <?php 
@@ -196,7 +256,7 @@ if (isset($arboles) && $arboles != 0):
             $btn = array(
               'type' => 'submit',
               'content' => 'Adoptar <span class="fa fa-fw">&#xf004;</span>',
-              'class' => 'btn btn-default btn-circle center-block blueButton',
+              'class' => 'btn btn-circle center-block blueButton',
               'onclick' => 'guardarScroll()'
             );
             echo form_button($btn);
@@ -271,7 +331,7 @@ endif;
 
 
     <div id="modalCesta" style="display: none" class="modal-example-content">
-        <div class="modal-content" style="border: 5px dashed #38761d;">
+        <div class="modal-content">
           <div class="modal-header" style="background-color: #38761d;">
             <button type="button" class="close" onClick="Custombox.modal.close();">&times;</button>
             <h2 class="modal-title white font-serif" align="center">Mi cesta <span class="glyphicon glyphicon-leaf"></span></h2>
@@ -349,7 +409,7 @@ endif;
                       echo '<h3 class="white font-serif" align="center">Arbol agregado a la cesta correctamente</h3>';
                     break;
                   case 5:
-                      echo '<h3 class="white font-serif" align="center">Se ha vaciado la canasta correctamente</h3>';
+                      echo '<h3 class="white font-serif" align="center">Se ha vaciado la cesta correctamente</h3>';
                     break;
                   
                   default:
@@ -370,7 +430,21 @@ endif;
 
     <script>
          function guardarScroll(){
-          <?php if(!$this->session->flashdata('item')){$this->session->set_flashdata('item',3);} ?>
+          <?php
+          /**
+          * Condicion que determina si la sesion flash item existe, para resetear su valor
+          */
+           if(!$this->session->flashdata('item')){$this->session->set_flashdata('item',3);} ?>
             window.name=self.pageYOffset || (document.documentElement.scrollTop+document.body.scrollTop);
+          }
+          function cambio(){
+            var x = document.getElementById("bTipo").value;
+            document.getElementById("hiddenValue").value="algo";
+            var y = document.getElementById("bTemporada").value;
+            document.getElementById("hiddenValue2").value="algo";
+            if (x==0 && y==0) {
+              document.getElementById("hiddenValue").value=" ";
+              document.getElementById("hiddenValue2").value=" ";
+            }
           }
     </script>

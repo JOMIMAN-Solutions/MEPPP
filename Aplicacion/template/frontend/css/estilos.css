@@ -151,7 +151,19 @@ box-shadow: 13px 12px 13px 0px rgba(152,191,136,0.75);
 }
 
 .blueButton:hover{
-	background-color:#004e87;
+	background-color:orange;
+	color:white;
+}
+
+.blueButton2{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: green;
+	background-color: #ffffff;
+}
+
+.blueButton2:hover{
+	background-color:orange;
 	color:white;
 }
 
@@ -216,7 +228,7 @@ border: 0px solid #000000;
 }
 
 #paginacion span.active{
-    color: #38761d;
+    color: #6aa84f;
     border: 1px white dashed;
     border-radius: 4px;
 }
@@ -234,4 +246,9 @@ border: 0px solid #000000;
 	-moz-border-radius: 0px 0px 29px 29px;
 	-webkit-border-radius: 0px 0px 29px 29px;
 	border: 0px solid #000000;
+}
+
+
+.pointerHover{
+	cursor: pointer;
 }

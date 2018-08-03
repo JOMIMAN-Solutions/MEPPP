@@ -7,12 +7,12 @@
 *     - Principales socios
 *
 * @autor Jonathan Jair Alfaro Sánchez
-* @link [dirección_url_de_la_ubicacion]
+* @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/views/frontend
 * @package application/views/frontend
 *
 * @version 1.0
 * Creado el 15/06/2018 a las 10:00 pm
-* Ultima modificacion el 27/07/2018 a las 08:15 pm
+* Ultima modificacion el 03/08/2018 a las 02:23 am
 */
 ?>
 
@@ -84,7 +84,7 @@ $('.bloque').smoove({offset:'10%'});
     </div> 
       <div class="row divContenidoR shadowL" style="padding-top: 10px">
         <div class="col-lg-12 col-xs-12" align="center">
-          <a class="btn btn-primary btn-circle" onclick="mostrar()" id="btnCalendario">Ver proximos eventos<span class="glyphicon glyphicon-calendar"></span></a><br>
+          <a class="btn btn-circle blueButton2" onclick="mostrar()" id="btnCalendario">Ver proximos eventos<span class="glyphicon glyphicon-calendar"></span></a><br>
           <a href="<?=base_url().'Campania';?>" class="btn btn-circle greenButton" style="font-size: 20px;">Ver campañas <span class="fa fa-fw">&#xf06c;</span></a>
         </div>
       </div>
@@ -133,7 +133,11 @@ $('.bloque').smoove({offset:'10%'});
                   */
                   if (($i % 3) == 0):
               ?>
-                    <li data-target="#myCarousel" data-slide-to="<?=$i;?>" class="<?php if($i==0){echo 'active';}?>"></li>                  
+                    <li data-target="#myCarousel" data-slide-to="<?=$i;?>" class="<?php
+                    /**
+                    * Condición que determina si la variable i es igual a cero para colocar el indicador del slider como activo
+                    */
+                     if($i==0){echo 'active';}?>"></li>                  
               <?php
                   endif;
                   $i++;
@@ -166,10 +170,14 @@ $('.bloque').smoove({offset:'10%'});
                 ?>
                       </div>
                     <?php endif; ?>
-                    <div class="item <?php if($i==0){echo 'active';} ?>">
+                    <div class="item <?php
+                      /**
+                      * Condicion que determina si la variable i es igual a 0 para activar el item del slider correspondiente
+                      */
+                     if($i==0){echo 'active';} ?>">
                   <?php endif; ?>
                   <div class="col-lg-4 col-md-4 col-xs-12 col-sm-4">
-                    <a class="contenedor-img ejemplo-1"><img src="<?=base_url().'images/arboles/'.$arbolT->imagenArbol;?>" class="img-responsive" style="border-radius: 45% / 20%"></a>
+                    <a class="contenedor-img ejemplo-1"><img src="<?=base_url().'images/arboles/'.$arbolT->imagenArbol;?>" class="img-responsive pointerHover" style="border-radius: 45% / 20%"></a>
                     <div style="background-color: #38761d;" class="redondeadoTitle">
                       <h4 align="center" class="font-serif" style="color:white;border-top: 5px solid #b9a11f;"><?=$arbolT->nombreComun;?><span class="glyphicon glyphicon-tree-deciduous"></span></h4>
                     </div>
@@ -187,9 +195,13 @@ $('.bloque').smoove({offset:'10%'});
 
           <?php
           /**
-          * Condición que activa los botones de control si hay mas de una pestaña en el slider.
+          * Condición que determina si la variable $i existe y activar los botones del slider.
           */ 
-          if ($i > 3):
+          if (isset($i)){
+            /**
+            * Condición que activa los botones de control si hay mas de una pestaña en el slider.
+            */ 
+            if ($i > 3) {
           ?>
             <!-- Left and right controls -->
             <a class="left carousel-control" href="#myCarousel" data-slide="prev">
@@ -200,7 +212,11 @@ $('.bloque').smoove({offset:'10%'});
               <span class="glyphicon glyphicon-chevron-right"></span>
               <span class="sr-only">Next</span>
             </a>
-          <?php endif;?> 
+          <?php } }else{ ?> 
+
+            <h1 align="center" class="white">Por el momento no hay árboles de temporada.</h1>
+
+          <?php } ?>
       
         </div>
       </div>
@@ -249,7 +265,6 @@ $('.bloque').smoove({offset:'10%'});
               /**
               * Condición que valida si existe la variable $socios y esta no esta vacia.
               */
-
               if (isset($socios) && $socios != 0):
                
                 /**
@@ -262,7 +277,12 @@ $('.bloque').smoove({offset:'10%'});
                   */
                   if ($cont % 3 == 0):
               ?>
-                  <li data-target="#myCarousel2" data-slide-to="<?=$cont?>" class="<?php if($cont==0){echo 'active';}?>"></li>
+                  <li data-target="#myCarousel2" data-slide-to="<?=$cont?>" class="<?php
+
+                  /**
+                  * Condicion que determina si la variable cont es igual a cero para activar el indicador correspondiente
+                  */
+                   if($cont==0){echo 'active';}?>"></li>
               <?php
                     endif;
                     $cont++;
@@ -280,7 +300,11 @@ $('.bloque').smoove({offset:'10%'});
             if (isset($socios) && $socios != 0):
               $cont = 0;
             ?>
-              <div class="item <?php if($cont==0){echo 'active';}?>" style="margin-top: 10px;">
+              <div class="item <?php
+              /**
+              * Condicion que determina si la variable cont es igual a cero para activar el item correspondiente.
+              */
+               if($cont==0){echo 'active';}?>" style="margin-top: 10px;">
                <div class="row">
                 <?php
                 /**
@@ -290,7 +314,7 @@ $('.bloque').smoove({offset:'10%'});
                 foreach ($socios as $socio):
                 ?>
                   <div class="col-lg-4 col-xs-12" align="center">
-                    <a class="contenedor-img ejemplo-1"><img src="<?=base_url().'images/usuarios/'.$socio->avatar;?>" width="80%" height="80%" ></a>
+                    <a class="contenedor-img ejemplo-1"><img src="<?=base_url().'images/usuarios/'.$socio->avatar;?>" width="80%" height="80%" class="pointerHover" ></a>
                   </div>
                   <?php
                       $cont++;
@@ -305,9 +329,14 @@ $('.bloque').smoove({offset:'10%'});
 
           <?php
           /**
-          * Condición que activa los botones de control si hay mas de una pestaña en el slider.
+          * Condición que determina si la variable $cont existe, para crear los botones de el slider socios.
           */ 
-          if ($cont > 3):
+          if (isset($cont)){
+            /**
+            * Condición que activa los botones de control si hay mas de una pestaña en el slider.
+            */ 
+            if ($cont > 3) {
+  
           ?>
             <!-- Left and right controls -->
             <a class="left carousel-control" href="#myCarousel2" data-slide="prev">
@@ -318,7 +347,9 @@ $('.bloque').smoove({offset:'10%'});
               <span class="glyphicon glyphicon-chevron-right"></span>
               <span class="sr-only">Next</span>
             </a>
-          <?php endif;?>   
+          <?php } }else{ ?>
+            <h1 align="center" class="white">Por el momento no hay socios.</h1>
+          <?php } ?>   
         </div>
 
         </div>
@@ -354,28 +385,31 @@ $('.bloque').smoove({offset:'10%'});
     <div class="modal-content">
       <div class="modal-header" style="background-color: #38761d;">
         <button type="button" class="close" onClick="Custombox.modal.close();">&times;</button>
-        <h2 class="modal-title white" align="center" id="titleModal"></h2>
+        <h2 class="modal-title white font-serif" align="center" id="titleModal"></h2>
       </div>
-      <div class="modal-body" style="background-color:white;">
+      <div class="modal-body" style="background-color: #6aa84f;">
       <div class="row">
-        <div class="col-lg-12 col-xs-12">
+        <div class="col-lg-4 col-xs-12">
+          <img id="imagen">
+        </div>
+        <div class="col-lg-8 col-xs-12">
           <div class="row">
             <div class="col-lg-12">
-              <h3 align="center"><strong id="str">Información del evento</strong></h3>
+              <h3 align="center" class="white"><strong id="str">Información del evento</strong></h3>
             </div>
           </div>
           <div class="row">
             <div class="col-lg-6">
-              <h3 id="hora" align="center"><strong id="str"></strong></h3>
+              <h3 id="hora" align="center" class="white"><strong id="str"></strong></h3>
               
             </div>
             <div class="col-lg-6">
-              <h3 id="lugar" align="center"></h3>
+              <h3 id="lugar" align="center" class="white"></h3>
             </div>  
           </div>
           <div class="row">
             <div class="col-lg-6">
-              <h3 id="publico" align="center"></h3>
+              <h3 id="publico" align="center" class="white"></h3>
               
             </div>
             <div class="col-lg-6">

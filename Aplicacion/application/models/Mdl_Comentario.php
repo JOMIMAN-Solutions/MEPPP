@@ -59,7 +59,7 @@ class Mdl_Comentario extends CI_Model
 	{
         $condicion = array(
             'tipoComentario' => 'Comentario',
-            'estatusComentario' => 1
+            'estatusComentario' => 'Activo'
         );
 
         $this->db->select('*');

@@ -3,7 +3,7 @@
 * Archivo vista, proporciona una vista de todas las preguntas frecuentes que hay en el sitio
 *
 * @autor Miguel Angel Mandujano Barragán 
-* @link [dirección_url_de_la_ubicacion]
+* @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/views/frontend
 * @package views/frontend
 *
 * @version 1.0
@@ -12,7 +12,7 @@
  ?>
  <script>
       $(document).ready(function(){
-$('.bloque').smoove({offset:'10%'}); 
+      $('.bloque').smoove({offset:'10%'}); 
 });
 
 </script>
@@ -48,10 +48,15 @@ $('.bloque').smoove({offset:'10%'});
                     <?php $i=0;
                     /**
                     * Bucle que recorre el arreglo $arboles
-                    * El bucle asigna a la variable $ar el valor del elemento actual que está reccoriendo en ese momento, en la siguiente iteración devolverá el siguiente valor.
+                    * El bucle asigna a la variable $ar el valor del elemento actual que está reccoriendo en ese momento, en la 
+                    * siguiente iteración devolverá el siguiente valor.
                     */
                      foreach($secciones as $sec): ?>
-                      <li class="<?php if($i==0){echo 'active';} ?>"><a href="#seccion<?=$i?>" data-toggle="tab"><?=$sec->nombreSeccion?></a></li>
+                      <li class="<?php
+                      /**
+                      * Condición para determinar si la variable $i es igual a cero para activar el nombre de la sección
+                      */
+                       if($i==0){echo 'active';} ?>"><a href="#seccion<?=$i?>" data-toggle="tab"><?=$sec->nombreSeccion?><span class="icon-lightbulb"></span></a></li>
                     <?php $i++; endforeach; ?>
                   </ul>
 
@@ -59,22 +64,28 @@ $('.bloque').smoove({offset:'10%'});
                     <?php $i=0;
                     /**
                     * Bucle que recorre el arreglo $arboles
-                    * El bucle asigna a la variable $ar el valor del elemento actual que está reccoriendo en ese momento, en la siguiente iteración devolverá el siguiente valor.
+                    * El bucle asigna a la variable $ar el valor del elemento actual que está reccoriendo en ese momento, en la
+                    * siguiente iteración devolverá el siguiente valor.
                     */
                      foreach($secciones as $sec): ?>
                       <!--PREGUNTA SECCIÓN 1-->
-                        <div class="<?php if($i==0){echo 'tab-pane active';}else{ echo 'tab-pane';} ?>" id="seccion<?=$i?>">
+                        <div class="<?php
+                        /**
+                        * Condición para determinar si la variable $i es igual a cero para activar el div que le pertenece a la faq.
+                        */
+                         if($i==0){echo 'tab-pane active';}else{ echo 'tab-pane';} ?>" id="seccion<?=$i?>">
                           <div style="margin-top: 10px">
                             <div class="panel panel-default">
                       <?php $j=0;
                       /**
                       * Bucle que recorre el arreglo $arboles
-                      * El bucle asigna a la variable $ar el valor del elemento actual que está reccoriendo en ese momento, en la siguiente iteración devolverá el siguiente valor.
+                      * El bucle asigna a la variable $ar el valor del elemento actual que está reccoriendo en ese momento, en la
+                      * siguiente iteración devolverá el siguiente valor.
                       */
                        foreach($faqs as $faq):?>
                       <?php
                       /**
-                      * Condicion que determina cuando imprimir una faq
+                      * Condicion que determina cuando imprimir una faq.
                       * Si la condicion se cumple, se imprimirá la faq y la respuesta en la sección indicada.
                       * 
                       */

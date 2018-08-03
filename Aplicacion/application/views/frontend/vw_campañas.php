@@ -50,7 +50,7 @@ $('.bloque').smoove({offset:'10%'});
                 /**
 		        * Condición que valida si existe la variable $campanias y esta no esta vacia.
 		        */
-                if (isset($campanias) && $campanias != 0):
+                if (isset($campanias) && $campanias != 0){
                 	/**
 			        * Bucle que recorre el arreglo $campanias.
 			        * El bucle asigna a la variable $campania el valor del elemento actual que está recorriendo en ese momento, en la siguiente iteración devolverá el siguiente valor.
@@ -172,7 +172,9 @@ $('.bloque').smoove({offset:'10%'});
 		                  </div>
                 <?php
                   	endforeach;
-              	endif;
+              	}else{
+              		echo "<h1 class='white' align='center'>Por el momento no hay campañas.</h1>";
+              	}
                 ?>
            	</div>
 		</div>

@@ -9,7 +9,7 @@
 *
 * @version 1.0.0
 * Creado el 15/06/2018 a las 6:30 pm
-* ultima Modificación el 28/07/2018 a las 12:30 am
+* ultima Modificación el 03/08/2018 a las 02:34 am
 */
 ?>
 <script>
@@ -63,7 +63,12 @@ $('.bloque').smoove({offset:'10%'});
                   */
                   if ($cont % 8 == 0):
               ?>
-                  <li data-target="#myCarousel" data-slide-to="<?=$cont?>" class="<?php if($cont==0){echo 'active';}?>"></li>
+                  <li data-target="#myCarousel" data-slide-to="<?=$cont?>" class="<?php 
+
+                  /**
+                  * Condición que determina si la variable cont es igual a 0 para activar cual elemento se mostrará al inicio.
+                  */
+                  if($cont==0){echo 'active';}?>"></li>
               <?php
                     endif;
                     $cont++;
@@ -81,7 +86,11 @@ $('.bloque').smoove({offset:'10%'});
               if (isset($socios) && $socios != 0):
                 $cont = 0;
               ?>
-              <div class="item <?php if($cont==0){echo 'active';}?>" style="margin-top: 10px;margin-bottom: 10px">
+              <div class="item <?php
+              /**
+              * Condición que determina si la variable cont es igual a cero para activar el item correspondiente.
+              */
+               if($cont==0){echo 'active';}?>" style="margin-top: 10px;margin-bottom: 10px">
             	 <div class="row">
                 <?php
                   /**
@@ -98,7 +107,7 @@ $('.bloque').smoove({offset:'10%'});
                       <h5 align="center" class="titlePlanta">Socio:</h5>
                       <h4 align="center" class="titlePlanta font-serif"><strong><?=$socio->nombreUsuario . ' ' . $socio->apePat .' ' . $socio->apeMat;?></strong> </h4>
                       <h5 align="center" class="titlePlanta">Representante de:</h5>
-                      <h4 align="center" class="titlePlanta font-serif"><strong><?=$socio->nombreOrganizacion;?></strong></h4>
+                      <h4 align="center" class="titlePlanta font-serif"><strong><?=$socio->organizacion;?></strong></h4>
                     </div>
                   </div>
                   <?php
@@ -111,15 +120,29 @@ $('.bloque').smoove({offset:'10%'});
               endif;
             ?>
           </div>
-          <!-- Left and right controls -->
-          <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="sr-only">Next</span>
-          </a>
+          <?php
+          /**
+          * Condición que determina si la variable $cont existe, para crear los botones de el slider socios.
+          */ 
+          if (isset($cont)){
+            /**
+            * Condición que activa los botones de control si hay mas de una pestaña en el slider.
+            */ 
+            if ($cont > 3) {
+  
+          ?>
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          <?php } }else{ ?>
+            <h1 align="center" class="white">Por el momento no hay socios.</h1>
+          <?php } ?>   
         </div>
         <a href="<?=base_url().'Frontend/login#services';?>" class="btn btn-default btn-circle center-block greenButton" style="font-size: 20px">Únete Ahora<span class="fa fa-fw">&#xf061;</span></a>
  	</div>

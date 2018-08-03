@@ -72,7 +72,7 @@ class Mdl_Campania extends CI_Model
         $this->db->select('*');
         $this->db->from('campanias');
         $this->db->join('tipos_campania', 'idTipoCampania = TiposCampania_idTipoCampania');
-        $this->db->where('estatusCampania = 2');
+        $this->db->where('estatusCampania = "Realizada"');
         $campanias = $this->db->get();
 
         /**
@@ -129,7 +129,7 @@ class Mdl_Campania extends CI_Model
     * @todo Nada
     */
     public function getEvents(){
-        $this->db->select('nombreCampania as "title",fechaInicio as "start",DATE_ADD(fechaFin, INTERVAL 1 DAY) as "end",publico,hora,lugar');
+        $this->db->select('nombreCampania as "title",fechaInicio as "start",DATE_ADD(fechaFin, INTERVAL 1 DAY) as "end",publico,hora,lugar,imagenPortada');
         $this->db->from('campanias');
         $this->db->order_by('fechaInicio','asc');
         $events = $this->db->get();

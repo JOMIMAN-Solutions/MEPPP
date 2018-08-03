@@ -135,7 +135,6 @@ class Mdl_Usuario extends CI_Model
 
         $this->db->select('*');
         $this->db->from('usuarios');
-        $this->db->join('usuarios_registrados', 'idUsuario = Usuarios_idUsuario');
         $this->db->where($data);
         $usuario = $this->db->get();
 
@@ -165,23 +164,12 @@ class Mdl_Usuario extends CI_Model
 	public function getPerfil($idUsuario) {
         $data = array('idUsuario' => $idUsuario);
 
-        $typeUser = $this->defineTypeUser($idUsuario);
+        //$typeUser = $this->defineTypeUser($idUsuario);
 
         $this->db->select('*');
         $this->db->from('usuarios');
-        $this->db->join('usuarios_registrados', 'idUsuario = Usuarios_idUsuario');
-        $this->db->join('telefonos', 'idUsuarioRegistrado = UsuariosRegistrados_Tel_idUsuarioRegistrado');
+        $this->db->join('telefonos', 'Telefonos_idTelefono = idTelefono');
         $this->db->join('tipos_usuario', 'idTipoUsuario = TiposUsuario_idTipoUsuario');
-        /**
-        * Condición que verifica si el tipo de usuario es persona, si se cumple la condición se hara un join con la tabla personas, si no hara join con la tabla personas y representantes.
-        * 
-        */
-        if ($typeUser == 'Persona') {
-        	$this->db->join('personas', 'idUsuarioRegistrado = UsuariosRegistrados_Persona_idUsuarioRegistrado');
-        }else{
-        	$this->db->join('personas', 'idUsuarioRegistrado = UsuariosRegistrados_Persona_idUsuarioRegistrado');
-        	$this->db->join('representantes', 'idPersona = Personas_idPersona');
-        }
         $this->db->join('direcciones', 'idDireccion = Direcciones_idDireccion');
         $this->db->join('colonias', 'idColonia = Colonias_idColonia');
         $this->db->join('ciudades', 'idCiudad = Ciudades_idCiudad');
@@ -239,7 +227,6 @@ class Mdl_Usuario extends CI_Model
 	{
         $this->db->select('*');
         $this->db->from('usuarios');
-        $this->db->join('usuarios_registrados', 'idUsuario = Usuarios_idUsuario');
         $this->db->join('tipos_usuario', 'idTipoUsuario = TiposUsuario_idTipoUsuario');
         $this->db->where('idTipoUsuario = 5');
         $this->db->order_by('idUsuario', 'DESC');
@@ -274,11 +261,8 @@ class Mdl_Usuario extends CI_Model
     {
         $this->db->select('*');
         $this->db->from('usuarios');
-        $this->db->join('usuarios_registrados', 'idUsuario = Usuarios_idUsuario');
-        $this->db->join('telefonos', 'idUsuarioRegistrado = UsuariosRegistrados_Tel_idUsuarioRegistrado');
+        $this->db->join('telefonos', 'Telefonos_idTelefono = idTelefono');
         $this->db->join('tipos_usuario', 'idTipoUsuario = TiposUsuario_idTipoUsuario');
-        $this->db->join('personas', 'idUsuarioRegistrado = UsuariosRegistrados_Persona_idUsuarioRegistrado');
-        $this->db->join('representantes', 'idPersona = Personas_idPersona');
         $this->db->where('idTipoUsuario = 5');
         $this->db->order_by('idUsuario', 'DESC');
         $socios = $this->db->get();
@@ -289,4 +273,5 @@ class Mdl_Usuario extends CI_Model
             return 0;
         }
     }
+
 }

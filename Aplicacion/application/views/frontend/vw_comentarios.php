@@ -11,7 +11,7 @@
 *
 * @version 1.0.0
 * Creado el 15/06/2018 a las 06:00 pm
-* Última modificación 28/07/2018 a las 03:15 pm
+* Última modificación 03/08/2018 a las 02:16 am
 */
 ?>
 <script>
@@ -22,13 +22,19 @@ $('.bloque').smoove({offset:'10%'});
 </script>
 <?php 
 	$hoy = getdate();
+	/**
+    * Condición para determinar si el numero del mes actual es menor a 10 para colocar un 0 antes.
+    */
 	if ($hoy["mon"]<10) {
 	 	$hoy["mon"]="0".$hoy["mon"];
 	 }
+	 /**
+    * Condición para determinar si el numero de dia actual es menor a 10 para colocar un 0 antes.
+    */
 	 if ($hoy["mday"]<10) {
 	 	$hoy["mday"]="0".$hoy["mday"];
-	 } 
-//$hoy["mon"]="01";
+	 }
+	 $fechaActual= $hoy["mday"]."/".$hoy["mon"]."/".$hoy["year"]; 
 
 ?>
 
@@ -63,44 +69,89 @@ $('.bloque').smoove({offset:'10%'});
                     <div class="panel-heading" style="border: dashed #38761d;background-color:  #38761d">
                       <h4 class="font-serif white"><a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#support1">Agregar comentario <span class="glyphicon glyphicon-comment"></span></a></h4>
                     </div>
+                    <?php
+
+
+                    /**
+    				* Condición para determinar si existe la sesión perfil para mostrar el formulario de comentario
+    				*/
+                     if ($this->session->userdata('perfil')) { ?>
+                    
                     <div class="panel-collapse collapse" id="support1">
                       <div class="panel-body" style="background-color: #2f6219 ">
 						<form action="" method="POST">
+							<input type="hidden" name="fecha" value="<?=$fechaActual?>">
 							<div class="row">
 								<div class="col-lg-6 col-xs-12">
-									<label for="" class="control-label" style="color:white">Fecha:</label>
-									<input type="text" class="form-control" name="fecha" value="<?=$hoy['mday'].'/'.$hoy['mon'].'/'.$hoy['year']?>" readonly><br>
+									
+									
+								</div>
+								<div class="col-lg-6 col-xs-12">
 									<label for="" class="control-label" style="color:white">Asunto:</label>
-									<select name="asunto" id="" class="form-control">
+									<select name="asunto" id="" class="form-control" required="true">
 										<option value="">-Selecciona una opción-</option>
 										<option value="Comentario">Comentario</option>
 										<option value="Sugerencia">Sugerencia</option>
 										<option value="Duda">Duda</option>
 										<option value="Queja">Queja</option>
-									</select>
-								</div>
+									</select><br>
+									
+								</div>								
+							</div>
+							<div class="row">
 								<div class="col-lg-6 col-xs-12">
 									<label for="" class="control-label" style="color:white">Usuario:</label>
-									<input type="text" class="form-control" name="usuario" placeholder="Usuario"><br>
+									<input type="text" class="form-control" name="user" placeholder="Usuario" required="true" value="<?=$this->session->userdata('perfil')->usuario?>" readonly><br>
+								</div>
+								<div class="col-lg-6 col-xs-12">
 									<label for="" class="control-label" style="color:white">Correo:</label>
-									<input type="text" class="form-control" placeholder="Correo electrónico">
-								</div>								
+									<input type="text" class="form-control" name="userEmail" placeholder="Correo electrónico" required="true" value="<?=$this->session->userdata('perfil')->correoUsuario?>" readonly>
+								</div>
 							</div>
 							<br>
 							<div class="row">
 								<div class="col-lg-12 col-xs-12">
 									<label for="" class="control-label" style="color:white">Mensaje:</label>
-									<textarea name="" id="" cols="30" rows="10" class="form-control" placeholder="Dejanos un mensaje"></textarea>	
+									<textarea id="" cols="30" rows="10" name="userMessage" class="form-control" placeholder="Dejanos un mensaje" required="true"></textarea>	
 								</div>
 							</div>
 							<br>
 							<div class="row">
-								<a href="" type="submit" class="btn btn-default btn-circle center-block greenButton" style="font-size: 20px">Enviar <span class="fa fa-fw">&#xf058;</span></a>
+								<button type="submit" class="btn btn-circle center-block blueButton" style="font-size: 20px">Enviar <span class="fa fa-fw">&#xf058;</span></button>
 							</div>
 						</form>
 
                       </div>
-                    </div>
+                    </div> <!--Aqui termina -->
+					<?php    }else{ ?>
+						<div class="panel-collapse collapse" id="support1">
+							<div class="panel-body" style="background-color: #2f6219 ">
+								<div class="row">
+									<h1 align="center" class="white">Entra a tu cuenta para dejar un comentario.</h1>
+									<div class="col-lg-4"></div>
+									<div class="col-lg-4" align="center">
+									<form action="<?=base_url()?>Usuario/login" method="POST">
+	                            		<label for="" class="control-label" style="color: white">Usuario</label>
+				                            <div class="input-group">
+				                               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+				                                <input type="text" class="form-control center-block" name="user" id="user" required="" placeholder="Nombre de usuario">
+				                            </div>
+				                              <br>
+				                            <label for="" class="control-label" style="color: white">Password</label>
+				                            <div class="input-group">
+				                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+				                                <input type="password" class="form-control center-block" name="password" id="password" required="" placeholder="Contraseña"><br>
+				                            </div><br>
+	                              		<button type="submit" class="btn btn-success center-block">Entrar</button>
+                          			</form>
+                          			<h4 class="white font-serif"><a href="<?=base_url().'Frontend/login#services';?>">Registrate</a></h4>
+									</div>//
+									<div class="col-lg-4"></div>
+								</div>	
+							</div>
+						</div>
+
+						<?php } ?>
                   </div>
            </div>
 			
@@ -125,7 +176,7 @@ $('.bloque').smoove({offset:'10%'});
 					/**
 			        * Condición que valida si existe la variable $comentarios y esta no esta vacia.
 			        */
-					if (isset($comentarios) && $comentarios != 0):
+					if (isset($comentarios) && $comentarios != 0){
 						$cont = 1;
 						/**
 				        * Bucle que recorre el arreglo $comentarios.
@@ -137,6 +188,7 @@ $('.bloque').smoove({offset:'10%'});
 					        * Valida que el contador sea menor o igual a 5 para mostrar los primeros 5 comentarios.
 					        */
 							if($cont <= 5):
+								$fecha = explode("-", $coment->fechaComentario);
 					?>
 								<div class="row" style="margin-top: 10px">
 									<div class="col-lg-12 col-xs-12">
@@ -145,10 +197,10 @@ $('.bloque').smoove({offset:'10%'});
 											<div class="col-lg-10 col-xs-12">
 												<div class="row" style="background-color: #38761d">
 													<div class="col-lg-6 col-xs-12">
-														<h4 class="white">Usuario: <?=$coment->nombreUsuario;?></h4>
+														<h4 class="white"><?=$coment->nombreUsuario;?></h4>
 													</div>
 													<div class="col-lg-6 col-xs-12">
-														<h4 class="white">Fecha: <?=$coment->fechaComentario;?></h4>
+														<h4 class="white"><?=$fecha[2]."-".$fecha[1]."-".$fecha[0]?></h4>
 													</div>
 												</div>
 												<div class="row" style="background-color: white">
@@ -223,11 +275,22 @@ $('.bloque').smoove({offset:'10%'});
 							endif;
 						$cont++;
 						endforeach;
-					endif;
+					}else{
+						echo "<h1 class='white' align='center'>Por el momento no hay comentarios <span class='glyphicon glyphicon-comment'></span></h1>";
+					}
 					?>
+					<?php
+
+					/**
+    				* Condición para determinar si la variable comentarios existe, si es diferente a 0 y si es mayor a 5 para mostrar
+    				* los botones para ver más comentarios.
+    				*/
+					 if (isset($comentarios) && $comentarios != 0 && $comentarios > 5) {?> 
+				
 					<h3 align="center" id="verMas"><a class="white">Ver más...</a></h3>
 					<h3 align="center" id="verMas1"><a  class="white">Ver más...</a></h3>
 					<h3 align="center" id="ocultar"><a class="white">Ocultar...</a></h3>
+					<?php } ?>
                       </div>
                     </div>
                   </div>
