@@ -74,7 +74,7 @@
       <form action="<?=base_url()?>Arbol/index" method="POST">
         <input type="hidden" name="valorEscondido" value="" id="hiddenValue">
         <input type="hidden" name="valorEscondido2" value="" id="hiddenValue2">
-      <div class="row" align="center" >
+      <div class="row" align="center" style="padding-left: 5%; padding-right: 5%" >
         <div class="col-lg-3 col-xs-12"></div>
         <div class="col-lg-3 col-xs-12">
           <h4 class="white font-serif">Tipo de árbol</h4>
@@ -98,9 +98,9 @@
             <?php endforeach; ?>
           </select>
         </div>
-        <div class="col-lg-3 col-xs-12">
+        <div class="col-lg-3 col-xs-12" >
           <h4 class="white font-serif">Temporada de árbol</h4>
-          <select name="bTemporada" id="bTemporada" class="form-control" onchange="cambio()" >
+          <select name="bTemporada" id="bTemporada" class="form-control" onchange="cambio()" align="center">
             <option value="0" selected="">Todos</option>
             <?php 
 
@@ -120,17 +120,17 @@
           </select>
         </div>
         <div class="col-lg-3 col-xs-12">
-          <button class="btn btn-circle greenButton2" type="submit" style="margin-top: 50px" onclick="guardarScroll()">Buscar <span class="glyphicon glyphicon-search"></span></button>
+          <button class="btn btn-circle greenButton2" type="submit" style="margin-top: 50px;width: 80%" onclick="guardarScroll()">Buscar <span class="glyphicon glyphicon-search"></span></button>
         </div>
       </div>
       </form>
       <hr>
       <div class="row">
-        <div class="col-lg-5"></div>
-        <div class="col-lg-2">
-          <a class=" btn btn-circle greenButton2 center-block" id="exampleCesta">Mi cesta: <?=count($canasta = $this->cart->contents())?><span class="glyphicon glyphicon-leaf"></span></a>
+        <div class="col-lg-5 col-xs-2"></div>
+        <div class="col-lg-2 col-xs-8">
+          <a class="btn btn-circle greenButton2 center-block" id="exampleCesta">Mi cesta: <?=count($canasta = $this->cart->contents())?><span class="glyphicon glyphicon-leaf"></span></a>
         </div>
-        <div class="col-lg-5"></div>
+        <div class="col-lg-5 col-xs-2"></div>
       </div>
       <?php
       /**

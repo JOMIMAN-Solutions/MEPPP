@@ -140,7 +140,7 @@
               <div class="titan-caption">
                 <div class="caption-content">
                   <div class="font-alt mb-30 titan-title-size-4">Conoce nuestras campañas</div>
-                  <a class="btn btn-border-w btn-round" href="<?=base_url();?>Frontend/campanias">Ver campañas</a>
+                  <a class="btn btn-border-w btn-round" href="<?=base_url().'Campania';?>">Ver campañas</a>
 
                 </div>
               </div>
@@ -149,7 +149,7 @@
               <div class="titan-caption">
                 <div class="caption-content">
                   <div class="font-alt mb-30 titan-title-size-4">ADOPTA UN ARBOL</div>
-                  <a class="section-scroll btn btn-border-w btn-round" href="<?=base_url();?>Frontend/invernadero">Ver invernadero</a>
+                  <a class="section-scroll btn btn-border-w btn-round" href="<?=base_url().'Arbol';?>">Ver invernadero</a>
                 </div>
               </div>
      

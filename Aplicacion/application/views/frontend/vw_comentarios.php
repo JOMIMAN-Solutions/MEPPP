@@ -145,7 +145,7 @@ $('.bloque').smoove({offset:'10%'});
 	                              		<button type="submit" class="btn btn-success center-block">Entrar</button>
                           			</form>
                           			<h4 class="white font-serif"><a href="<?=base_url().'Frontend/login#services';?>">Registrate</a></h4>
-									</div>//
+									</div>
 									<div class="col-lg-4"></div>
 								</div>	
 							</div>
@@ -287,9 +287,9 @@ $('.bloque').smoove({offset:'10%'});
     				*/
 					 if (isset($comentarios) && $comentarios != 0 && $comentarios > 5) {?> 
 				
-					<h3 align="center" id="verMas"><a class="white">Ver más...</a></h3>
-					<h3 align="center" id="verMas1"><a  class="white">Ver más...</a></h3>
-					<h3 align="center" id="ocultar"><a class="white">Ocultar...</a></h3>
+					<h3 align="center" id="verMas"><a class="white pointerHover">Ver más...</a></h3>
+					<h3 align="center" id="verMas1"><a  class="white pointerHover">Ver más...</a></h3>
+					<h3 align="center" id="ocultar"><a class="white pointerHover">Ocultar...</a></h3>
 					<?php } ?>
                       </div>
                     </div>
