@@ -130,13 +130,16 @@ box-shadow: 13px 12px 13px 0px rgba(152,191,136,0.75);
 	color:white;
 }
 
+
+
 .greenButton2{
-	width: 80%;
+	width: 100%;
 	margin-top: 10px;
 	margin-bottom: 10px;
 	background-color: #38761d;
 	color: #ffffff;
 }
+
 
 .greenButton2:hover{
 	background-color:#ffffff;
