@@ -61,7 +61,7 @@ class Mdl_Comentario extends CI_Model
 	{
         $condicion = array(
             'tipoComentario' => 'Comentario',
-            'estatusComentario' => 1
+            'estatusComentario' => 'Activo'
         );
 
         $this->db->select('*');
@@ -70,7 +70,7 @@ class Mdl_Comentario extends CI_Model
         $this->db->join('usuarios', 'idUsuario = Usuarios_idUsuario');
         $this->db->where($condicion);
         $this->db->order_by('fechaComentario', 'DESC');
-        $this->db->limit(15);
+        //$this->db->limit(15);
         $comentarios = $this->db->get();
 
         /**

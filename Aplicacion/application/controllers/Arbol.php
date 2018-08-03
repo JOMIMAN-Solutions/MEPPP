@@ -33,7 +33,6 @@ class Arbol extends CI_Controller
 
     /**
     * Método para cargar todos los arboles de la base de datos y enviar un array con datos al metodo de cargarVistaFront
-    * 
     *
     * @access public
     * @param Ninguno
@@ -45,14 +44,48 @@ class Arbol extends CI_Controller
     */
     public function index()
     {
+
+        /**
+        * Condición que determina si se esta realizando una búsqueda para dejar seleccionado el valor correspondiente en los select en la
+        * vista vw_invernadero
+        */
+        if ($this->input->post('bTipo') || $this->input->post('bTemporada')) {
+            $dataBusqueda = array(
+                'tipo' => $this->input->post('bTipo'),
+                'temporada' => $this->input->post('bTemporada')
+            );
+            $bus = (object)$dataBusqueda;
+            $this->session->set_userdata('busqueda', $bus);
+            $data['busquedaTipo'] = $this->input->post('bTipo');
+            $data['busquedaTemporada'] = $this->input->post('bTemporada');    
+        }
+        /**
+        * Condición que determina si la búsqueda se ha reseteado para posteriormente eliminar la sesión búsqueda;
+        */
+        if ($this->input->post('valorEscondido')==" " && $this->input->post('valorEscondido2')==" ") {
+          $this->session->unset_userdata('busqueda');  
+        }
+
+    
         $data['title']="MEPPP | Invernadero";
         $data['page']="Invernadero";
         $data['seccion']="1";
         $data['imagen']='invernaderoSeccion';
-        //Paginación
+        $data['temporadas']=$this->Mdl_Arbol->getTemporadasArboles();
+        $data['tipos']=$this->Mdl_Arbol->getTiposArboles();
+
+        //PAGINACIÓN
         $config['base_url'] = base_url() . 'Arbol/page/';
-        $config['total_rows'] = $this->Mdl_Arbol->totalRows();
-        $config['per_page'] = 2;
+        /**
+        * Condición que determina si la sesión búsqueda existe
+        */
+        if ($this->session->has_userdata('busqueda')) {
+            $config['total_rows'] = $this->Mdl_Arbol->totalRows($this->session->userdata('busqueda')->tipo,$this->session->userdata('busqueda')->temporada);
+        }else{
+         $config['total_rows'] = $this->Mdl_Arbol->totalRows(0,0);   
+        }
+
+        $config['per_page'] = 4;
         $config['num_links'] = 4;
         $config['first_link'] = '<span class="fa fa-angle-double-left"></span>';
         $config['last_link'] = '<span class="fa fa-angle-double-right"></span>';
@@ -63,9 +96,28 @@ class Arbol extends CI_Controller
         $config['use_page_numbers'] = TRUE;
         $this->pagination->initialize($config);
 
-        //$data['arboles'] = $this->Mdl_Arbol->getAllInvernadero();
-        $data["arboles"] = $this->Mdl_Arbol->getTreesPaged($config['per_page'], $this->uri->segment(3));
+        $data["arboles"] = $this->Mdl_Arbol->getTreesPaged($config['per_page'], $this->uri->segment(3),$this->input->post('bTipo'),$this->input->post('bTemporada'));
 
+
+        /**
+        * Condición que determina si la sesión búsqueda existe
+        */
+        if ($this->session->has_userdata('busqueda')) {
+            $data["arboles"] = $this->Mdl_Arbol->getTreesPaged($config['per_page'], $this->uri->segment(3),$this->session->userdata('busqueda')->tipo,$this->session->userdata('busqueda')->temporada);
+            $data['busquedaTipo'] = $this->session->userdata('busqueda')->tipo;
+            $data['busquedaTemporada'] = $this->session->userdata('busqueda')->temporada;
+        }
+
+        /**
+        * Condición que determina si se abrirá una ventana modal al cargar la pagina, se verifica la existencia de session con el nombre 
+        * de item.
+        */
+        if ($this->session->flashdata('item')) {
+           
+        }else{
+           $this->session->set_flashdata('item', 3);
+        }
+    
         $this->cargarVistaFront('vw_invernadero',$data);
     }
 
@@ -107,7 +159,7 @@ class Arbol extends CI_Controller
         
         /* Redirigimos mostrando un mensaje con las sesiones flashdata
            confirmando que hemos agregado el árbol */
-        //$this->session->set_flashdata('agregado', 'El árbol fue agregado correctamente');
+        $this->session->set_flashdata('item',4);
         redirect(base_url().'Arbol/page/'.$uri, 'refresh');
     }
     
@@ -137,8 +189,9 @@ class Arbol extends CI_Controller
         $this->cart->update($arbol);
         
         //$this->session->set_flashdata('productoEliminado', 'El producto fue eliminado correctamente');
+        $this->session->set_flashdata('item',1);
         if ($this->cart->contents()) {
-            redirect(base_url().'Arbol/misAdopciones', 'refresh');
+            redirect(base_url().'Arbol/', 'refresh');
         } else {
             redirect(base_url().'Arbol', 'refresh');
         }
@@ -162,29 +215,8 @@ class Arbol extends CI_Controller
     public function vaciarCanasta() {
         $this->cart->destroy();
         //$this->session->set_flashdata('destruido', 'El carrito fue eliminado correctamente');
+        $this->session->set_flashdata('item',5);
         redirect(base_url().'Arbol', 'refresh');
-    }
-
-    /**
-    * Método que carga los arboles que has agregado a tu "carrito"
-    * Descripción larga del fichero (opcional, líneas que necesarias)
-    *
-    * @access public
-    * @param Ninguno
-    * @return void
-    *
-    * @since Método disponible desde la versión 1.0
-    * @deprecated Método obsoleto en la versión 2.0
-    * @todo [información]
-    */
-    public function misAdopciones()
-    {
-        $data['title']="MEPPP | Mis Adopciones";
-        $data['page']="Mis Adopciones";
-        $data['seccion']="9";
-        $data['imagen']='invernaderoSeccion';
-
-        $this->cargarVistaFront('vw_misAdopciones',$data);
     }
 
 
@@ -429,6 +461,7 @@ class Arbol extends CI_Controller
         $nombre_archivo = utf8_decode("Localidades de "."Invernadero.pdf");
         $pdf->Output($nombre_archivo, 'I');
     }
+
 
 
 /* ------------------------------------------------------------------------------------- */
