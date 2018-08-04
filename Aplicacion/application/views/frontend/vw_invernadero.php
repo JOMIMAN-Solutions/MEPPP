@@ -83,7 +83,7 @@
             <?php 
 
             /**
-            * Bucle que recorre el arreglo $temporadas
+            * Bucle que recorre el arreglo $tipos
             * El bucle asigna a la variable $tip el valor del elemento actual que está reccoriendo en ese momento, en la siguiente iteración devolverá el siguiente valor.
             * Para cargar los tipos de árboles
             */

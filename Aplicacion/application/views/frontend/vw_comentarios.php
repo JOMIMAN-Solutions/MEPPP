@@ -34,9 +34,24 @@ $('.bloque').smoove({offset:'10%'});
 	 if ($hoy["mday"]<10) {
 	 	$hoy["mday"]="0".$hoy["mday"];
 	 }
-	 $fechaActual= $hoy["mday"]."/".$hoy["mon"]."/".$hoy["year"]; 
+	 $fechaActual= $hoy["year"]."-".$hoy["mon"]."-".$hoy["mday"]; 
 
 ?>
+
+<script>
+ window.onload=function(){
+    var pos=window.name || 0;
+    window.scrollTo(0,pos);
+    pos=0;
+    window.name=0;
+    window.history.pushState("Details", "Title", "<?php echo base_url(); ?>Comentario");
+      if (<?=$this->session->flashdata('comentario')?> == 1) {
+      		modalAgregada.open();
+    	}
+
+  }
+
+</script>
 
 <div class="main" style="background-color: #b6d7a8">
 <div style="height:10px;background-color:#b9a11f;margin-bottom: 40px" class="shadowBrownLine"></div>
@@ -45,7 +60,6 @@ $('.bloque').smoove({offset:'10%'});
       <h1 class="white" style="font-size: 45px" align="center">Dejanos un comentario <span class="glyphicon glyphicon-comment"></span></h1>
     </div>
  </div>
-
  <div class="row bloque" data-move-x="-150%" style="margin-bottom: 20px">
       <div class="col-lg-12 col-xs-12 col-sm-12 divContenidoR">
         <section class="module pb-0 bg-dark-10 pt-0 pb-0 parallax-bg" data-background="<?=base_url();?>template/frontend/images/parallax8.png">
@@ -61,13 +75,24 @@ $('.bloque').smoove({offset:'10%'});
     </div>
 
 
- <div class="row bloque" data-move-x="150%">
+ <div class="row bloque" data-move-x="150%" id="comentarios">
 	<div class="col-lg-1 col-xs-12"></div>
 	<div class="col-lg-10 col-xs-12 divContenido borderTopBrown">
 				<div style="margin-top: 10px">
                   <div class="panel panel-default" style="">
                     <div class="panel-heading" style="border: dashed #38761d;background-color:  #38761d">
-                      <h4 class="font-serif white"><a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#support1">Agregar comentario <span class="glyphicon glyphicon-comment"></span></a></h4>
+                      <h4 class="font-serif white"><a class="<?php
+
+                      /**
+			           * Condicion que determina si existe la variable $badUser o si se han obtenido errores de validación de campos.
+			           * 
+			           */
+                       if(isset($badUser) || validation_errors()){echo'';}else{echo 'collapsed';} ?>" data-toggle="collapse" data-parent="#accordion" href="#support1" <?php
+                       /**
+			            * Condicion que determina si existe la variable $badUser o si se han obtenido errores de validación de campos.
+			            * 
+			            */
+                        if(isset($badUser) || validation_errors()){echo'aria-expanded="true"';}else{echo 'aria-expanded="false"';} ?>>Agregar comentario <span class="glyphicon glyphicon-comment"></span></a></h4>
                     </div>
                     <?php
 
@@ -77,23 +102,51 @@ $('.bloque').smoove({offset:'10%'});
     				*/
                      if ($this->session->userdata('perfil')) { ?>
                     
-                    <div class="panel-collapse collapse" id="support1">
+                    <div class="panel-collapse <?php 
+                    	/**
+			            * Condicion que determina si existe la variable $badUser o si se han obtenido errores de validación de campos.
+			            * 
+			            */
+						 if(isset($badUser) || validation_errors()){echo'collapse in';}else{echo 'collapse';} ?>" id="support1" <?php
+
+						 /**
+				         * Condicion que determina si existe la variable $badUser o si se han obtenido errores de validación de campos.
+				         * 
+				         */
+						  if(isset($badUser) || validation_errors()){echo'aria-expanded="true"';}else{echo 'aria-expanded="false"';} ?>>
                       <div class="panel-body" style="background-color: #2f6219 ">
-						<form action="" method="POST">
+						<form action="<?=base_url()?>Comentario/save" method="POST">
 							<input type="hidden" name="fecha" value="<?=$fechaActual?>">
+							<?php
+			                        /**
+			                        * Condición que determina si hubo errores en el formulario
+			                        * Si hubo errores se imprimira el error
+			                        *
+			                        */
+			                        if(validation_errors()){ ?>
+			                            <div class="alert alert-danger" role="alert">
+			                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>ERROR!</strong> <?=validation_errors()?>
+			                            </div>
+			                    	<?php }?>	
 							<div class="row">
 								<div class="col-lg-6 col-xs-12">
-									
 									
 								</div>
 								<div class="col-lg-6 col-xs-12">
 									<label for="" class="control-label" style="color:white">Asunto:</label>
 									<select name="asunto" id="" class="form-control" required="true">
-										<option value="">-Selecciona una opción-</option>
-										<option value="Comentario">Comentario</option>
-										<option value="Sugerencia">Sugerencia</option>
-										<option value="Duda">Duda</option>
-										<option value="Queja">Queja</option>
+										<option value="" selected>-Selecciona una opción-</option>
+										<?php
+
+										/**
+							            * Bucle que recorre el arreglo $commentType
+							            * El bucle asigna a la variable $ty el valor del elemento actual que está reccoriendo en ese
+							            * momento, en la siguiente iteración devolverá el siguiente valor.
+							            * Para cargar los tipos de árboles
+							            */
+										 foreach ($commentTypes as $ty) { ?>	
+											<option value="<?=$ty->idTipoComentario?>"><?=$ty->tipoComentario?></option>
+										<?php } ?>
 									</select><br>
 									
 								</div>								
@@ -101,7 +154,7 @@ $('.bloque').smoove({offset:'10%'});
 							<div class="row">
 								<div class="col-lg-6 col-xs-12">
 									<label for="" class="control-label" style="color:white">Usuario:</label>
-									<input type="text" class="form-control" name="user" placeholder="Usuario" required="true" value="<?=$this->session->userdata('perfil')->usuario?>" readonly><br>
+									<input type="text" class="form-control" name="user" placeholder="Usuario" required="true" value="<?=$this->session->userdata('perfil')->nombreUsuario.' '.$this->session->userdata('perfil')->apePat.' '.$this->session->userdata('perfil')->apeMat?>" readonly><br>
 								</div>
 								<div class="col-lg-6 col-xs-12">
 									<label for="" class="control-label" style="color:white">Correo:</label>
@@ -117,20 +170,54 @@ $('.bloque').smoove({offset:'10%'});
 							</div>
 							<br>
 							<div class="row">
-								<button type="submit" class="btn btn-circle center-block blueButton" style="font-size: 20px">Enviar <span class="fa fa-fw">&#xf058;</span></button>
+								<button type="submit" class="btn btn-circle center-block blueButton" style="font-size: 20px" onclick="guardarScroll()">Enviar <span class="fa fa-fw">&#xf058;</span></button>
 							</div>
 						</form>
 
                       </div>
-                    </div> <!--Aqui termina -->
+                    </div> <!--Aqui termina --> 
 					<?php    }else{ ?>
-						<div class="panel-collapse collapse" id="support1">
+						<div class="panel-collapse <?php
+						/**
+			            * Condicion que determina si existe la variable $badUser o si se han obtenido errores de validación de campos.
+			            * 
+			            */
+						 if(isset($badUser) || validation_errors()){echo'collapse in';}else{echo 'collapse';} ?>" id="support1" <?php
+
+						 /**
+				         * Condicion que determina si existe la variable $badUser o si se han obtenido errores de validación de campos.
+				         * 
+				         */
+						  if(isset($badUser) || validation_errors()){echo'aria-expanded="true"';}else{echo 'aria-expanded="false"';} ?>>
 							<div class="panel-body" style="background-color: #2f6219 ">
 								<div class="row">
 									<h1 align="center" class="white">Entra a tu cuenta para dejar un comentario.</h1>
 									<div class="col-lg-4"></div>
 									<div class="col-lg-4" align="center">
+										<?php
+				                          /**
+				                          * Condición que determina si la variable $badUser existe
+				                          * Si existe la variable $badUser se imprimira un error
+				                          *
+				                          */
+                           				if(isset($badUser)){ ?>
+			                            <div class="alert alert-danger" role="alert">
+			                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>ERROR!</strong> <?php echo $badUser; ?>
+			                            </div>
+			                            <?php }?>
+			                            <?php
+			                            /**
+			                            * Condición que determina si hubo errores en el formulario
+			                            * Si hubo errores se imprimira el error
+			                            *
+			                            */
+			                             if(validation_errors()){ ?>
+			                            <div class="alert alert-danger" role="alert">
+			                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>ERROR!</strong> <?=validation_errors()?>
+			                            </div>
+			                            <?php }?>
 									<form action="<?=base_url()?>Usuario/login" method="POST">
+										<input type="hidden" name="where" value="1">
 	                            		<label for="" class="control-label" style="color: white">Usuario</label>
 				                            <div class="input-group">
 				                               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -142,7 +229,7 @@ $('.bloque').smoove({offset:'10%'});
 				                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
 				                                <input type="password" class="form-control center-block" name="password" id="password" required="" placeholder="Contraseña"><br>
 				                            </div><br>
-	                              		<button type="submit" class="btn btn-success center-block">Entrar</button>
+	                              		<button type="submit" class="btn btn-success center-block" onclick="guardarScroll()">Entrar</button>
                           			</form>
                           			<h4 class="white font-serif"><a href="<?=base_url().'Frontend/login#services';?>">Registrate</a></h4>
 									</div>
@@ -302,6 +389,19 @@ $('.bloque').smoove({offset:'10%'});
 	<div class="col-lg-1 col-xs-12"></div>
  </div>
 
+ 	<div id="modalAgregada" style="display: none" class="modal-example-content">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: #38761d;">
+            <button type="button" class="close" onClick="Custombox.modal.close();">&times;</button>
+            <h3 class="white font-serif" align="center">Tu comentario ha sido enviado.</h3>
+          </div>
+          <div class="modal-body">
+            <img src="<?=base_url()?>template/frontend/images/correcto.png" alt="" width="50%" class="center-block">
+          </div>
+          <div class="modal-footer" style="background-color: #38761d"></div>
+        </div>
+    </div>
+
 
 
  <script>
@@ -330,4 +430,18 @@ $('.bloque').smoove({offset:'10%'});
         });
 
     }); 	
+
+    var modalAgregada = new Custombox.modal({
+      content:{
+        effect: 'fadein',
+        target: '#modalAgregada',
+        width: '20%',
+      }
+    });
+ </script>
+
+ <script>
+ 	    function guardarScroll(){
+        	window.name=self.pageYOffset || (document.documentElement.scrollTop+document.body.scrollTop);
+        }
  </script>
