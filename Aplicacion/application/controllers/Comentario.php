@@ -49,6 +49,7 @@ class Comentario extends CI_Controller
         $data['seccion'] = "4";
         $data['imagen'] = 'comentariosSeccion';
         $data['comentarios'] = $this->Mdl_Comentario->getRecent();
+        $data['commentTypes'] = $this->Mdl_Comentario->getCommentTypes();
 
         $this->cargarVistaFront('vw_comentarios',$data);
     }
@@ -66,33 +67,30 @@ class Comentario extends CI_Controller
     */
     public function save()
     {
-        $this->form_validation->set_rules('nombreUsuario', 'Nombre del usuario', 'trim|required|max_length[100]');
-        $this->form_validation->set_rules('apellidoPat', 'Apellido paterno', 'trim|required|max_length[80]');
-        $this->form_validation->set_rules('apellidoMat', 'Apellido materno', 'trim|required|max_length[80]');
-        $this->form_validation->set_rules('nickname', 'Nickname', 'trim|required|max_length[50]');
-
+        $this->form_validation->set_rules('asunto', 'Asunto', 'required');
+        $this->form_validation->set_rules('userMessage', 'Mensaje', 'trim|required|max_length[300]');
         $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
-        $this->form_validation->set_message('min_length', 'El campo %s debe tener mínimo %d caracteres.');
+        $this->form_validation->set_message('trim','El campo %s no puede quedar vacio');
         $this->form_validation->set_message('max_length', 'El campo %s debe tener máximo %d caracteres.');
-        $this->form_validation->set_message('matches', 'Las contraseñas no coiciden.');
 
         if ($this->form_validation->run() === false){
             $data['title'] = "MEPPP | Comentarios";
             $data['page'] = "Comentarios";
             $data['seccion'] = "4";
             $data['imagen'] = 'comentariosSeccion';
-
+            $data['comentarios'] = $this->Mdl_Comentario->getRecent();
+            $data['commentTypes'] = $this->Mdl_Comentario->getCommentTypes();
             $this->cargarVistaFront('vw_comentarios',$data);
         } else{
             $comentario = array(
-                'fechaComentario' => $this->input->POST('nombreUsuario'),
-                'mensaje' => $this->input->POST('apellidoPat'),
+                'fechaComentario' => $this->input->POST('fecha'),
+                'mensaje' => $this->input->POST('userMessage'),
                 'estatusComentario' => 'Inactivo',
-                'Usuario_idUsuario' => $this->input->POST('puesto'),
-                'TiposComentario_idTipoComentario' => $this->input->POST('permisos')
+                'Usuarios_idUsuario' => $this->session->userdata('perfil')->idUsuario,
+                'TiposComentario_idTipoComentario' => $this->input->POST('asunto')
             );
-
             $this->Mdl_Comentario->insert($comentario);
+            $this->session->set_flashdata('comentario',1);
             redirect('Comentario/index');
         }
     }

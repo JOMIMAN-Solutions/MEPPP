@@ -84,6 +84,35 @@ class Mdl_Comentario extends CI_Model
         }
     }
 
+
+    /**
+    * Metodo que obtiene los tipos de comentario existentes
+    * 
+    * @access public
+    * @param Ninguno
+    * @return array || int
+    *
+    * @since Método disponible desde la versión 1.0
+    * @deprecated Método obsoleto en la versión 2.0
+    * @todo Nada
+    */
+    public function getCommentTypes()
+    {
+        $this->db->select('*');
+        $this->db->from('tipos_comentario');
+        $comentarios = $this->db->get();
+
+        /**
+        * Condición que determina el dato a retornar
+        * Condición que verifica si la consulta anterior trae datos. Si se cumple retorna el arreglo del resultado; si no, retorna 0.
+        */
+        if ($comentarios->num_rows() != 0) {
+            return $comentarios->result();
+        } else {
+            return 0;
+        }
+    }
+
     /**
     * Método que guarda un comentario hecho desde el Frontend
     *

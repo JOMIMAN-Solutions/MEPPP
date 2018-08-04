@@ -158,9 +158,9 @@
                           * Si existe la variable $badUser se imprimira un error
                           *
                           */
-                           if(isset($badUser)){ ?>
+                           if(isset($badUser) && $badUser==5){ ?>
                             <div class="alert alert-danger" role="alert">
-                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>ERROR!</strong> <?php echo $badUser; ?>
+                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>ERROR!</strong> <?php echo "El usuario no existe"; ?>
                             </div>
                             <?php }?>
                             <?php
@@ -169,7 +169,7 @@
                             * Si hubo errores se imprimira el error
                             *
                             */
-                             if(validation_errors()){ ?>
+                             if(validation_errors() && $badUser==5){ ?>
                             <div class="alert alert-danger" role="alert">
                                 <button class="close" type="button" data-dismiss="alert" aria-hidden="true">&times;</button><i class="fa fa-coffee"></i><strong>ERROR!</strong> <?=validation_errors()?>
                             </div>

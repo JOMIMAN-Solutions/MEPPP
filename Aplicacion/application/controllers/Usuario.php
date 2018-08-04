@@ -34,6 +34,7 @@ class Usuario extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('Mdl_Usuario');
+        $this->load->model('Mdl_Comentario');
 	}
 
 	/**
@@ -51,7 +52,7 @@ class Usuario extends CI_Controller
 	{
         $this->form_validation->set_rules('user', 'Usuario', 'trim|required|max_length[50]');
         $this->form_validation->set_rules('password', 'Contraseña', 
-            'trim|required|min_length[4]|max_length[30]');
+            'trim|required|min_length[4]|max_length[50]');
 
         $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
         $this->form_validation->set_message('min_length', 'El campo %s debe tener mínimo %d caracteres.');
@@ -62,13 +63,26 @@ class Usuario extends CI_Controller
         * 
         */
         if ($this->form_validation->run() === false) {
-            $data['title'] = ' MEPPP| Login';
-            $data['err'] = 'bad rules';
-            $data['page']="login";
-            $data['seccion']="7";
-            $data['imagen']="loginSeccion";
-            //$this->load->view('template/frontend/header', $data);
-            $this->cargarVistaFront('vw_login', $data);
+            /**
+            * Condicion que determina si se recibio por medio de POST un campo con nombre where
+            * 
+            */
+            if ($this->input->POST('where')) {
+                    $data['title'] = "MEPPP | Comentarios";
+                    $data['err'] = 'bad rules';
+                    $data['page'] = "Comentarios";
+                    $data['seccion'] = "4";
+                    $data['imagen'] = 'comentariosSeccion';
+                    $data['comentarios'] = $this->Mdl_Comentario->getRecent();
+                    $this->cargarVistaFront('vw_comentarios', $data);
+                }else{
+                    $data['title'] = 'MEPPP| Login';
+                    $data['badUser'] = 5;
+                    $data['page']="login";
+                    $data['seccion']="7";
+                    $data['imagen']="loginSeccion";
+                    $this->cargarVistaFront('vw_login', $data);
+                }
         } else {
         	$this->Mdl_Usuario->setUsuario($this->input->POST('user'));
        		$this->Mdl_Usuario->setContrasenia($this->input->POST('password'));
@@ -102,8 +116,15 @@ class Usuario extends CI_Controller
                     * Verificar si el carrito contiene items
                     * En el caso de que asi sea, se le mandara a la pagina de inverndaero. De lo contrario se manda a la pagina de inicio.
                     */
+
                     if ($this->cart->contents()) {
                         redirect('Arbol/index');
+                    /**
+                    * Condicion que determina si se recibio por medio de POST un campo con nombre where
+                    * 
+                    */
+                    } else if ($this->input->POST('where')) {
+                        redirect('Comentario/index');
                     } else {
                         redirect('Frontend/index');
                     }
@@ -117,13 +138,26 @@ class Usuario extends CI_Controller
                     redirect('Adopcion/cPanel');
                 }
             } else {
-                $data['title'] = 'MEPPP| Login';
-                $data['badUser'] = 'Inicio de sesión incorrecto!!!<br>';
-                $data['page']="login";
-                $data['seccion']="7";
-                $data['imagen']="loginSeccion";
-                //$this->load->view('template/frontend/header', $data);
-                $this->cargarVistaFront('vw_login', $data);
+                /**
+                * Condicion que determina si se recibio por medio de POST un campo con nombre where
+                * 
+                */
+                if ($this->input->POST('where')) {
+                    $data['title'] = "MEPPP | Comentarios";
+                    $data['badUser'] = 'Inicio de sesión incorrecto!!!<br>';
+                    $data['page'] = "Comentarios";
+                    $data['seccion'] = "4";
+                    $data['imagen'] = 'comentariosSeccion';
+                    $data['comentarios'] = $this->Mdl_Comentario->getRecent();
+                    $this->cargarVistaFront('vw_comentarios', $data);
+                }else{
+                    $data['title'] = 'MEPPP| Login';
+                    $data['badUser'] = 5;
+                    $data['page']="login";
+                    $data['seccion']="7";
+                    $data['imagen']="loginSeccion";
+                    $this->cargarVistaFront('vw_login', $data);
+                }
             }
         } 
 	}
@@ -139,6 +173,7 @@ class Usuario extends CI_Controller
     * @deprecated Método obsoleto en la versión 2.0.0
     * @todo Nada
     */
+<<<<<<< HEAD
     public function perfil() {
         /**
         * Verificar que exista sesion de un usuario
@@ -148,12 +183,370 @@ class Usuario extends CI_Controller
             $data['page']="perfil";
             $data['seccion']="8";
             $data['imagen']="perfilSeccion";
+=======
+    public function perfil(){
+        $data['title']="MEPPP | Perfil de usuario";
+        $data['page']="perfil";
+        $data['seccion']="8";
+        $data['imagen']="perfilSeccion";
+>>>>>>> origin/aplicacion
 
             $this->cargarVistaFront('vw_perfil',$data);  
         } else {
             redirect('Frontend/login');
         }
     }
+
+    /**
+    * Este método permite insertar un usuario desde el frontend
+    *
+    * @access public
+    * @param Ninguno
+    * @return void
+    *
+    * @since Método disponible desde la versión 1.0.0
+    * @deprecated Método obsoleto en la versión 2.0.0
+    * @todo Nada
+    */
+    public function insertUser(){
+        $this->form_validation->set_rules('nombreUsuario', 'Nombre', 'trim|required|max_length[100]');
+        $this->form_validation->set_rules('apeMat', 'Apellido Materno', 'trim|required|max_length[80]');
+        $this->form_validation->set_rules('apePat', 'Apellido Paterno', 'trim|required|max_length[80]');
+        $this->form_validation->set_rules('telefono', 'Telefono', 'trim|required|max_length[10]|min_length[10]');
+        $this->form_validation->set_rules('correoUsuario', 'Correo', 'trim|required|max_length[80]');
+        $this->form_validation->set_rules('calle', 'Calle', 'trim|required|max_length[150]');
+        $this->form_validation->set_rules('colonia', 'Colonia', 'trim|required|max_length[100]');
+        $this->form_validation->set_rules('numero', 'Numero', 'trim|required|max_length[10]');
+        $this->form_validation->set_rules('ciudad', 'Ciudad', 'trim|required|max_length[100]');
+        $this->form_validation->set_rules('cp', 'Código postal', 'trim|required|max_length[5]');
+        $this->form_validation->set_rules('usuario', 'Usuario', 'trim|required|max_length[50]');
+        $this->form_validation->set_rules('contrasenia', 'Contraseña', 'trim|required|max_length[50]');
+        /**
+        * Condicion que determina si hubo post por parte del campo organización pra añadirle reglas.
+        * 
+        */
+        if ($this->input->POST('organizacion')) {
+           $this->form_validation->set_rules('organizacion', 'Organizacion', 'trim|required|max_length[100]'); 
+           $organizacion = $this->input->POST('organizacion');
+           $re = 1;
+        }else{
+            $organizacion = " ";
+            $re = 0;
+        }
+        
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
+        $this->form_validation->set_message('trim','El campo %s no puede quedar vacio');
+        $this->form_validation->set_message('max_length', 'El campo %s debe tener máximo %d caracteres.');
+        $this->form_validation->set_message('min_length', 'El campo %s debe tener minimo %d caracteres.');
+
+        //Imagen
+        $config['upload_path'] = 'images/usuarios/';
+        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+        $config['max_size'] = '2048';
+        $this->load->library('upload', $config);
+  
+        /**
+        * Condicion que determina si las reglas no se cumplieron
+        * 
+        */
+        if ($this->form_validation->run() === false){
+                $data['title'] = 'MEPPP| Login';
+                $data['badUser'] = 4;
+                $data['page']="login";
+                $data['seccion']="7";
+                $data['imagen']="loginSeccion";
+                $this->cargarVistaFront('vw_login', $data);
+        }else{
+
+            /**
+            * Condicion que determina si la imagen que se subio cumplio con los requisitos.
+            * 
+            */
+            if (!$this->upload->do_upload('avatar')) {
+                    $data['title'] = 'MEPPP| Login';
+                    $data['badUser'] = 7;
+                    $data['page']="login";
+                    $data['seccion']="7";
+                    $data['imagen']="loginSeccion";
+                    $this->cargarVistaFront('vw_login', $data);
+            }else{
+                    $data = array('upload_data' => $this->upload->data());
+                    $img_full_path = $config['upload_path'] . $data['upload_data']['file_name'];
+
+                    $config['image_library'] = 'gd2';
+                    $config['source_image'] = $img_full_path;
+                    $config['maintain_ratio'] = FALSE;
+                    $config['width'] = 215;
+                    $config['height'] = 215;
+                    $config['quality'] = 100;
+                    $config['new_image'] = 'images/usuarios/'. $data['upload_data']['file_name'];
+                    $this->load->library('image_lib', $config);
+                    if (!$this->image_lib->resize()) {
+                        echo $this->image_lib->display_errors();
+                    }
+
+
+            $usuario = array(
+                'avatar' => $data['upload_data']['file_name'],
+                'nombreUsuario' => $this->input->POST('nombreUsuario'),
+                'apePat' => $this->input->POST('apePat'),
+                'apeMat' => $this->input->POST('apeMat'),
+                'correoUsuario' => $this->input->POST('correoUsuario'),
+                'organizacion' => $organizacion,
+                'usuario' => $this->input->POST('usuario'),
+                'contrasenia' => $this->input->POST('contrasenia'),
+                'privilegios' => "Usuario general",
+                'estatusUsuario' => "Activo"
+            );
+
+            $inicio = 0;$fin    = 3;
+            $lada = substr($this->input->POST('telefono'),$inicio,$fin);
+            $inicio = 3;$fin    = 9;
+            $tel = substr($this->input->POST('telefono'),$inicio,$fin);
+            $telefono = array(
+                'lada' => $lada,
+                'telefono' => $tel
+            );
+
+            $direccion = array(
+                'calle' => $this->input->POST('calle'),
+                'numero' => $this->input->POST('numero')
+            );
+
+            $colonia = array(
+                'colonia' => $this->input->POST('colonia'),
+                'cp' => $this->input->POST('cp')
+            );
+            $ciudad = array(
+                'ciudad' => $this->input->POST('ciudad')
+            );
+
+            $this->Mdl_Usuario->insert($ciudad,$colonia,$direccion,$telefono,$usuario,$re);   
+            redirect('Frontend/index');
+           
+
+
+
+
+            }
+
+     
+        } 
+    }
+
+
+
+
+
+    /**
+    * Este método permite modificar un usuario
+    *
+    * @access public
+    * @param Ninguno
+    * @return void
+    *
+    * @since Método disponible desde la versión 1.0.0
+    * @deprecated Método obsoleto en la versión 2.0.0
+    * @todo Nada
+    */
+    public function updateUser(){
+
+        $this->form_validation->set_rules('nombreUsuario', 'Nombre', 'trim|required|max_length[100]');
+        $this->form_validation->set_rules('apeMat', 'Apellido Materno', 'trim|required|max_length[80]');
+        $this->form_validation->set_rules('apePat', 'Apellido Paterno', 'trim|required|max_length[80]');
+        $this->form_validation->set_rules('telefono', 'Telefono', 'trim|required|max_length[10]|min_length[10]');
+        $this->form_validation->set_rules('correoUsuario', 'Correo', 'trim|required|max_length[80]');
+        $this->form_validation->set_rules('calle', 'Calle', 'trim|required|max_length[150]');
+        $this->form_validation->set_rules('colonia', 'Colonia', 'trim|required|max_length[100]');
+        $this->form_validation->set_rules('numero', 'Numero', 'trim|required|max_length[10]');
+        $this->form_validation->set_rules('ciudad', 'Ciudad', 'trim|required|max_length[100]');
+        $this->form_validation->set_rules('cp', 'Código postal', 'trim|required|max_length[5]');
+        $this->form_validation->set_rules('usuario', 'Usuario', 'trim|required|max_length[50]');
+        $this->form_validation->set_rules('contrasenia', 'Contraseña', 'trim|required|max_length[50]');
+        /**
+        * Condicion que determina si hubo post por parte del campo organización pra añadirle reglas.
+        * 
+        */
+        if ($this->input->POST('organizacion')) {
+           $this->form_validation->set_rules('organizacion', 'Organizacion', 'trim|required|max_length[100]'); 
+           $organizacion = $this->input->POST('organizacion');
+           $re = 1;
+        }else{
+            $organizacion = " ";
+            $re = 0;
+        }
+       
+        $this->form_validation->set_message('required', 'El campo %s es obligatorio.');
+        $this->form_validation->set_message('trim','El campo %s no puede quedar vacio');
+        $this->form_validation->set_message('max_length', 'El campo %s debe tener máximo %d caracteres.');
+        $this->form_validation->set_message('min_length', 'El campo %s debe tener minimo %d caracteres.');
+
+        //Imagen
+        $config['upload_path'] = 'images/usuarios/';
+        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+        $config['max_size'] = '2048';
+        $this->load->library('upload', $config);
+  
+        /**
+        * Condicion que determina si las reglas no se cumplieron
+        * 
+        */
+        if ($this->form_validation->run() === false){
+                $data['title']="MEPPP | Perfil de usuario";
+                $data['page']="perfil";
+                $data['seccion']="8";
+                $data['title'] = 'MEPPP| Perfil';
+                $data['badUser'] = 4;
+                $data['imagen']="perfilSeccion";
+                $this->cargarVistaFront('vw_perfil', $data);
+
+        }else{
+
+            /**
+            * Condicion que determina si el campo avatar viene vacio.
+            * 
+            */
+            if ($_FILES['avatar']['name']!= null) {
+                /**
+                * Condicion que determina si la imagen que se subio cumplio con los requisitos.
+                * 
+                */
+                if (!$this->upload->do_upload('avatar')) {
+
+                    $data['title']="MEPPP | Perfil de usuario";
+                    $data['page']="perfil";
+                    $data['seccion']="8";
+                    $data['title'] = 'MEPPP| Perfil';
+                    $data['badUser'] = 7;
+                    $data['imagen']="perfilSeccion";
+                    $this->cargarVistaFront('vw_perfil', $data);  
+                }else{
+                    $data = array('upload_data' => $this->upload->data());
+                    $img_full_path = $config['upload_path'] . $data['upload_data']['file_name'];
+
+                    $config['image_library'] = 'gd2';
+                    $config['source_image'] = $img_full_path;
+                    $config['maintain_ratio'] = FALSE;
+                    $config['width'] = 215;
+                    $config['height'] = 215;
+                    $config['quality'] = 100;
+                    $config['new_image'] = 'images/usuarios/'. $data['upload_data']['file_name'];
+                    $this->load->library('image_lib', $config);
+                    if (!$this->image_lib->resize()) {
+                        echo $this->image_lib->display_errors();
+                    }
+
+                    $usuario = array(
+                        'avatar' => $data['upload_data']['file_name'],
+                        'nombreUsuario' => $this->input->POST('nombreUsuario'),
+                        'apePat' => $this->input->POST('apePat'),
+                        'apeMat' => $this->input->POST('apeMat'),
+                        'correoUsuario' => $this->input->POST('correoUsuario'),
+                        'organizacion' => $organizacion,
+                        'usuario' => $this->input->POST('usuario'),
+                        'contrasenia' => $this->input->POST('contrasenia'),
+                        'privilegios' => "Usuario general",
+                        'estatusUsuario' => "Activo"
+                    );
+
+                    $inicio = 0;$fin    = 3;
+                    $lada = substr($this->input->POST('telefono'),$inicio,$fin);
+                    $inicio = 3;$fin    = 9;
+                    $tel = substr($this->input->POST('telefono'),$inicio,$fin);
+                    $telefono = array(
+                        'lada' => $lada,
+                        'telefono' => $tel
+                    );
+
+                    $direccion = array(
+                        'calle' => $this->input->POST('calle'),
+                        'numero' => $this->input->POST('numero')
+                    );
+
+                    $colonia = array(
+                        'colonia' => $this->input->POST('colonia'),
+                        'cp' => $this->input->POST('cp')
+                    );
+                    $ciudad = array(
+                        'ciudad' => $this->input->POST('ciudad')
+                    );
+
+                    $this->Mdl_Usuario->update($ciudad,$colonia,$direccion,$telefono,$usuario,$re);
+                    $perfil = $this->Mdl_Usuario->getPerfil($this->session->userdata('perfil')->idUsuario);
+                            /**
+                            * Bucle que recorre el arreglo $user
+                            * El bucle asigna a la variable $datosUser el valor del elemento actual que está reccoriendo en ese momento, en la siguiente iteración devolverá el siguiente valor.
+                            */
+                            foreach ($perfil as $per) {}
+                            $this->session->set_userdata('perfil', $per);
+                        $data['title']="MEPPP | Perfil de usuario";
+                        $data['page']="perfil";
+                        $data['seccion']="8";
+                        $data['title'] = 'MEPPP| Perfil';
+                        $data['goodChanges'] = 1;
+                        $data['imagen']="perfilSeccion";
+                        $this->cargarVistaFront('vw_perfil', $data);
+
+                }
+            }else{
+
+            $usuario = array(
+                'avatar' => $this->session->userdata('perfil')->avatar,
+                'nombreUsuario' => $this->input->POST('nombreUsuario'),
+                'apePat' => $this->input->POST('apePat'),
+                'apeMat' => $this->input->POST('apeMat'),
+                'correoUsuario' => $this->input->POST('correoUsuario'),
+                'organizacion' => $organizacion,
+                'usuario' => $this->input->POST('usuario'),
+                'contrasenia' => $this->input->POST('contrasenia'),
+                'privilegios' => "Usuario general",
+                'estatusUsuario' => "Activo"
+            );
+
+            $inicio = 0;$fin    = 3;
+            $lada = substr($this->input->POST('telefono'),$inicio,$fin);
+            $inicio = 3;$fin    = 9;
+            $tel = substr($this->input->POST('telefono'),$inicio,$fin);
+            $telefono = array(
+                'lada' => $lada,
+                'telefono' => $tel
+            );
+
+            $direccion = array(
+                'calle' => $this->input->POST('calle'),
+                'numero' => $this->input->POST('numero')
+            );
+
+            $colonia = array(
+                'colonia' => $this->input->POST('colonia'),
+                'cp' => $this->input->POST('cp')
+            );
+            $ciudad = array(
+                'ciudad' => $this->input->POST('ciudad')
+            );
+
+            $this->Mdl_Usuario->update($ciudad,$colonia,$direccion,$telefono,$usuario,$re);
+            $perfil = $this->Mdl_Usuario->getPerfil($this->session->userdata('perfil')->idUsuario);
+                    /**
+                    * Bucle que recorre el arreglo $user
+                    * El bucle asigna a la variable $datosUser el valor del elemento actual que está reccoriendo en ese momento, en la siguiente iteración devolverá el siguiente valor.
+                    */
+                    foreach ($perfil as $per) {}
+                    $this->session->set_userdata('perfil', $per);
+                $data['title']="MEPPP | Perfil de usuario";
+                $data['page']="perfil";
+                $data['seccion']="8";
+                $data['title'] = 'MEPPP| Perfil';
+                $data['goodChanges'] = 1;
+                $data['imagen']="perfilSeccion";
+                $this->cargarVistaFront('vw_perfil', $data);
+
+            }
+        } 
+    }
+
+
+
 
 	/**
 	* Método que realiza la función de cerrar sesión
@@ -1453,7 +1846,7 @@ class Usuario extends CI_Controller
     public function cargarVistaFront($view, $data) 
     {
         $this->load->view('template/frontend/headerSeccion',$data);
-        $this->load->view('frontend/' . $view, $data);
+        $this->load->view('frontend/'.$view, $data);
         $this->load->view('template/frontend/footer');
     }
 }

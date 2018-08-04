@@ -139,12 +139,10 @@ class Mdl_Usuario extends CI_Model
 			'usuario' => $this->_usuario,
 			'contrasenia' => $pass,
 		);
-
-        $this->db->select('*');
+        $this->db->select("*");
         $this->db->from('usuarios');
         $this->db->where($data);
         $usuario = $this->db->get();
-
         /**
         * Condición que verifica si el resultado de la consulta anterior fue diferente a 0, si se cumple retorna un arreglo con el resultado, si no se cumple retorna un 0
         * 
@@ -184,6 +182,113 @@ class Mdl_Usuario extends CI_Model
         $usuario = $this->db->get();
 
         return $usuario->result(); 
+    }
+
+
+    /**
+    * Método que permite insertar un nuevo usuario desde el frontend
+    *
+    * @access public
+    * @param array $ciudad hace referencia a un arreglo con los datos de la tabla ciudad.
+    *        array $colonia hace referencia a un arreglo con los datos de la tabla colonia.
+    *        array $direccion hace referencia a un arreglo con los datos de la tabla direccion.
+    *        array $telefono hace referencia a un arreglo con los datos de la tabla telefono.
+    *        array $usuario hace referencia a un arreglo con los datos de la tabla usuario.
+    * @return void
+    *
+    * @since Método disponible desde la versión 1.0
+    * @deprecated Método obsoleto en la versión 2.0
+    * @todo Nada
+    */
+    public function insert($ciudad,$colonia,$direccion,$telefono,$usuario,$re) {
+        $this->db->trans_begin();
+
+        $this->db->insert('ciudades', $ciudad);
+        $lastIdCiudad = $this->db->insert_id();
+
+        $colonia+= array('Ciudades_idCiudad' => $lastIdCiudad);
+        $this->db->insert('colonias', $colonia);
+        $lastIdColonia = $this->db->insert_id();
+
+        $direccion+= array('Colonias_idColonia' => $lastIdColonia);
+        $this->db->insert('direcciones', $direccion);
+        $lastIdDireccion = $this->db->insert_id();
+
+        $this->db->insert('telefonos', $telefono);
+        $lastIdTelefono = $this->db->insert_id();
+
+        $usuario += array('Telefonos_idTelefono' => $lastIdTelefono);
+        $usuario += array('Direcciones_idDireccion' => $lastIdDireccion);
+        /**
+        * Condicion que determina que tipo de usuario será.
+        * 
+        */
+        if($re==1){
+            $usuario += array('TiposUsuario_idTipoUsuario' => 3);
+        }else{
+           $usuario += array('TiposUsuario_idTipoUsuario' => 2); 
+        }
+ 
+        $this->db->set('avatar',$usuario['avatar'])
+                ->set('nombreUsuario',$usuario['nombreUsuario'])
+                ->set('apePat',$usuario['apePat'])
+                ->set('apeMat',$usuario['apeMat'])
+                ->set('correoUsuario',$usuario['correoUsuario'])
+                ->set('organizacion',$usuario['organizacion'])
+                ->set('usuario',$usuario['usuario'])
+                ->set('contrasenia',"AES_ENCRYPT('{$this->user_password}','{$this->user_name}')",FALSE)
+                ->set('privilegios',$usuario['privilegios'])
+                ->set('estatusUsuario',$usuario['estatusUsuario'])
+                ->set('Telefonos_idTelefono',$usuario['Telefonos_idTelefono'])
+                ->set('Direcciones_idDireccion',$usuario['Direcciones_idDireccion'])
+                ->set('TiposUsuario_idTipoUsuario',$usuario['TiposUsuario_idTipoUsuario']);
+        $this->db->insert('usuarios');
+
+        if ($this->db->trans_status() === TRUE){
+            $this->db->trans_commit();
+        }else{
+            $this->db->trans_rollback();
+        }
+    }
+
+    /**
+    * Método que permite modificar un usuario existente e la aplicación
+    *
+    * @access public
+    * @param array $ciudad hace referencia a un arreglo con los datos de la tabla ciudad.
+    *        array $colonia hace referencia a un arreglo con los datos de la tabla colonia.
+    *        array $direccion hace referencia a un arreglo con los datos de la tabla direccion.
+    *        array $telefono hace referencia a un arreglo con los datos de la tabla telefono.
+    *        array $usuario hace referencia a un arreglo con los datos de la tabla usuario.
+    * @return void
+    *
+    * @since Método disponible desde la versión 1.0
+    * @deprecated Método obsoleto en la versión 2.0
+    * @todo Nada
+    */
+    public function update($ciudad,$colonia,$direccion,$telefono,$usuario,$re){
+        $this->db->trans_begin();
+
+        $this->db->where("idTelefono = ".$this->session->userdata('perfil')->idTelefono);
+        $this->db->update('telefonos', $telefono);
+
+        $this->db->where("idCiudad = ".$this->session->userdata('perfil')->idCiudad);
+        $this->db->update('ciudades', $ciudad);
+
+        $this->db->where("idColonia = ".$this->session->userdata('perfil')->idColonia);
+        $this->db->update('colonias', $colonia);
+
+        $this->db->where("idDireccion = ".$this->session->userdata('perfil')->idDireccion);
+        $this->db->update('direcciones', $direccion);
+
+        $this->db->where("idUsuario = ".$this->session->userdata('perfil')->idUsuario);
+        $this->db->update('usuarios', $usuario);
+
+        if ($this->db->trans_status() === TRUE){
+            $this->db->trans_commit();
+        }else{
+            $this->db->trans_rollback();
+        }
     }
 
     /**
