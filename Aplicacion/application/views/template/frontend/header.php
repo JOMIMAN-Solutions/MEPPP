@@ -100,14 +100,17 @@
               
               <?php
               /**
-              * Condicion que determina si la session perfil existe
+              * Condicion que determina si la sesión de un usuario existe
               * Si se cumple la condición, se abrirá una sección con el nombre del usuario logeado si no, se abrirá una sección para logearse o inscribirse. 
               *
               */
-               if ($this->session->userdata('perfil')) { ?>
+              if ($this->session->userdata('perfil')) { ?>
                 <li class="dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown"><?=$this->session->userdata('perfil')->nombreUsuario ?></a>
                     <ul class="dropdown-menu">
                       <li><a href="<?=base_url()?>Usuario/perfil">Perfil</a></li>
+                      <?php if ($this->session->has_userdata('idAdmin')): ?>
+                        <li><a href="<?=base_url().'Adopcion/cPanel';?>">Volver al cPanel</a></li>
+                      <?php endif; ?>
                       <li><a href="<?=base_url()?>Usuario/logout">Cerrar Sesión</a></li>
                     </ul>
                   </li>

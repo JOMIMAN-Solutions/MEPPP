@@ -128,9 +128,16 @@ class Mdl_Usuario extends CI_Model
 	*/
 	public function login()
 	{
+        // Cifrar la contraseña
+        $llave = $this->db->select("AES_ENCRYPT('$this->_contrasenia', 'meppp') AS pass")->get();
+        $miLlave = $llave->result();
+        foreach ($miLlave as $reg) {
+          $pass = $reg->pass;
+        }
+
 		$data = array(
 			'usuario' => $this->_usuario,
-			'contrasenia' => $this->_contrasenia,
+			'contrasenia' => $pass,
 		);
         $this->db->select("*");
         $this->db->from('usuarios');

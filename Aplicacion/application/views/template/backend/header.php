@@ -4,12 +4,12 @@
 * Ademas de esto contine los enlaces a los archicos css para dar los estilos a los elementos.
 *
 * @author Jonathan Jair Alfaro Sánchez
-* @link [dirección_url_de_la_ubicacion]
+* @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/views/template/backend
 * @package application/view/template/backend
 *
 * @version 1.0.0
 * Creado el 26/07/2018 a las 05:30 pm
-* Ultima modificacion el 28/07/2018 a las 07:55 pm
+* Ultima modificacion el 04/08/2018 a las 04:11 am
 */
 ?>
 
@@ -99,16 +99,22 @@
                     <ul class="navbar-nav my-lg-0">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            	<img src="<?=base_url().'template/backend/assets/images/users/1.jpg';?>" alt="user" class="profile-pic m-r-5" />Markarn Doe
+                                <img src="<?=base_url().'/images/usuarios/'.$avatar;?>" alt="user" class="profile-pic m-r-5">
+                                <?=$nombreUsuario;?>
                             </a>
 
                             <ul class="dropdown-menu">
-                                <a href="">
+                                <a href="<?=base_url().'Usuario/perfilAdmin';?>">
                                     <li class="dropdown-item">
                                         <span class="fa fa-user m-r-5"></span>Perfil
                                     </li>
                                 </a>
-                                <a href="">
+                                <a href="<?=base_url().'Frontend/index';?>">
+                                    <li class="dropdown-item">
+                                        <span class="fa fa-home m-r-5"></span>Ir al sitio
+                                    </li>
+                                </a>
+                                <a href="<?=base_url().'Usuario/logout';?>">
                                     <li class="dropdown-item">
                                         <span class="fa fa-sign-out m-r-5"></span>Cerrar sesión
                                     </li>

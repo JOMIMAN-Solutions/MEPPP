@@ -8,7 +8,7 @@
 *
 * @version 1.0.1
 * Creado el 13/06/2018 a las 01:10 am
-* Ultima modificacion el 03/08/2018 a las 02:25 am
+* Ultima modificacion el 03/08/2018 a las 01:09 am
 */
 ?>
 
@@ -161,7 +161,7 @@
             echo form_hidden('uri', $this->uri->segment(3));
             $btn = array(
               'type' => 'submit',
-              'content' => 'Adoptar <span class="fa fa-fw">&#xf004;</span>',
+              'content' => 'Añadir <span class="fa fa-fw">&#xf004;</span>',
               'class' => 'btn  btn-circle center-block greenButton2',
               'onclick' => 'guardarScroll()'
             );
@@ -255,7 +255,7 @@ if (isset($arboles) && $arboles != 0):
             echo form_hidden('uri', $this->uri->segment(3));
             $btn = array(
               'type' => 'submit',
-              'content' => 'Adoptar <span class="fa fa-fw">&#xf004;</span>',
+              'content' => 'Añadir <span class="fa fa-fw">&#xf004;</span>',
               'class' => 'btn btn-circle center-block blueButton',
               'onclick' => 'guardarScroll()'
             );
@@ -377,7 +377,7 @@ endif;
                           <?php endforeach; ?>
                         </table>
 
-                        <a href="#" class="btn btn-circle center-block greenButton2">Adoptar <span class="glyphicon glyphicon-heart"></span></a>
+                        <a href="<?=base_url().'Arbol/adoptar';?>" class="btn btn-circle center-block greenButton2">Adoptar <span class="glyphicon glyphicon-heart"></span></a>
                       </div>
 
                     <?php else: ?>

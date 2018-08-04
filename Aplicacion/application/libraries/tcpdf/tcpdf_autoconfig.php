@@ -244,14 +244,18 @@ if (!defined('NOMBRE_EMPRESA')) {
 	define ('NOMBRE_EMPRESA', 'Movimiento Ecologista Preocupados por el Planeta');
 }
 
-if (!defined('PATH_LOGO')) {
-	$path_logo = base_url().'images/';
+if (!defined('LOGO_EMPRESA')) {
+	$logo_empresa = '';
+	if (@file_exists(K_PATH_IMAGES.'meppp_logo.jpg')) {
+		$logo_empresa = 'meppp_logo.jpg';
+	}
+	define ('LOGO_EMPRESA', $logo_empresa);
 }
 
-if (!defined('LOGO_EMPRESA')) {
-	$tcpdf_header_logo = '';
-	if (@file_exists(PATH_LOGO.'tcpdf_logo.jpg')) {
-		$tcpdf_header_logo = 'tcpdf_logo.jpg';
+if (!defined('LOGO_WIDTH')) {
+	if (!empty($logo_empresa)) {
+		define ('LOGO_WIDTH', 15);
+	} else {
+		define ('LOGO_WIDTH', 0);
 	}
-	define ('LOGO_EMPRESA', $tcpdf_header_logo);
 }

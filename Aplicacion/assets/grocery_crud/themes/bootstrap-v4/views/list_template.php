@@ -122,7 +122,7 @@
                             <?php } ?>
                             <div class="floatR">
                                 <?php if(!$unset_pdf): ?>
-                                    <a href="<?=base_url().$pdf_url;?>" class="btn btn-default btn-outline-dark t5"><i class="el el-share m-r-5"></i>Generar PDF</a>
+                                    <a href="<?=base_url().$pdf_url;?>" target="_blank" class="btn btn-default btn-outline-dark t5"><i class="el el-share m-r-5"></i>Generar PDF</a>
                                 <?php endif; ?>
 
                                 <?php if(!$unset_export) { ?>

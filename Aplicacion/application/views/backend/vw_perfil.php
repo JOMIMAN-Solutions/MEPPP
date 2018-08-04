@@ -1,14 +1,14 @@
 <?php
 /**
-* Pagina de adopciones, del lado administrador
+* Pagina de Perfil, del lado administrador
 *
 * @author Jonathan Jair Alfaro Sánchez
 * @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/views/backend
 * @package application/view/backend
 *
 * @version 1.0.0
-* Creado el 26/07/2018 a las 06:00 pm
-* Ultima modificacion el 03/08/2018 a las 10:04 pm
+* Creado el 03/08/2018 a las 10:05 pm
+* Ultima modificacion el 03/08/2018 a las 10:13 pm
 */
 ?>
 
@@ -25,10 +25,10 @@
         <!-- ============================================================== -->
         <div class="row page-titles">
             <div class="col-12">
-                <h3 class="text-themecolor">Adopciones</h3>
+                <h3 class="text-themecolor">Perfil</h3>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><span class="text-themecolor">cPanel</span></li>
-                    <li class="breadcrumb-item active">Adopciones</li>
+                    <li class="breadcrumb-item active"><?=$seccion;?></li>
                     <li class="breadcrumb-item active"><?=$accion;?></li>
                 </ol>
             </div>

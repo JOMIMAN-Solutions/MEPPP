@@ -10,6 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *     - vaciarCanasta
 *     - misAdopciones
 *     - cPanel
+*     - pdf
 *     - cargarVistaFront
 *
 * @author Jonathan Jair Alfaro Sánchez
@@ -18,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *
 * @version 1.0.1
 * Creado el 14/06/2018 a las 10:40 pm
-* Ultima modificacion el 03/08/2018 a las 01:42 am
+* Ultima modificacion el 04/08/2018 a las 03:47 am
 *
 * @since Clase disponible desde la versión 1.0.0
 * @deprecated Clase obsoleta en la versión 2.0.0
@@ -219,6 +220,34 @@ class Arbol extends CI_Controller
         redirect(base_url().'Arbol', 'refresh');
     }
 
+    /**
+    * Método que pemrite enviar la solicitud de adopcion
+    *
+    * @access public
+    * @param Ninguno
+    * @return Nada
+    *
+    * @since Método disponible desde la versión 1.0.1
+    * @deprecated Método obsoleto en la versión 2.0.0
+    * @todo Nada
+    */
+    public function adoptar()
+    {
+        /**
+        * Condición para determinar si existe la sesión perfil
+        * Si no, se le mandara a loguearse. De lo contrario podra seguir con el proceso
+        */
+        if ($this->session->has_userdata('perfil')) {
+            $this->Mdl_Arbol->adoptar();
+
+            $this->cart->destroy();
+
+            redirect('Arbol/index');
+        } else {
+            redirect('Frontend/login');
+        }
+    }
+
 
 /* -------------------------------------- BACKEND --------------------------------------- */
 
@@ -235,138 +264,151 @@ class Arbol extends CI_Controller
     */
     public function cPanel()
     {
-        /* Cargar la libreria */
-        $this->load->library('grocery_CRUD');
-
-        /* Instanciar un objeto de grocery crud */
-        $crud = new grocery_CRUD();
-
-        /* Establecer el tema */
-        $crud->set_theme('bootstrap-v4');
-
-        /* Indicar el "objeto" que estaremos manejando */
-        $crud->set_subject('Árbol');
-
-        /* Indicar con que tabla se trabajará */
-        $crud->set_table('arboles');
-
-        /* Perzonalizar como se muestras los nombres de los campos */
-        $campos = array(
-            'idArbol' => 'ID',
-            'imagenArbol' => 'Imagen',
-            'nombreComun' => 'Nombre Común',
-            'nombreCientifico' => 'Nombre Científico',
-            'descripcion' => 'Descripción',
-            'existencia' => 'Existencia',
-            'estatusArbol' => 'Estatus',
-            'TiposArbol_idTipoArbol' => 'Tipo de árbol'
-        );
-        $crud->display_as($campos);
-
-        /* Establecer relaciones entra tablas */
-        // set_relation(campo_tabla_actual, tabla_a_relacionar, campo_tabla_relacionada)
-        $crud->set_relation('TiposArbol_idTipoArbol','tipos_arbol','tipoArbol');
-        // set_relation_n_n(nombre_relacion, tabla_det, tabla3, pk_tabla_actual, pk_tabla3, campo_mostrar)
-        $crud->set_relation_n_n('Temporadas', 'det_temporadas', 'temporadas_arbol', 'idArbol', 'idTemporadaArbol', 'temporadaArbol');
-
-        /* Establecer los campos que queremos ver en la lista */
-        // Todas
-        //$crud->columns('idArbol','imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol');
-        // Perzonalizado
-        $crud->columns('imagenArbol', 'nombreComun', 'existencia', 'TiposArbol_idTipoArbol', 'Temporadas', 'estatusArbol');
-        // Deshabilitando las que no se quieren
-        //$crud->unset_columns('idArbol', 'nombreCientifico', 'descripcion', 'TiposArbol_idTipoArbol');
-
-        /* Establecer los campos que queremos ver en los formularios */
-        // Todos
-        //$crud->fields('idArbol','imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol', 'Temporadas');
-        // Perzonalizado
-        $crud->fields('imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol', 'Temporadas');
-        // Para el formulario add
-        //$crud->add_fields('imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol');
-        //$crud->unset_add_fields('idFaq');
-        // Para el formulario edit
-        //$crud->edit_fields('imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol');
-        //$crud->unset_edit_fields('idFaq', 'Administradores_idAdministrador');
-
-        /* Cambiar el atributo type a un campo */
-        // The field type is a string and can take the following options:
-            // hidden      // set          // text       // enum         
-            // invisible   // integer      // date       // string      
-            // password    // true_false   // datetime   //readonly                           
-        // $crud->field_type(campo, type, value);
-        $crud->field_type('estatusArbol','dropdown', array('Activo' => 'Activo', 'Inactivo' => 'Inactivo'));
-        
-        /* Habilitar un input como campos para subir archivos */
-        $crud->set_field_upload('imagenArbol', 'images/arboles');
-
-        /* Establecer los campos que son requeridos en los formularios */
-        $crud->required_fields('imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol');
-
-        /* Establecer las reglas de los formularios */
-        // $crud->set_rules(campo, label, rule);
-        $crud->set_rules('nombreComun', 'Nombre Común', 'trim|required');
-        $crud->set_rules('nombreCientifico', 'Nombre Científico', 'trim|required');
-        $crud->set_rules('descripcion', 'Descripción', 'trim|required');
-
-        /* Deshabilitar funciones */
-        //$crud->unset_add();
-        //$crud->unset_edit();
-        //$crud->unset_read();
-        $crud->unset_delete();
-        //$crud->unset_print();
-        //$crud->unset_export();
-        //$crud->unset_operations();
-        //$crud->unset_back_to_list();
-        //$crud->unset_texteditor(campo, 'full_text');
-        $crud->unset_texteditor('descripcion', 'full_text');
-
-        /* Funcion de exportar a PDF */
-        //$crud->unset_pdf();
-        $crud->setPdfUrl('Arbol/pdf');
-
-        /* Condiciones para los datos a listar */
-        // $crud->where(campo, valor_condicion);
-
-        /* Ordenamiento de los datos a listar */
-        // $crud->order_by(campo, direccion);
-        $crud->order_by('nombreComun', 'ASC');
-
-        /* Renderizar la tabla */
-        $output = $crud->render();
-
-        /* Variables para perzonalizar las paginas */
-        // Titulo
-        $output->title = "cPanel | Invernadero";
-        // Clases para el menu lateral
-        $output->activeAdopcion = "";
-        $output->activeArbol = "active";
-        $output->activeCampania = "";
-        $output->activeComentario = "";
-        $output->activeFaq = "";
-        $output->activeUsuario = "";
-        $output->activeQuienesSomos = "";
-        // Seccion titulos
-
         /**
-        * Condicion que determina la pagina en la que se encuentra, para establecer un valor diferente a la variable $accion. 
+        * Verificar que exista sesion de un administrador
         */
-        if ($this->uri->segment(3) == '' || $this->uri->segment(3) == 'success') {
-            $output->accion = "Lista";
-        } else if ($this->uri->segment(3) == 'read') {
-            $output->accion = "Viendo";
-        } else if ($this->uri->segment(3) == 'add') {
-            $output->accion = "Agregando";
-        } else if ($this->uri->segment(3) == 'edit') {
-            $output->accion = "Modificando";
-        } else {
-            $output->accion = "";
-        }
+        if ($this->session->has_userdata('idAdmin')) {
+            /* Cargar la libreria */
+            $this->load->library('grocery_CRUD');
 
-        /* Cargar las vistas */
-        $this->load->view('template/backend/header',(array)$output);
-        $this->load->view('backend/vw_invernadero.php',(array)$output);
-        $this->load->view('template/backend/footer',(array)$output);
+            /* Instanciar un objeto de grocery crud */
+            $crud = new grocery_CRUD();
+
+            /* Establecer el tema */
+            $crud->set_theme('bootstrap-v4');
+
+            /* Indicar el "objeto" que estaremos manejando */
+            $crud->set_subject('Árbol');
+
+            /* Indicar con que tabla se trabajará */
+            $crud->set_table('arboles');
+
+            /* Perzonalizar como se muestras los nombres de los campos */
+            $campos = array(
+                'idArbol' => 'ID',
+                'imagenArbol' => 'Imagen',
+                'nombreComun' => 'Nombre Común',
+                'nombreCientifico' => 'Nombre Científico',
+                'descripcion' => 'Descripción',
+                'existencia' => 'Existencia',
+                'estatusArbol' => 'Estatus',
+                'TiposArbol_idTipoArbol' => 'Tipo de árbol'
+            );
+            $crud->display_as($campos);
+
+            /* Establecer relaciones entra tablas */
+            // set_relation(campo_tabla_actual, tabla_a_relacionar, campo_tabla_relacionada)
+            $crud->set_relation('TiposArbol_idTipoArbol','tipos_arbol','tipoArbol');
+            // set_relation_n_n(nombre_relacion, tabla_det, tabla3, pk_tabla_actual, pk_tabla3, campo_mostrar)
+            $crud->set_relation_n_n('Temporadas', 'det_temporadas', 'temporadas_arbol', 'idArbol', 'idTemporadaArbol', 'temporadaArbol');
+
+            /* Establecer los campos que queremos ver en la lista */
+            // Todas
+            //$crud->columns('idArbol','imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol');
+            // Perzonalizado
+            $crud->columns('imagenArbol', 'nombreComun', 'existencia', 'TiposArbol_idTipoArbol', 'Temporadas', 'estatusArbol');
+            // Deshabilitando las que no se quieren
+            //$crud->unset_columns('idArbol', 'nombreCientifico', 'descripcion', 'TiposArbol_idTipoArbol');
+
+            /* Establecer los campos que queremos ver en los formularios */
+            // Todos
+            //$crud->fields('idArbol','imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol', 'Temporadas');
+            // Perzonalizado
+            $crud->fields('imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol', 'Temporadas');
+            // Para el formulario add
+            //$crud->add_fields('imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol');
+            //$crud->unset_add_fields('idFaq');
+            // Para el formulario edit
+            //$crud->edit_fields('imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol');
+            //$crud->unset_edit_fields('idFaq', 'Administradores_idAdministrador');
+
+            /* Cambiar el atributo type a un campo */
+            // The field type is a string and can take the following options:
+                // hidden      // set          // text       // enum         
+                // invisible   // integer      // date       // string      
+                // password    // true_false   // datetime   //readonly                           
+            // $crud->field_type(campo, type, value);
+            $crud->field_type('estatusArbol','dropdown', array('Activo' => 'Activo', 'Inactivo' => 'Inactivo'));
+            
+            /* Habilitar un input como campos para subir archivos */
+            $crud->set_field_upload('imagenArbol', 'images/arboles');
+
+            /* Establecer los campos que son requeridos en los formularios */
+            $crud->required_fields('imagenArbol', 'nombreComun', 'nombreCientifico', 'descripcion', 'existencia', 'estatusArbol', 'TiposArbol_idTipoArbol');
+
+            /* Establecer las reglas de los formularios */
+            // $crud->set_rules(campo, label, rule);
+            $crud->set_rules('nombreComun', 'Nombre Común', 'trim|required');
+            $crud->set_rules('nombreCientifico', 'Nombre Científico', 'trim|required');
+            $crud->set_rules('descripcion', 'Descripción', 'trim|required');
+
+            /* Deshabilitar funciones */
+            //$crud->unset_add();
+            //$crud->unset_edit();
+            //$crud->unset_read();
+            $crud->unset_delete();
+            //$crud->unset_print();
+            //$crud->unset_export();
+            //$crud->unset_operations();
+            //$crud->unset_back_to_list();
+            //$crud->unset_texteditor(campo, 'full_text');
+            $crud->unset_texteditor('descripcion', 'full_text');
+
+            /* Funcion de exportar a PDF */
+            //$crud->unset_pdf();
+            $crud->setPdfUrl('Arbol/pdf');
+
+            /* Condiciones para los datos a listar */
+            // $crud->where(campo, valor_condicion);
+
+            /* Ordenamiento de los datos a listar */
+            // $crud->order_by(campo, direccion);
+            $crud->order_by('nombreComun', 'ASC');
+
+            /* Renderizar la tabla */
+            $output = $crud->render();
+
+            /* Variables para perzonalizar las paginas */
+            // Titulo
+            $output->title = "cPanel | Invernadero";
+            // Clases para el menu lateral
+            $output->activeAdopcion = "";
+            $output->activeArbol = "active";
+            $output->activeCampania = "";
+            $output->activeComentario = "";
+            $output->activeFaq = "";
+            $output->activeUsuario = "";
+            $output->activeQuienesSomos = "";
+            //Imagen y nombre del administrador
+            $this->load->model('Mdl_usuario');
+            $admin = $this->Mdl_usuario->getPerfil($this->session->userdata('idAdmin'));
+            foreach ($admin as $perfil) {
+                $output->nombreUsuario = $perfil->nombreUsuario;
+                $output->avatar = $perfil->avatar;
+            }
+            // Seccion titulos
+            /**
+            * Condicion que determina la pagina en la que se encuentra, para establecer un valor diferente a la variable $accion. 
+            */
+            if ($this->uri->segment(3) == '' || $this->uri->segment(3) == 'success') {
+                $output->accion = "Lista";
+            } else if ($this->uri->segment(3) == 'read') {
+                $output->accion = "Viendo";
+            } else if ($this->uri->segment(3) == 'add') {
+                $output->accion = "Agregando";
+            } else if ($this->uri->segment(3) == 'edit') {
+                $output->accion = "Modificando";
+            } else {
+                $output->accion = "";
+            }
+
+            /* Cargar las vistas */
+            $this->load->view('template/backend/header',(array)$output);
+            $this->load->view('backend/vw_invernadero.php',(array)$output);
+            $this->load->view('template/backend/footer',(array)$output);
+        } else {
+            redirect('Frontend/login');
+        }
     }
 
     /**
@@ -382,84 +424,119 @@ class Arbol extends CI_Controller
     */
     public function pdf ()
     {
-        //$this->load->view('generarPDF');
+        /**
+        * Verificar que exista sesion de un administrador
+        */
+        if ($this->session->has_userdata('idAdmin')) {
+            $this->load->library('Pdf');
+            $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
 
-        $this->load->library('Pdf');
-        $pdf = new Pdf('P', 'mm', 'A4', true, 'UTF-8', false);
-        $pdf->SetCreator(PDF_CREATOR);
-        /*$pdf->SetAuthor('Israel Parra');
-        $pdf->SetTitle('Ejemplo de provincías con TCPDF');
-        $pdf->SetSubject('Tutorial TCPDF');
-        $pdf->SetKeywords('TCPDF, PDF, example, test, guide');*/
- 
-        // Datos por defecto de cabecera, se pueden modificar en el archivo tcpdf_config_alt.php de libraries/config
-        $pdf->SetHeaderData(LOGO_EMPRESA, PDF_HEADER_LOGO_WIDTH, 'Invernadero - 001', PDF_HEADER_TITLE, array(0, 64, 255), array(0, 64, 128));
-        $pdf->setFooterData($tc = array(0, 64, 0), $lc = array(0, 64, 128));
- 
-        // datos por defecto de cabecera, se pueden modificar en el archivo tcpdf_config.php de libraries/config
-        $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-        $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
- 
-        // se pueden modificar en el archivo tcpdf_config.php de libraries/config
-        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
- 
-        // se pueden modificar en el archivo tcpdf_config.php de libraries/config
-        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-        $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
- 
-        // se pueden modificar en el archivo tcpdf_config.php de libraries/config
-        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
- 
-        //relación utilizada para ajustar la conversión de los píxeles
-        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
- 
- 
-        // ---------------------------------------------------------
-        // establecer el modo de fuente por defecto
-        $pdf->setFontSubsetting(true);
- 
-        // Establecer el tipo de letra
- 
-        //Si tienes que imprimir carácteres ASCII estándar, puede utilizar las fuentes básicas como
-        // Helvetica para reducir el tamaño del archivo.
-        $pdf->SetFont('freemono', '', 14, '', true);
- 
-        // Añadir una página
-        // Este método tiene varias opciones, consulta la documentación para más información.
-        $pdf->AddPage();
- 
-        //fijar efecto de sombra en el texto
-        $pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
- 
-        // Establecemos el contenido para imprimir
-        //preparamos y maquetamos el contenido a crear
-        $html = '';
-        $html .= "<style type=text/css>";
-        $html .= "th{color: #fff; font-weight: bold; background-color: #222}";
-        $html .= "td{background-color: #AAC7E3; color: #fff}";
-        $html .= "</style>";
-        $html .= "<table width='100%'>";
-        $html .= "<tr><th>Id localidad</th><th>Invernadero</th></tr>";
-        
-        //provincias es la respuesta de la función getProvinciasSeleccionadas($provincia) del modelo
-        $arboles = $this->Mdl_Arbol->getAllInvernadero();
-        foreach($arboles as $arbol){
-            $nombre = $arbol->nombreArbol;
-
-            $html .= "<tr><td class='localidad'>" . $nombre . "</td></tr>";
+            // Fecha
+            date_default_timezone_set('America/Mexico_City');
+            $header = 'Reporte del invernadero';
+     
+            // Datos por defecto de cabecera, se pueden modificar en el archivo tcpdf_config_alt.php de libraries/config
+            $pdf->SetHeaderData(LOGO_EMPRESA, LOGO_WIDTH, $header, NOMBRE_EMPRESA, array(12, 38, 12), array(63, 191, 63));
+            $pdf->setFooterData(array(12, 38, 12), array(63, 191, 63));
+     
+            // datos por defecto de cabecera, se pueden modificar en el archivo tcpdf_config.php de libraries/config
+            $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+            $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+     
+            // se pueden modificar en el archivo tcpdf_config.php de libraries/config
+            $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+     
+            // se pueden modificar en el archivo tcpdf_config.php de libraries/config
+            $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+            $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+            $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+     
+            // se pueden modificar en el archivo tcpdf_config.php de libraries/config
+            $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+     
+            //relación utilizada para ajustar la conversión de los píxeles
+            $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+     
+     
+            // ---------------------------------------------------------
+            // establecer el modo de fuente por defecto
+            $pdf->setFontSubsetting(true);
+     
+            // Establecer el tipo de letra
+     
+            //Si tienes que imprimir carácteres ASCII estándar, puede utilizar las fuentes básicas como
+            // Helvetica para reducir el tamaño del archivo.
+            $pdf->SetFont('freemono', '', 11, '', true);
+     
+            // Añadir una página
+            // Este método tiene varias opciones, consulta la documentación para más información.
+            $pdf->AddPage();
+     
+            //fijar efecto de sombra en el texto
+            $pdf->setTextShadow(array('enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array(196, 196, 196), 'opacity' => 1, 'blend_mode' => 'Normal'));
+     
+            // Establecemos el contenido para imprimir
+            //preparamos y maquetamos el contenido a crear
+            $html = '';
+            $html .= '<!DOCTYPE html>';
+            $html .= '<html lang="en">';
+            $html .= '<head>';
+                $html .= '<meta charset="UTF-8">';
+                $html .= '<title>Invernadero</title>';
+                $html .= '<style type=text/css>';
+                    $html .= 'body{text-align: center;}';
+                    $html .= 'table, th, td{border:1px black solid; border-collapse: collapse;}';
+                $html .= '</style>';
+            $html .= '</head>';
+            $html .= '<body>';
+                $html .= '<table width="100%">';
+                    $html .= '<tr>';
+                        $html .= '<th><strong>Nombre Común</strong></th>';
+                        $html .= '<th><strong>Nombre Científico</strong></th>';
+                        $html .= '<th><strong>Existencia</strong></th>';
+                        $html .= '<th><strong>Tipo de arbol</strong></th>';
+                        $html .= '<th><strong>Temporada(s)</strong></th>';
+                    $html .= '</tr>';
+                    $html .= '<tr>';
+                        $html .= '<td></td>';
+                    $html .= '</tr>';
+                    $arboles = $this->Mdl_Arbol->getAllInvernadero();
+                    /**
+                    * Ciclo que recorre los registros de arboles e inserta una fila por cada uno.
+                    */
+                    foreach($arboles as $arbol){
+                        $html .= '<tr>';
+                            $html .= '<td>'.$arbol->nombreComun.'</td>';
+                            $html .= '<td>'.$arbol->nombreCientifico.'</td>';
+                            $html .= '<td>'.$arbol->existencia.'</td>';
+                            $html .= '<td>'.$arbol->tipoArbol.'</td>';
+                            $html .= '<td>';
+                                $temps = $this->Mdl_Arbol->getTempsArboles($arbol->idArbol);
+                                /**
+                                * Ciclo que recorre los registros de las temporadas de cada árbol
+                                */
+                                foreach($temps as $temp){
+                                    $html .= $temp->temporadaArbol.'. ';
+                                }
+                            $html .= '</td>';
+                        $html .= '</tr>';
+                    }
+                $html .= '</table>';
+            $html .= '</body>';
+            $html .= '</html>';
+     
+            // Imprimimos el texto con writeHTMLCell()
+            $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $html, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
+     
+            // ---------------------------------------------------------
+            // Cerrar el documento PDF y preparamos la salida
+            // Este método tiene varias opciones, consulte la documentación para más información.
+            $titulo = 'Invernadero_'.date('d').'-'.date('m').'-'.date('Y');
+            $nombre_archivo = utf8_decode($titulo.".pdf");
+            $pdf->Output($nombre_archivo, 'I');
+        } else {
+            redirect('Frontend/login');
         }
-
-        $html .= "</table>";
- 
-        // Imprimimos el texto con writeHTMLCell()
-        $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $html, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
- 
-        // ---------------------------------------------------------
-        // Cerrar el documento PDF y preparamos la salida
-        // Este método tiene varias opciones, consulte la documentación para más información.
-        $nombre_archivo = utf8_decode("Localidades de "."Invernadero.pdf");
-        $pdf->Output($nombre_archivo, 'I');
     }
 
 
