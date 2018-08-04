@@ -3,12 +3,12 @@
 * Pagina de comentarios, del lado administrador
 *
 * @author Jonathan Jair Alfaro Sánchez
-* @link [dirección_url_de_la_ubicacion]
+* @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/views/backend
 * @package application/view/backend
 *
 * @version 1.0.0
 * Creado el 26/07/2018 a las 08:33 pm
-* Ultima modificacion el 03/08/2018 a las 12:36 am
+* Ultima modificacion el 03/08/2018 a las 10:09 pm
 */
 ?>
 

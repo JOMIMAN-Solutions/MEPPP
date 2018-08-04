@@ -3,12 +3,12 @@
 * Archivo que contiene los scripts a los archivos JavaScript
 *
 * @author Jonathan Jair Alfaro Sánchez
-* @link [dirección_url_de_la_ubicacion]
+* @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/views/template/backend
 * @package application/view/template/backend
 *
 * @version 1.0.0
 * Creado el 26/07/2018 a las 05:30 pm
-* Ultima modificacion el 28/07/2018 a las 07:56 pm
+* Ultima modificacion el 04/08/2018 a las 04:11 am
 */
 ?>
 

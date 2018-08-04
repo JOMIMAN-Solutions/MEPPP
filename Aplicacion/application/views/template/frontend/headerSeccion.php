@@ -97,6 +97,9 @@
                 <li class="dropdown"><a class="dropdown-toggle" id="<?php if($page=='perfil'){echo 'active';} ?>" data-toggle="dropdown"><?=$this->session->userdata('perfil')->nombreUsuario ?></a>
                     <ul class="dropdown-menu">
                       <li><a href="<?=base_url()?>Usuario/perfil">Perfil</a></li>
+                      <?php if ($this->session->has_userdata('idAdmin')): ?>
+                        <li><a href="<?=base_url().'Adopcion/cPanel';?>">Volver al cPanel</a></li>
+                      <?php endif; ?>
                       <li><a href="<?=base_url()?>Usuario/logout">Cerrar Sesión</a></li>
                     </ul>
                   </li>
