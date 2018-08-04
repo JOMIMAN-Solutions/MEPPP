@@ -332,7 +332,6 @@ $('.bloque').smoove({offset:'10%'});
           * Condición que determina si la variable $cont existe, para crear los botones de el slider socios.
           */ 
           if (isset($cont) && $socios != 0){
-            echo "<script>alert(".$cont.");</script>";
             /**
             * Condición que activa los botones de control si hay mas de una pestaña en el slider.
             */ 
