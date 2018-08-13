@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *
 * @version 1.0.1
 * Creado el 15/06/2018 a las 10:05 am
-* Ultima modificacion el 04/08/2018 a las 03:48 am
+* Ultima modificacion el 04/08/2018 a las 09:30 am
 *
 * @since Clase disponible desde la versión 1.0.0
 * @deprecated Clase obsoleta en la versión 2.0.0
@@ -30,6 +30,7 @@ class Campania extends CI_Controller
 	function __construct() {
         parent::__construct();
         $this->load->model('Mdl_Campania');
+        $this->load->model('Mdl_QuienesSomos');
     }
 
     /**
@@ -254,7 +255,14 @@ class Campania extends CI_Controller
             $this->load->view('backend/vw_campanias.php',(array)$output);
             $this->load->view('template/backend/footer',(array)$output);
         } else {
-            redirect('Frontend/login');
+            /**
+            * Verificar si hay sesión de un usuario que no es administrador
+            */
+            if ($this->session->has_userdata('perfil')) {
+                redirect('Frontend/index');
+            } else {
+                redirect('Frontend/login');
+            }
         }
     }
 
@@ -404,7 +412,14 @@ class Campania extends CI_Controller
             $this->load->view('backend/vw_campanias.php',(array)$output);
             $this->load->view('template/backend/footer',(array)$output);
         } else {
-            redirect('Frontend/login');
+            /**
+            * Verificar si hay sesión de un usuario que no es administrador
+            */
+            if ($this->session->has_userdata('perfil')) {
+                redirect('Frontend/index');
+            } else {
+                redirect('Frontend/login');
+            }
         }
     }
 
@@ -429,6 +444,15 @@ class Campania extends CI_Controller
     {
         $this->load->view('template/frontend/headerSeccion',$data);
         $this->load->view('frontend/' . $view, $data);
-        $this->load->view('template/frontend/footer');
+
+        $datos = $this->Mdl_QuienesSomos->getDatos();
+        foreach ($datos as $dato) {}
+        $data['dato'] = $dato;
+
+        $direccion = $this->Mdl_QuienesSomos->getDireccion();
+        foreach ($direccion as $dir) {}
+        $data['direccion'] = $dir;
+
+        $this->load->view('template/frontend/footer', $data);
     }
 }

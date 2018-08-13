@@ -11,7 +11,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *
 * @version 1.0.1
 * Creado el 01/08/2018 a las 01:49 pm
-* Ultima modificacion el 04/08/2018 a las 03:49 am
+* Ultima modificacion el 04/08/2018 a las 09:28 am
 *
 * @since Clase disponible desde la versión 1.0.0
 * @deprecated Clase obsoleta en la versión 2.0.0
@@ -21,6 +21,34 @@ class QuienesSomos extends CI_Controller
 {
 	function __construct() {
         parent::__construct();
+        $this->load->model('Mdl_QuienesSomos');
+    }
+
+    /**
+    * Cargar pagina ¿Quienes somos?
+    *
+    * @access public
+    * @param Nada
+    * @return void
+    *
+    * @since Método disponible desde la versión 1.0
+    * @deprecated Método obsoleto en la versión 2.0
+    * @todo Nada
+    */
+    public function index(){
+        $data['title'] = "MEPPP | ¿Quienes Somos?";
+        $data['page'] = "¿Quienes Somos?";
+        $data['seccion'] = "5";
+        $data['imagen'] = 'quienesSomosSeccion';
+
+        $filosofia = $this->Mdl_QuienesSomos->getFilosofia();
+        foreach ($filosofia as $filo) {}
+        $data['filosofia'] = $filo;
+
+        $valores = $this->Mdl_QuienesSomos->getvalores();
+        $data['valores'] = $valores;
+
+        $this->cargarVistaFront('vw_quienesSomos', $data);
     }
 
     /**
@@ -194,7 +222,14 @@ class QuienesSomos extends CI_Controller
             $this->load->view('backend/vw_quienes_somos.php',(array)$output);
             $this->load->view('template/backend/footer',(array)$output);
         } else {
-            redirect('Frontend/login');
+            /**
+            * Verificar si hay sesión de un usuario que no es administrador
+            */
+            if ($this->session->has_userdata('perfil')) {
+                redirect('Frontend/index');
+            } else {
+                redirect('Frontend/login');
+            }
         }
     }
 
@@ -362,7 +397,14 @@ class QuienesSomos extends CI_Controller
             $this->load->view('backend/vw_quienes_somos.php',(array)$output);
             $this->load->view('template/backend/footer',(array)$output);
         } else {
-            redirect('Frontend/login');
+            /**
+            * Verificar si hay sesión de un usuario que no es administrador
+            */
+            if ($this->session->has_userdata('perfil')) {
+                redirect('Frontend/index');
+            } else {
+                redirect('Frontend/login');
+            }
         }
     }
 
@@ -515,7 +557,54 @@ class QuienesSomos extends CI_Controller
             $this->load->view('backend/vw_quienes_somos.php',(array)$output);
             $this->load->view('template/backend/footer',(array)$output);
         } else {
-            redirect('Frontend/login');
+            /**
+            * Verificar si hay sesión de un usuario que no es administrador
+            */
+            if ($this->session->has_userdata('perfil')) {
+                redirect('Frontend/index');
+            } else {
+                redirect('Frontend/login');
+            }
         }
+    }
+
+
+
+
+/* ------------------------------------------------------------------------------------- */
+
+    /**
+    * Método que carga las vistas especificadas para el frontend
+    * Por defecto ya carga el header y footer y la vista a cargar debe ser especificada.
+    *
+    * @access public
+    * @param 
+    *    - String $view Vista que se desea cargar
+    *    - Array $data Arreglo que contiene variables que serviran en la pagina cargada
+    * @return void
+    *
+    * @since Método disponible desde la versión 1.0
+    * @deprecated Método obsoleto en la versión 2.0
+    * @todo Nada
+    */
+    public function cargarVistaFront($view, $data) 
+    {
+        if (isset($data['seccion'])) {
+            $this->load->view('template/frontend/headerSeccion',$data);
+        }else{
+            $this->load->view('template/frontend/header', $data);   
+        }
+
+        $this->load->view('frontend/' . $view, $data);
+
+        $datos = $this->Mdl_QuienesSomos->getDatos();
+        foreach ($datos as $dato) {}
+        $data['dato'] = $dato;
+
+        $direccion = $this->Mdl_QuienesSomos->getDireccion();
+        foreach ($direccion as $dir) {}
+        $data['direccion'] = $dir;
+
+        $this->load->view('template/frontend/footer', $data);
     }
 }

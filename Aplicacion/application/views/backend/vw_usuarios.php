@@ -8,7 +8,7 @@
 *
 * @version 1.0.0
 * Creado el 26/07/2018 a las 08:33 pm
-* Ultima modificacion el 03/08/2018 a las 10:11 pm
+* Ultima modificacion el 12/08/2018 a las 07:36 pm
 */
 ?>
 
@@ -46,9 +46,11 @@
                 <div class="card">
                     <div class="card-block">
                         <div class="row">
+                            <?php if($this->session->has_userdata('idAdmin') && $this->session->userdata('perfil')->privilegios == 'Súper'): ?>
                             <div class="col-xs-12 col-md-2 m-b-10">
-                                <a href="<?=base_url().'Usuario/admin';?>" class="btn btn-default btn-outline-dark <?php if($seccion == 'Administradores'){echo 'active';}?>"><i class="fa fa-user-secret m-r-5"></i>Administradores</a>
+                                <a href="<?=base_url().'Usuario/admin';?>" class="btn btn-default btn-outline-dark <?php if($seccion == 'Administradores'){echo 'active';}?>"><i class="fa fa-user-secret m-r-5"></i>Admins</a>
                             </div>
+                        <?php endif; ?>
                             <div class="col-xs-12 col-md-2 m-b-10">
                                 <a href="<?=base_url().'Usuario/miembros';?>" class="btn btn-default btn-outline-dark <?php if($seccion == 'Miembros'){echo 'active';}?>"><i class="fa fa-pagelines m-r-5"></i>Miembros</a>
                             </div>
@@ -59,7 +61,7 @@
                                 <a href="<?=base_url().'Usuario/representantes';?>" class="btn btn-default btn-outline-dark <?php if($seccion == 'Representantes'){echo 'active';}?>"><i class="fa fa-building m-r-5"></i>Representantes</a>
                             </div>
                             <div class="col-xs-12 col-md-2 m-b-10">
-                                <a href="<?=base_url().'Usuario/general';?>" class="btn btn-default btn-outline-dark <?php if($seccion == 'Usuarios generales'){echo 'active';}?>"><i class="fa fa-users m-r-5"></i>Usuarios generales</a>
+                                <a href="<?=base_url().'Usuario/general';?>" class="btn btn-default btn-outline-dark <?php if($seccion == 'Usuarios generales'){echo 'active';}?>"><i class="fa fa-users m-r-5"></i>Generales</a>
                             </div>
                         </div>
 

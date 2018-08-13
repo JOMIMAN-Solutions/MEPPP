@@ -1645,6 +1645,7 @@ class grocery_CRUD_Layout extends grocery_CRUD_Model_Driver
 		$data->unset_export			= $this->unset_export;
 		$data->unset_pdf			= $this->unset_pdf;
 		$data->pdf_url				= $this->getPdfUrl();
+		$data->activarEstatus		= $this->getActivarEstatus();;
 		$data->unset_print			= $this->unset_print;
 
 		$default_per_page = $this->config->default_per_page;
@@ -3627,6 +3628,7 @@ class Grocery_CRUD extends grocery_CRUD_States
 	protected $unset_export			= false;
 	protected $unset_pdf			= false;
 	protected $pdf_url				= '';
+	protected $activarEstatus		= false;
 	protected $unset_print			= false;
 	protected $unset_back_to_list	= false;
     protected $unset_clone			= false;
@@ -3925,6 +3927,16 @@ class Grocery_CRUD extends grocery_CRUD_States
 	public function setPdfUrl($url)
 	{
 		return $this->pdf_url = $url;
+	}
+
+	public function getActivarEstatus()
+	{
+		return $this->activarEstatus;
+	}
+
+	public function setActivarEstatus($bool)
+	{
+		return $this->activarEstatus = $bool;
 	}
 
 	/**

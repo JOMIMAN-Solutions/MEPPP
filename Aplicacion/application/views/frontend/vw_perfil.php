@@ -197,7 +197,14 @@
                                 <input type="text" class="form-control" value="<?=$this->session->userdata('perfil')->usuario?>" id="usuario" name="usuario" readonly required>
                               </td>
                               <td class="whiteD">
-                                <input type="text" class="form-control" value="<?=$this->session->userdata('perfil')->contrasenia?>" id="contrasenia" name="contrasenia" readonly required>
+                                <?php 
+                                $llave = $this->db->select("AES_DECRYPT('".$this->session->userdata('perfil')->contrasenia."', 'meppp') AS pass")->get();
+                                $miLlave =  $llave->result();
+                                foreach ($miLlave as $reg) {
+                                  $pass = $reg->pass;
+                                }
+                                ?>
+                                <input type="text" class="form-control" value="<?=$pass;?>" id="contrasenia" name="contrasenia" readonly required>
                               </td>
                               <td class="whiteD">
                                 <input type="text" class="form-control" value="<?=$this->session->userdata('perfil')->tipoUsuario?>" id="tipo" readonly required>
@@ -303,7 +310,7 @@
     document.getElementById("usuario").value = "<?=$this->session->userdata('perfil')->usuario?>";
     document.getElementById("usuario").setAttribute("readonly","true");
 
-    document.getElementById("contrasenia").value = "<?=$this->session->userdata('perfil')->contrasenia?>";
+    document.getElementById("contrasenia").value = "<?=$pass;?>";
     document.getElementById("contrasenia").setAttribute("readonly","true");
 
     $("#acept").hide();

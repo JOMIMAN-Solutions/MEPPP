@@ -41,6 +41,13 @@
                     <?php if(!$unset_edit){?>
                         <a class="btn btn-default btn-outline-dark" href="<?php echo $row->edit_url?>"><i class="el el-pencil"></i> <?php echo $this->l('list_edit'); ?></a>
                     <?php } ?>
+
+                    <?php if ($activarEstatus == true) { ?>
+                        <a href="<?php echo $row->read_url?>" class="btn btn-default btn-outline-dark">
+                            <i class="el el-eye-open"></i> <?php echo $this->l('list_view')?>
+                        </a>
+                    <?php } ?>
+
                     <?php if (!empty($row->action_urls) || !$unset_read || !$unset_delete) { ?>
 
                         <?php if ($show_more_button) { ?>
@@ -62,7 +69,7 @@
                                         <?php }
                                     }
                                     ?>
-                                    <?php if (!$unset_read) { ?>
+                                    <?php if (!$unset_read && $activarEstatus == false) { ?>
                                         <a href="<?php echo $row->read_url?>" class="dropdown-item">
                                             <i class="el el-eye-open"></i> <?php echo $this->l('list_view')?>
                                         </a>
@@ -86,7 +93,7 @@
                                     <?php }
                                 }
 
-                                if (!$unset_read) { ?>
+                                if (!$unset_read  && $activarEstatus == false) { ?>
                                     <a class="btn btn-default btn-outline-dark" href="<?php echo $row->read_url?>"><i class="el el-eye-open"></i> <?php echo $this->l('list_view')?></a>
                                 <?php }
 
@@ -124,7 +131,7 @@
                                 <?php }
                             }
                             ?>
-                            <?php if (!$unset_read) { ?>
+                            <?php if (!$unset_read  && $activarEstatus == false) { ?>
                                 <a href="<?php echo $row->read_url?>" class="dropdown-item">
                                     <i class="el el-eye-open"></i> <?php echo $this->l('list_view')?>
                                 </a>

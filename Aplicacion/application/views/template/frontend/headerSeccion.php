@@ -86,7 +86,7 @@
               <li class="dropdown"><a  href="<?=base_url().'Usuario/getSocios';?>" id="<?php if($page=='Socios'){echo 'active';} ?>" >Socios <span class="glyphicon glyphicon-briefcase"></span></a></li>
               <li class="dropdown"><a  href="<?=base_url().'Comentario';?>" id="<?php if($page=='Comentarios'){echo 'active';} ?>">Comentarios <span class="glyphicon glyphicon-comment"></span></a></li>
               <li class="dropdown"><a  href="<?=base_url().'Faq';?>" id="<?php if($page=='FAQS'){echo 'active';} ?>">FAQS <span class="glyphicon glyphicon-question-sign"></span></a></li>
-              <li class="dropdown"><a  href="<?=base_url().'Frontend/quienesSomos';?>" id="<?php if($page=='¿Quienes Somos?'){echo 'active';} ?>" >¿Quiénes somos? <span class="glyphicon glyphicon-globe"></span></a></li>
+              <li class="dropdown"><a  href="<?=base_url().'QuienesSomos';?>" id="<?php if($page=='¿Quienes Somos?'){echo 'active';} ?>" >¿Quiénes somos? <span class="glyphicon glyphicon-globe"></span></a></li>
               <?php
               /**
               * Condicion que determina si la session perfil existe
