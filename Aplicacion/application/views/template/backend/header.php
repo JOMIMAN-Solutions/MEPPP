@@ -41,9 +41,9 @@
     <!-- CSS files of Grocery CRUD -->
     <?php 
     foreach ($css_files as $file): 
-        if ($file == "http://localhost/MEPPP/Aplicacion/assets/grocery_crud/themes/bootstrap-v4/css/bootstrap/bootstrap.min.css"): 
+        if ($file == base_url()."assets/grocery_crud/themes/bootstrap-v4/css/bootstrap/bootstrap.min.css"): 
     ?>
-            <link rel="stylesheet" href="http://localhost/MEPPP/Aplicacion/assets/grocery_crud/themes/bootstrap-v4/css/bootstrap/bootstrap.css">
+            <link rel="stylesheet" href="<?=base_url().'assets/grocery_crud/themes/bootstrap-v4/css/bootstrap/bootstrap.css';?>">
         <?php else: ?>
             <link rel="stylesheet" href="<?=$file;?>">
         <?php endif; ?>

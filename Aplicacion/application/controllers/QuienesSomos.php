@@ -22,6 +22,7 @@ class QuienesSomos extends CI_Controller
 	function __construct() {
         parent::__construct();
         $this->load->model('Mdl_QuienesSomos');
+        $this->load->model('Mdl_Usuario');
     }
 
     /**
@@ -195,8 +196,7 @@ class QuienesSomos extends CI_Controller
             $output->activeUsuario = "";
             $output->activeQuienesSomos = "active";
             //Imagen y nombre del administrador
-            $this->load->model('Mdl_usuario');
-            $admin = $this->Mdl_usuario->getPerfil($this->session->userdata('idAdmin'));
+            $admin = $this->Mdl_Usuario->getPerfil($this->session->userdata('idAdmin'));
             foreach ($admin as $perfil) {
                 $output->nombreUsuario = $perfil->nombreUsuario;
                 $output->avatar = $perfil->avatar;
@@ -370,7 +370,6 @@ class QuienesSomos extends CI_Controller
             $output->activeUsuario = "";
             $output->activeQuienesSomos = "active";
             //Imagen y nombre del administrador
-            $this->load->model('Mdl_usuario');
             $admin = $this->Mdl_usuario->getPerfil($this->session->userdata('idAdmin'));
             foreach ($admin as $perfil) {
                 $output->nombreUsuario = $perfil->nombreUsuario;
@@ -530,7 +529,6 @@ class QuienesSomos extends CI_Controller
             $output->activeUsuario = "";
             $output->activeQuienesSomos = "active";
             //Imagen y nombre del administrador
-            $this->load->model('Mdl_usuario');
             $admin = $this->Mdl_usuario->getPerfil($this->session->userdata('idAdmin'));
             foreach ($admin as $perfil) {
                 $output->nombreUsuario = $perfil->nombreUsuario;

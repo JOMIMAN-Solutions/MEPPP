@@ -356,8 +356,16 @@ class Arbol extends CI_Controller
             $crud->unset_texteditor('descripcion', 'full_text');
 
             /* Funcion de exportar a PDF */
-            //$crud->unset_pdf();
-            $crud->setPdfUrl('Arbol/pdf');
+            /**
+            * Validar si existen arboles en el invernadero
+            * Si no existen deshabilita la funcion de exportar a pdf
+            */
+            $arboles = $this->Mdl_Arbol->getAllInvernadero();
+            if ($arboles == 0) {
+                $crud->unset_pdf();
+            } else {
+                $crud->setPdfUrl('Arbol/pdf');
+            }
 
             /* Condiciones para los datos a listar */
             // $crud->where(campo, valor_condicion);
@@ -381,8 +389,8 @@ class Arbol extends CI_Controller
             $output->activeUsuario = "";
             $output->activeQuienesSomos = "";
             //Imagen y nombre del administrador
-            $this->load->model('Mdl_usuario');
-            $admin = $this->Mdl_usuario->getPerfil($this->session->userdata('idAdmin'));
+            $this->load->model('Mdl_Usuario');
+            $admin = $this->Mdl_Usuario->getPerfil($this->session->userdata('idAdmin'));
             foreach ($admin as $perfil) {
                 $output->nombreUsuario = $perfil->nombreUsuario;
                 $output->avatar = $perfil->avatar;

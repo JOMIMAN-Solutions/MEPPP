@@ -732,8 +732,7 @@ class Usuario extends CI_Controller
             $output->activeUsuario = "active";
             $output->activeQuienesSomos = "";
             //Imagen y nombre del administrador
-            $this->load->model('Mdl_usuario');
-            $admin = $this->Mdl_usuario->getPerfil($this->session->userdata('idAdmin'));
+            $admin = $this->Mdl_Usuario->getPerfil($this->session->userdata('idAdmin'));
             foreach ($admin as $perfil) {
                 $output->nombreUsuario = $perfil->nombreUsuario;
                 $output->avatar = $perfil->avatar;
@@ -923,8 +922,7 @@ class Usuario extends CI_Controller
             $output->activeUsuario = "active";
             $output->activeQuienesSomos = "";
             //Imagen y nombre del administrador
-            $this->load->model('Mdl_usuario');
-            $admin = $this->Mdl_usuario->getPerfil($this->session->userdata('idAdmin'));
+            $admin = $this->Mdl_Usuario->getPerfil($this->session->userdata('idAdmin'));
             foreach ($admin as $perfil) {
                 $output->nombreUsuario = $perfil->nombreUsuario;
                 $output->avatar = $perfil->avatar;
@@ -1123,8 +1121,7 @@ class Usuario extends CI_Controller
             $output->activeUsuario = "active";
             $output->activeQuienesSomos = "";
             //Imagen y nombre del administrador
-            $this->load->model('Mdl_usuario');
-            $admin = $this->Mdl_usuario->getPerfil($this->session->userdata('idAdmin'));
+            $admin = $this->Mdl_Usuario->getPerfil($this->session->userdata('idAdmin'));
             foreach ($admin as $perfil) {
                 $output->nombreUsuario = $perfil->nombreUsuario;
                 $output->avatar = $perfil->avatar;
@@ -1315,8 +1312,7 @@ class Usuario extends CI_Controller
             $output->activeUsuario = "active";
             $output->activeQuienesSomos = "";
             //Imagen y nombre del administrador
-            $this->load->model('Mdl_usuario');
-            $admin = $this->Mdl_usuario->getPerfil($this->session->userdata('idAdmin'));
+            $admin = $this->Mdl_Usuario->getPerfil($this->session->userdata('idAdmin'));
             foreach ($admin as $perfil) {
                 $output->nombreUsuario = $perfil->nombreUsuario;
                 $output->avatar = $perfil->avatar;
@@ -1506,8 +1502,7 @@ class Usuario extends CI_Controller
             $output->activeUsuario = "active";
             $output->activeQuienesSomos = "";
             //Imagen y nombre del administrador
-            $this->load->model('Mdl_usuario');
-            $admin = $this->Mdl_usuario->getPerfil($this->session->userdata('idAdmin'));
+            $admin = $this->Mdl_Usuario->getPerfil($this->session->userdata('idAdmin'));
             foreach ($admin as $perfil) {
                 $output->nombreUsuario = $perfil->nombreUsuario;
                 $output->avatar = $perfil->avatar;
@@ -1644,7 +1639,7 @@ class Usuario extends CI_Controller
             $crud->set_field_upload('avatar', 'images/usuarios');
 
             /* Establecer los campos que son requeridos en los formularios */
-            $crud->required_fields('avatar', 'nombreUsuario', 'apePat', 'apeMat', 'correoUsuario', 'organizacion', 'usuario', 'contrasenia', 'Telefonos_idtelefono', 'Direcciones_idDireccion');
+            $crud->required_fields('avatar', 'nombreUsuario', 'apePat', 'apeMat', 'correoUsuario', 'organizacion', 'usuario', 'contrasenia', 'Telefonos_idtelefono');
 
             /* Establecer las reglas de los formularios */
             // $crud->set_rules(campo, label, rule);
@@ -1690,8 +1685,7 @@ class Usuario extends CI_Controller
             $output->activeUsuario = "active";
             $output->activeQuienesSomos = "";
             //Imagen y nombre del administrador
-            $this->load->model('Mdl_usuario');
-            $admin = $this->Mdl_usuario->getPerfil($this->session->userdata('idAdmin'));
+            $admin = $this->Mdl_Usuario->getPerfil($this->session->userdata('idAdmin'));
             foreach ($admin as $perfil) {
                 $output->nombreUsuario = $perfil->nombreUsuario;
                 $output->avatar = $perfil->avatar;

@@ -50,7 +50,9 @@
               <div class="col-sm-3">
                 <div class="widget">
                   <h5 class="widget-title font-alt">Redes sociales</h5>
-                  <div class="col-sm-6 shake-slow" align="center" ><img src="<?=base_url()?>template/frontend/images/fb.png" width="50%"></div>
+                  <a href="https://www.facebook.com/Movimiento-Ecologista-Preocupados-por-El-Planeta-AC-259202034280295/" target="_blank">
+                    <div class="col-sm-6 shake-slow" align="center" ><img src="<?=base_url()?>template/frontend/images/fb.png" width="50%"></div>
+                  </a>
                   <div class="col-sm-6 shake-slow" align="center"><img src="<?=base_url()?>template/frontend/images/insta.png" width="50%"></div>
                 </div>
               </div>
@@ -64,10 +66,12 @@
           <div class="container">
             <div class="row">
               <div class="col-sm-6">
-                <p class="copyright font-alt">&copy; 2018&nbsp;<a href="index.html">JOMIMAN</a>, TODOS LOS DERECHOS RESERVADOS</p>
+                <p class="copyright font-alt">&copy; 2018&nbsp;<a href="#">JOMIMAN Solutions</a>, TODOS LOS DERECHOS RESERVADOS</p>
               </div>
               <div class="col-sm-6">
-                <div class="footer-social-links"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-instagram"></i></a>
+                <div class="footer-social-links">
+                   <a href="https://www.facebook.com/Movimiento-Ecologista-Preocupados-por-El-Planeta-AC-259202034280295/" target="_blank"><i class="fa fa-facebook"></i></a>
+                  <a href="#"><i class="fa fa-instagram"></i></a>
                 </div>
               </div>
             </div>

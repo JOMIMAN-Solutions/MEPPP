@@ -225,8 +225,8 @@ class Comentario extends CI_Controller
             $output->activeUsuario = "";
             $output->activeQuienesSomos = "";
             //Imagen y nombre del administrador
-            $this->load->model('Mdl_usuario');
-            $admin = $this->Mdl_usuario->getPerfil($this->session->userdata('idAdmin'));
+            $this->load->model('Mdl_Usuario');
+            $admin = $this->Mdl_Usuario->getPerfil($this->session->userdata('idAdmin'));
             foreach ($admin as $perfil) {
                 $output->nombreUsuario = $perfil->nombreUsuario;
                 $output->avatar = $perfil->avatar;
