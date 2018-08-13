@@ -2,12 +2,13 @@
 /**
 * Archivo vista, proporciona una vista de todas las preguntas frecuentes que hay en el sitio
 *
-* @autor Miguel Angel Mandujano Barragán 
+* @author Miguel Angel Mandujano Barragán 
 * @link https://github.com/JOMIMAN-Solutions/MEPPP/tree/master/Aplicacion/application/views/frontend
 * @package views/frontend
 *
-* @version 1.0
+* @version 1.0.0
 * Creado el 13/06/2018 a las 01:11 am
+* Ultima modificacion el 12/08/2018 a las 08:07 pm
 */
  ?>
  <script>
@@ -78,32 +79,39 @@
                             <div class="panel panel-default">
                       <?php $j=0;
                       /**
-                      * Bucle que recorre el arreglo $arboles
-                      * El bucle asigna a la variable $ar el valor del elemento actual que está reccoriendo en ese momento, en la
-                      * siguiente iteración devolverá el siguiente valor.
+                      * Condición que valida si existe la variable $faqs y esta no esta vacia.
                       */
-                       foreach($faqs as $faq):?>
-                      <?php
-                      /**
-                      * Condicion que determina cuando imprimir una faq.
-                      * Si la condicion se cumple, se imprimirá la faq y la respuesta en la sección indicada.
-                      * 
-                      */
-                       if($faq->SeccionesFaq_idSeccionFaq == $sec->idSeccionFaq): ?>           
-                          <div class="panel-heading" style="border: dashed #38761d;background-color:  #38761d">
-                              <h4 class="white font-serif"><a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#<?=$j?>"><?=$faq->pregunta?></a></h4>
-                          </div>
-                            <div class="panel-collapse collapse " id="<?=$j?>">
-                              <div class="panel-body" >
-                                <div class="row">
-                                   <div class="col-lg-12 col-xs-12">
-                                      <h4 class="black"><?=$faq->respuesta?></h4>
-                                   </div>
+                      if (isset($faqs) && $faqs != 0):
+                        /**
+                        * Bucle que recorre el arreglo $arboles
+                        * El bucle asigna a la variable $ar el valor del elemento actual que está reccoriendo en ese momento, en la
+                        * siguiente iteración devolverá el siguiente valor.
+                        */
+                        foreach($faqs as $faq):?>
+                        <?php
+                        /**
+                        * Condicion que determina cuando imprimir una faq.
+                        * Si la condicion se cumple, se imprimirá la faq y la respuesta en la sección indicada.
+                        * 
+                        */
+                         if($faq->SeccionesFaq_idSeccionFaq == $sec->idSeccionFaq): ?>           
+                            <div class="panel-heading" style="border: dashed #38761d;background-color:  #38761d">
+                                <h4 class="white font-serif"><a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#<?=$j?>"><?=$faq->pregunta?></a></h4>
+                            </div>
+                              <div class="panel-collapse collapse " id="<?=$j?>">
+                                <div class="panel-body" >
+                                  <div class="row">
+                                     <div class="col-lg-12 col-xs-12">
+                                        <h4 class="black"><?=$faq->respuesta?></h4>
+                                     </div>
+                                  </div>
                                 </div>
-                              </div>
-                          </div>
+                            </div>
+                      <?php endif; ?>
+                      <?php $j++; endforeach; ?>
+                    <?php else: ?>
+                      <h3 align="center">No hay preguntas frecuentes por ahora, pero estamos trabajando en ello.</h3>
                     <?php endif; ?>
-                    <?php $j++; endforeach; ?>
                         </div>
                       </div>
                     </div>

@@ -10,11 +10,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *
 * @version 1.0.0
 * Creado el 26/07/2018 a las 05:50 pm
-* Ultima modificacion el 04/08/2018 a las 03:47 am
+* Ultima modificacion el 12/08/2018 a las 06:53 pm
 *
 * @since Clase disponible desde la versión 1.0.0
 * @deprecated Clase obsoleta en la versión 2.0.0
-* @todo Insertar la solicitud desde el front, crear método para exportar a PDF
+* @todo Nada
 */
 class Adopcion extends CI_Controller 
 {
@@ -74,9 +74,9 @@ class Adopcion extends CI_Controller
             * Condicion que determina si esta en alguno de los formularios, para omitir el campo "cantidad" de la relación en estas secciones.
             */
             if ($this->uri->segment(3) == 'add' || $this->uri->segment(3) == 'edit') {
-                $crud->set_relation_n_n('Adoptados', 'det_adopciones', 'arboles', 'idAdopcion', 'idArbol', '{nombreComun}');
+                $crud->set_relation_n_n('Adoptados', 'det_adopciones', 'arboles', 'idAdopcion', 'idArbol', '{nombreComun} ({cantidad})');
             } else {
-                $crud->set_relation_n_n('Adoptados', 'det_adopciones', 'arboles', 'idAdopcion', 'idArbol', '{nombreComun} - {cantidad}');
+                $crud->set_relation_n_n('Adoptados', 'det_adopciones', 'arboles', 'idAdopcion', 'idArbol', '{nombreComun} ({cantidad})');
             }
 
             /* Establecer los campos que queremos ver en la lista */
@@ -120,13 +120,9 @@ class Adopcion extends CI_Controller
             /* Establecer las reglas de los formularios */
             // $crud->set_rules(campo, label, rule);
 
-            /* Ordenamiento de los datos a listar */
-            // $crud->order_by(campo, direccion);
-            $crud->order_by('fechaAdopcion', 'ASC');
-
             /* Deshabilitar funciones */
             $crud->unset_add();
-            //$crud->unset_edit();
+            $crud->unset_edit();
             //$crud->unset_read();
             $crud->unset_delete();
             //$crud->unset_print();
@@ -146,9 +142,19 @@ class Adopcion extends CI_Controller
             } else {
                 $crud->setPdfUrl('Adopcion/pdf');
             }
+
+            /* Agregar funciones especiales/personalizadas */
+            $crud->setActivarEstatus(true);
+            $crud->add_action('En proceso', '', 'Adopcion/changeEstatus/1', 'el el-time');
+            $crud->add_action('Cubierta', '', 'Adopcion/changeEstatus/2', 'el el-thumbs-up');
+            $crud->add_action('Cancelar', '', 'Adopcion/changeEstatus/3', 'el el-ban-circle');
             
             /* Condiciones para los datos a listar */
             // $crud->where(campo, valor_condicion);
+
+            /* Ordenamiento de los datos a listar */
+            // $crud->order_by(campo, direccion);
+            $crud->order_by('fechaAdopcion', 'DESC');
 
             /* Renderizar la tabla */
             $output = $crud->render();
@@ -184,14 +190,31 @@ class Adopcion extends CI_Controller
             } else if ($this->uri->segment(3) == 'edit') {
                 $output->accion = "Modificando";
             }
+            // estatus
+            $output->estatus = "Estatus";
 
             /* Cargar las vistas */
             $this->load->view('template/backend/header',(array)$output);
             $this->load->view('backend/vw_adopciones.php',(array)$output);
             $this->load->view('template/backend/footer',(array)$output);
         } else {
-            redirect('Frontend/login');
+            /**
+            * Verificar si hay sesión de un usuario que no es administrador
+            */
+            if ($this->session->has_userdata('perfil')) {
+                redirect('Frontend/index');
+            } else {
+                redirect('Frontend/login');
+            }
         }
+    }
+
+    public function changeEstatus($estatus)
+    {
+        $idAdopcion = $this->uri->segment(4);
+        $this->Mdl_Adopcion->changeEstatus($estatus, $idAdopcion);
+
+        redirect('Adopcion/cPanel');
     }
 
     /**
@@ -316,7 +339,14 @@ class Adopcion extends CI_Controller
             $nombre_archivo = utf8_decode($titulo . ".pdf");
             $pdf->Output($nombre_archivo, 'I');
         } else {
-            redirect('Frontend/login');
+            /**
+            * Verificar si hay sesión de un usuario que no es administrador
+            */
+            if ($this->session->has_userdata('perfil')) {
+                redirect('Frontend/index');
+            } else {
+                redirect('Frontend/login');
+            }
         }
     }
 }

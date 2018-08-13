@@ -8,12 +8,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 * @link [dirección_url_de_la_ubicacion]
 * @package application/controllers
 *
-* @version 1.0
+* @version 1.0.0
 * Creado el 14/06/2018 a las 10:28 pm
+* Ultima modificacion el 12/08/2018 a las 07:09 pm
 *
-* @since Clase disponible desde la versión 1.0
-* @deprecated Clase obsoleta en la versión 2.0
-* @todo [información]
+* @since Clase disponible desde la versión 1.0.0
+* @deprecated Clase obsoleta en la versión 2.0.0
+* @todo Nada
 */
 class Frontend extends CI_Controller 
 {
@@ -22,6 +23,7 @@ class Frontend extends CI_Controller
         parent::__construct();
         $this->load->model('Mdl_Arbol');
 		$this->load->model('Mdl_Usuario');
+        $this->load->model('Mdl_QuienesSomos');
 	}
 
     /**
@@ -83,6 +85,15 @@ class Frontend extends CI_Controller
         $data['page'] = "login";
         $data['seccion'] = "7";
         $data['imagen'] = "loginSeccion";
+
+        /**
+        * Verificar si hay una sesión iniciada
+        * Esto se hace dato que este metodo manda al formulario de logueo/registro, y en dado casio de que haya sesion iniciada y quieran registrarse debe cerrar esta sesion.
+        */
+        if ($this->session->has_userdata('perfil')) {
+            $this->session->unset_userdata('perfil');
+        }
+
         $this->cargarVista('vw_login', $data);
     }
 
@@ -113,6 +124,15 @@ class Frontend extends CI_Controller
             $this->load->view('template/frontend/header', $data);   
         }
         $this->load->view('frontend/' . $view, $data);
-        $this->load->view('template/frontend/footer');
+
+        $datos = $this->Mdl_QuienesSomos->getDatos();
+        foreach ($datos as $dato) {}
+        $data['dato'] = $dato;
+
+        $direccion = $this->Mdl_QuienesSomos->getDireccion();
+        foreach ($direccion as $dir) {}
+        $data['direccion'] = $dir;
+
+        $this->load->view('template/frontend/footer', $data);
     }
 }

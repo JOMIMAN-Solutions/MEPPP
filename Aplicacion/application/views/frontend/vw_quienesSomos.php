@@ -40,9 +40,9 @@ $('.bloque').smoove({offset:'10%'});
 			<div class="col-lg-3">
 				<img src="<?=base_url()?>template/frontend/images/mision.png" width="70%" style="margin-top: 10px;margin-bottom: 10px;border-radius: 45% / 20%" class="center-block">
 			</div>
-			<div class="col-lg-9">
-				<h1 class="white" align="center" style="margin-left: 10px;margin-right: 10px">Movimiento Ecologista Preocupados por el Planeta tiene como misión concientizar a la ciudadanía sobre el medio ambiente y su deterioro, así como motivarlos a la plantación de árboles, buscando innovación, respeto  y amor por el planeta.</h1>
-			</div>
+      <div class="col-lg-9">
+        <h1 class="white" align="center" style="margin-left: 10px;margin-right: 10px"><?=$filosofia->mision;?></h1>
+      </div>
 		</div>
     </div>
   </div>
@@ -58,9 +58,9 @@ $('.bloque').smoove({offset:'10%'});
   <div class="row bloque" data-move-x="-150%">
     <div class="col-lg-11 col-xs-12 col-sm-10 divContenidoL shadowR">
 		<div class="row">
-			<div class="col-lg-9">
-				<h1 class="white" align="center" style="margin-left: 10px;margin-right: 10px">Lograr ser reconocidos como una asociación que mejora el medio ambiente a través de la donación de árboles a los miembros de la sociedad logrando así una reserva ecológica sustentable. </h1>
-			</div>
+      <div class="col-lg-9">
+        <h1 class="white" align="center" style="margin-left: 10px;margin-right: 10px"><?=$filosofia->mision;?></h1>
+      </div>
 			<div class="col-lg-3">
 				<img src="<?=base_url()?>template/frontend/images/vision.png" width="70%" style="margin-top: 10px;margin-bottom: 10px;border-radius: 45% / 20%" class="center-block">
 			</div>
@@ -69,7 +69,7 @@ $('.bloque').smoove({offset:'10%'});
      <div class="col-lg-1 col-xs-12 col-sm-1"></div>
   </div>
 
-    <!--VALORES-->
+  <!--VALORES-->
   <div class="row bloque" data-move-x="150%">
     <div class="col-lg-1 col-xs-12 col-sm-1"></div>
     <div class="col-lg-11 col-xs-12 col-sm-10 divRedondoR borderTopBrown shadowL">
@@ -79,46 +79,41 @@ $('.bloque').smoove({offset:'10%'});
   <div class="row bloque" data-move-x="150%">
     <div class="col-lg-1 col-xs-12 col-sm-1"></div>
     <div class="col-lg-11 col-xs-12 col-sm-10 divContenidoR shadowL">
-		<div class="row">
-			<div class="col-lg-3">
-				<img src="<?=base_url()?>template/frontend/images/valores.png" width="70%" style="margin-top: 10px;margin-bottom: 10px;border-radius: 45% / 20%" class="center-block">
-			</div>
-			<div class="col-lg-9">
-				<div role="tabpanel" style="margin-top: 10px">
-                  <ul class="nav nav-tabs font-alt" role="tablist" style="background-color: #38761d">
-                    <li class="active"><a href="#amor" data-toggle="tab" style="white"><span class=" icon-heart"></span>Amor</a></li>
-                    <li><a href="#confianza" data-toggle="tab"><span class="icon-global"></span>Confianza</a></li>
-                    <li><a href="#comunicacion" data-toggle="tab"><span class="icon-chat"></span>Comunicación</a></li>
-                    <li><a href="#cooperacion" data-toggle="tab"><span class="icon-happy"></span>Cooperación</a></li>
-                  </ul>
-                  <div class="tab-content">
-
-                    <div class="tab-pane active" id="amor">
-						          <div style="margin-top: 10px">
-                  			<h3 class="white" style="margin-right: 10px" align="center">Consideramos que el amor puede mover cualquier cosa es por eso  que cada uno de nuestros miembros ama a la naturaleza y su entorno.</h3>
-           				     </div>
-                    </div>
-
-                    <div class="tab-pane" id="confianza">
-                    	<div style="margin-top: 10px">
-                  			<h3 class="white" style="margin-right: 10px" align="center">Sabemos que la confianza, permite creer en nosotros y sobre todo en los demás, lo que provoca lograr un mejor resultado.</h3>
-           				</div>
-                    </div>
-
-                    <div class="tab-pane" id="comunicacion">
-                    	<div style="margin-top: 10px">
-                  			<h3 class="white" style="margin-right: 10px" align="center">Fomentamos la comunicación dentro y fuera de la asociación, contribuyendo a la comunicación de ideas de manera clara.</h3>
-           				</div>
-                    </div>
-
-                     <div class="tab-pane" id="cooperacion">
-                    	<div style="margin-top: 10px">
-                  			<h3 class="white" style="margin-right: 10px" align="center">Impulsamos el trabajo en equipo, complementando esfuerzos y respetando los distintos puntos de vista.</h3>
-           				</div>
-                    </div>
-                  </div>
+    <div class="row">
+      <div class="col-lg-3">
+        <img src="<?=base_url()?>template/frontend/images/valores.png" width="70%" style="margin-top: 10px;margin-bottom: 10px;border-radius: 45% / 20%" class="center-block">
+      </div>
+      <div class="col-lg-9">
+        <div role="tabpanel" style="margin-top: 10px">
+          <ul class="nav nav-tabs font-alt" role="tablist" style="background-color: #38761d">
+            <?php
+            $iconos = ['icon-heart', 'icon-global', 'icon-chat', 'icon-happy'];
+            $i = 0;
+            foreach ($valores as $valor): 
+            ?>
+              <li class="<?php if($i==0){echo 'active';}?>"><a href="#<?=$valor->nombreValor;?>" data-toggle="tab"><span class="<?=$iconos[$i];?>"></span><?=$valor->nombreValor;?></a></li>
+            <?php
+              $i++;
+            endforeach;
+            ?>
+          </ul>
+          <div class="tab-content">
+            <?php
+            $i = 0;
+            foreach ($valores as $valor): 
+            ?>
+              <div class="tab-pane <?php if($i==0){echo 'active';}?>" id="<?=$valor->nombreValor;?>">
+              <div style="margin-top: 10px">
+                <h3 class="white" style="margin-right: 10px" align="center"><?=$valor->descripcionValor;?></h3>
+               </div>
             </div>
-			</div>
-		</div>
+            <?php
+              $i++;
+            endforeach;
+            ?>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
   </div>

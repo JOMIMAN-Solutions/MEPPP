@@ -11,7 +11,7 @@
 *
 * @version 1.0.0
 * Creado el 03/08/2018 a las 07:59 pm
-* Ultima modificacion el 03/08/2018 a las 08:34 pm
+* Ultima modificacion el 12/08/2018 a las 06:45 pm
 *
 * @since Clase disponible desde la versión 1.0.0
 * @deprecated Clase obsoleta en la versión 2.0.0
@@ -81,4 +81,42 @@ class Mdl_Adopcion extends CI_Model
             return 0;
         }
     }
+
+    /**
+	* Método que interactua con la base de datos para cambiar el estatus de una adopcion en particular.
+	* @access public
+	* @param
+	*    - int estatus identificador para saber que estatus poner en la adopcion
+    *    - int idAdopcion identificador para saber que adopcion modificar
+	* @return void
+	*
+	* @since Método disponible desde la versión 1.0.1
+	* @deprecated Método obsoleto en la versión 2.0.0
+	* @todo Nada
+	*/
+	public function changeEstatus($estatus, $idAdopcion)
+	{
+		if ($estatus == 1) {
+            $statusAdopcion = 'En proceso';
+        } else if ($estatus == 2) {
+            $statusAdopcion = 'Cubierta';
+        } else {
+        	$statusAdopcion = 'Cancelada';
+        }
+
+        $data = array(
+            'estatusAdopcion' => $statusAdopcion
+        );
+
+        $this->db->trans_begin();
+
+        $this->db->where("idAdopcion = $idAdopcion");
+        $this->db->update('adopciones', $data);
+
+        if ($this->db->trans_status() === TRUE){
+            $this->db->trans_commit();
+        }else{
+            $this->db->trans_rollback();
+        }
+	}
 }

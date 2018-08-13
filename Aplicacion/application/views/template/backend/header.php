@@ -23,7 +23,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="<?=base_url().'template/backend/assets/images/favicon.png';?>">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?=base_url().'template/backend/assets/images/cpanel-icon.png';?>">
     <title><?=$title;?></title>
     <!-- Bootstrap Core CSS -->
     <link href="<?=base_url().'template/backend/assets/plugins/bootstrap/css/bootstrap.min.css';?>" rel="stylesheet">
@@ -73,7 +73,7 @@
                 <div class="navbar-header">
                     <div class="navbar-brand">
                         <!-- Logo icon -->
-                        <b><img src="<?=base_url().'template/backend/assets/images/logo-icon.png';?>" alt="homepage"/></b>
+                        <b><img src="<?=base_url().'template/backend/assets/images/cpanel-icon.png';?>" alt="homepage"/></b>
                         <!--End Logo icon -->
 
                         <!-- Logo text -->
@@ -109,7 +109,7 @@
                                         <span class="fa fa-user m-r-5"></span>Perfil
                                     </li>
                                 </a>
-                                <a href="<?=base_url().'Frontend/index';?>">
+                                <a href="<?=base_url().'Frontend/index';?>" target="_blank">
                                     <li class="dropdown-item">
                                         <span class="fa fa-home m-r-5"></span>Ir al sitio
                                     </li>

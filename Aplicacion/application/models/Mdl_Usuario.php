@@ -236,7 +236,7 @@ class Mdl_Usuario extends CI_Model
                 ->set('correoUsuario',$usuario['correoUsuario'])
                 ->set('organizacion',$usuario['organizacion'])
                 ->set('usuario',$usuario['usuario'])
-                ->set('contrasenia',"AES_ENCRYPT('{$this->user_password}','{$this->user_name}')",FALSE)
+                ->set('contrasenia',"AES_ENCRYPT('".$usuario['contrasenia']."','meppp')",FALSE)
                 ->set('privilegios',$usuario['privilegios'])
                 ->set('estatusUsuario',$usuario['estatusUsuario'])
                 ->set('Telefonos_idTelefono',$usuario['Telefonos_idTelefono'])
@@ -281,8 +281,18 @@ class Mdl_Usuario extends CI_Model
         $this->db->where("idDireccion = ".$this->session->userdata('perfil')->idDireccion);
         $this->db->update('direcciones', $direccion);
 
+        $this->db->set('avatar', $usuario['avatar'])
+            ->set('nombreUsuario', $usuario['nombreUsuario'])
+            ->set('apePat', $usuario['apePat'])
+            ->set('apeMat', $usuario['apeMat'])
+            ->set('correoUsuario', $usuario['correoUsuario'])
+            ->set('organizacion', $usuario['organizacion'])
+            ->set('usuario', $usuario['usuario'])
+            ->set('contrasenia', "AES_ENCRYPT('".$usuario['contrasenia']."','meppp')", FALSE)
+            ->set('privilegios', $usuario['privilegios'])
+            ->set('estatusUsuario', $usuario['estatusUsuario']);
         $this->db->where("idUsuario = ".$this->session->userdata('perfil')->idUsuario);
-        $this->db->update('usuarios', $usuario);
+        $this->db->update('usuarios');
 
         if ($this->db->trans_status() === TRUE){
             $this->db->trans_commit();

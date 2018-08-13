@@ -45,12 +45,15 @@ $('.bloque').smoove({offset:'10%'});
     pos=0;
     window.name=0;
     window.history.pushState("Details", "Title", "<?php echo base_url(); ?>Comentario");
-      if (<?=$this->session->flashdata('comentario')?> == 1) {
-      		modalAgregada.open();
-    	}
 
   }
 
+</script>
+
+<script>
+	  if (<?=$this->session->flashdata('comentario')?> == 1) {
+      		modalAgregada.open();
+    	}
 </script>
 
 <div class="main" style="background-color: #b6d7a8">

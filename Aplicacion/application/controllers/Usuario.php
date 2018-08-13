@@ -22,7 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 *
 * @version 1.0.1
 * Creado el 14/06/2018 a las 10:28 pm
-* Ultima modificacion el 04/08/2018 a las 04:00 am
+* Ultima modificacion el 04/08/2018 a las 08:16 am
 *
 * @since Clase disponible desde la versión 1.0.0
 * @deprecated Clase obsoleta en la versión 2.0.0
@@ -35,6 +35,7 @@ class Usuario extends CI_Controller
 		parent::__construct();
 		$this->load->model('Mdl_Usuario');
         $this->load->model('Mdl_Comentario');
+        $this->load->model('Mdl_QuienesSomos');
 	}
 
 	/**
@@ -173,23 +174,15 @@ class Usuario extends CI_Controller
     * @deprecated Método obsoleto en la versión 2.0.0
     * @todo Nada
     */
-<<<<<<< HEAD
     public function perfil() {
         /**
         * Verificar que exista sesion de un usuario
         */
         if ($this->session->has_userdata('perfil')) {
-            $data['title']="MEPPP | PERFIL DE USUARIO";
+            $data['title']="MEPPP | Perfil de usuario";
             $data['page']="perfil";
             $data['seccion']="8";
             $data['imagen']="perfilSeccion";
-=======
-    public function perfil(){
-        $data['title']="MEPPP | Perfil de usuario";
-        $data['page']="perfil";
-        $data['seccion']="8";
-        $data['imagen']="perfilSeccion";
->>>>>>> origin/aplicacion
 
             $this->cargarVistaFront('vw_perfil',$data);  
         } else {
@@ -322,15 +315,8 @@ class Usuario extends CI_Controller
             );
 
             $this->Mdl_Usuario->insert($ciudad,$colonia,$direccion,$telefono,$usuario,$re);   
-            redirect('Frontend/index');
-           
-
-
-
-
+            redirect('Frontend/login', 'refresh');
             }
-
-     
         } 
     }
 
@@ -773,7 +759,14 @@ class Usuario extends CI_Controller
             $this->load->view('backend/vw_usuarios.php',(array)$output);
             $this->load->view('template/backend/footer',(array)$output);
         } else {
-            redirect('Frontend/login');
+            /**
+            * Verificar si hay sesión de un usuario que no es administrador
+            */
+            if ($this->session->has_userdata('perfil')) {
+                redirect('Frontend/index');
+            } else {
+                redirect('Frontend/login');
+            }
         }
     }
 
@@ -957,7 +950,14 @@ class Usuario extends CI_Controller
             $this->load->view('backend/vw_usuarios.php',(array)$output);
             $this->load->view('template/backend/footer',(array)$output);
         } else {
-            redirect('Frontend/login');
+            /**
+            * Verificar si hay sesión de un usuario que no es administrador
+            */
+            if ($this->session->has_userdata('perfil')) {
+                redirect('Frontend/index');
+            } else {
+                redirect('Frontend/login');
+            }
         }
     }
 
@@ -1150,7 +1150,14 @@ class Usuario extends CI_Controller
             $this->load->view('backend/vw_usuarios.php',(array)$output);
             $this->load->view('template/backend/footer',(array)$output);
         } else {
-            redirect('Frontend/login');
+            /**
+            * Verificar si hay sesión de un usuario que no es administrador
+            */
+            if ($this->session->has_userdata('perfil')) {
+                redirect('Frontend/index');
+            } else {
+                redirect('Frontend/login');
+            }
         }
 
     }
@@ -1335,7 +1342,14 @@ class Usuario extends CI_Controller
             $this->load->view('backend/vw_usuarios.php',(array)$output);
             $this->load->view('template/backend/footer',(array)$output);
         } else {
-            redirect('Frontend/login');
+            /**
+            * Verificar si hay sesión de un usuario que no es administrador
+            */
+            if ($this->session->has_userdata('perfil')) {
+                redirect('Frontend/index');
+            } else {
+                redirect('Frontend/login');
+            }
         }
     }
 
@@ -1519,7 +1533,14 @@ class Usuario extends CI_Controller
             $this->load->view('backend/vw_usuarios.php',(array)$output);
             $this->load->view('template/backend/footer',(array)$output);
         } else {
-            redirect('Frontend/login');
+            /**
+            * Verificar si hay sesión de un usuario que no es administrador
+            */
+            if ($this->session->has_userdata('perfil')) {
+                redirect('Frontend/index');
+            } else {
+                redirect('Frontend/login');
+            }
         }
     }
 
@@ -1696,7 +1717,14 @@ class Usuario extends CI_Controller
             $this->load->view('backend/vw_perfil.php',(array)$output);
             $this->load->view('template/backend/footer',(array)$output);
         } else {
-            redirect('Frontend/login');
+            /**
+            * Verificar si hay sesión de un usuario que no es administrador
+            */
+            if ($this->session->has_userdata('perfil')) {
+                redirect('Frontend/index');
+            } else {
+                redirect('Frontend/login');
+            }
         }
     }
 
@@ -1822,7 +1850,14 @@ class Usuario extends CI_Controller
             $nombre_archivo = utf8_decode($titulo.".pdf");
             $pdf->Output($nombre_archivo, 'I');   
         } else {
-            redirect('Frontend/login');
+            /**
+            * Verificar si hay sesión de un usuario que no es administrador
+            */
+            if ($this->session->has_userdata('perfil')) {
+                redirect('Frontend/index');
+            } else {
+                redirect('Frontend/login');
+            }
         }
     }
 
@@ -1847,6 +1882,15 @@ class Usuario extends CI_Controller
     {
         $this->load->view('template/frontend/headerSeccion',$data);
         $this->load->view('frontend/'.$view, $data);
-        $this->load->view('template/frontend/footer');
+
+        $datos = $this->Mdl_QuienesSomos->getDatos();
+        foreach ($datos as $dato) {}
+        $data['dato'] = $dato;
+
+        $direccion = $this->Mdl_QuienesSomos->getDireccion();
+        foreach ($direccion as $dir) {}
+        $data['direccion'] = $dir;
+
+        $this->load->view('template/frontend/footer', $data);
     }
 }

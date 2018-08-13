@@ -12,7 +12,14 @@
               <div class="col-sm-3">
                 <div class="widget">
                 	<img src="<?=base_url()?>template/frontend/images/icon.png" width="50%" class="center-block" style="margin-bottom: 20px">
-                  <p><strong>Teléfono:</strong> 417-100-92-87 <br><strong>Dirección:</strong>  GuillermoPrieto 1A <br> <strong>Correo:</strong> hotmail.com</p>
+                  <p>
+                    <strong>Teléfono:</strong> <?=$dato->telefono1;?>
+                    <?php if($dato->telefono2 != ''): ?>
+                      <strong>Celular:</strong> <?=$dato->telefono2;?>
+                    <?php endif; ?>
+                    <br><strong>Dirección:</strong>  <?=$direccion->calle.' #'.$direccion->numero. ' Col.'.$direccion->colonia.', '.$direccion->ciudad;?>
+                    <br> <strong>Correo:</strong> <?=$dato->correoEmpresa;?>
+                  </p>
                 </div>
               </div>
 
@@ -35,7 +42,7 @@
                     <li><a href="<?=base_url().'Usuario/getSocios';?>">Socios</a></li>
                     <li><a href="<?=base_url().'Comentario';?>">Comentarioss</a></li>
                     <li><a href="<?=base_url().'Faq';?>">Faqs</a></li>
-                    <li><a href="<?=base_url().'Frontend/quienesSomos';?>">¿Quiénes Somos?</a></li>
+                    <li><a href="<?=base_url().'QuienesSomos';?>">¿Quiénes Somos?</a></li>
                   </ul>
                 </div>
               </div>
