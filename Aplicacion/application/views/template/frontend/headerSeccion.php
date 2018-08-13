@@ -113,7 +113,7 @@
         </div>
       </nav>
 
-      <section class="home-section home-parallax home-fade <?php if($page=='login'){echo 'home-full-height';} ?> bg-dark-30" id="home" data-background="<?=base_url();?>template/Frontend/images/<?=$imagen?>.jpg">
+      <section class="home-section home-parallax home-fade <?php if($page=='login'){echo 'home-full-height';} ?> bg-dark-30" id="home" data-background="<?=base_url();?>template/frontend/images/<?=$imagen?>.jpg">
         <div class="titan-caption">
           <div class="caption-content">
             <div class="font-alt mb-40 titan-title-size-4"><?=$page?></div>
